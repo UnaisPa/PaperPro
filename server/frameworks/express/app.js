@@ -1,7 +1,8 @@
 import express from "express";
 import connectDB from "../../config/config.js";
 import cookieParser from "cookie-parser";
-import { errorHandler,notFound} from "../../middlewares/errorMiddleware.js";
+import { errorHandler,notFound} from "../../interfaces/middlewares/errorMiddleware.js";
+import userRoutes from "../../interfaces/routes/userRoutes.js"
 const app = express();
 
 const port = process.env.PORT || 8000
@@ -15,7 +16,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
 
 //Routes
-
+ app.use('/api/users',userRoutes)
 
 //Error handler middlewares
 app.use(notFound);
