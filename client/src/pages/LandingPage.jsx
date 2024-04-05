@@ -1,7 +1,9 @@
 import React from "react";
 import LandingPageHeader from "../components/LandingPageHeader";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Link,useNavigate } from "react-router-dom";
 const LandingPage = () => {
+  const navigate = useNavigate()
   return (
     <>
       <LandingPageHeader />
@@ -16,7 +18,7 @@ const LandingPage = () => {
               Enhance your longevity by testing strategies with our
               user-friendly virtual trading app.
             </p>
-            <button className="rounded-3xl mt-6 bg-primary px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-hoverColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <button onClick={()=>navigate('/login')} className="rounded-3xl mt-6 bg-primary px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-hoverColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Get started for free
             </button>
           </div>

@@ -1,6 +1,7 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const LandingPageHeader = () => {
+  const navigate = useNavigate()
   return (
     <div className='flex p-2 ' >
         <div className=' w-2/4 p-5' >
@@ -9,7 +10,7 @@ const LandingPageHeader = () => {
         <div className='flex  w-2/4 p-5 text-white' >
             <div  className=' flex justify-around align-middle md:justify-center w-full' >
                 <p className='md:mr-20 sm:mr-2 p-1'>About</p>
-                <button className='border text-xs sm:text-base border-e-2 border-primary pl-4 pr-4 p-1 sm:pl-6 sm:pr-5 rounded-2xl'>Login</button>
+                <button onClick={()=>navigate('/login')} className='border text-xs sm:text-base border-e-2 border-primary pl-4 pr-4 p-1 sm:pl-6 sm:pr-5 rounded-2xl'>Login</button>
             </div>
         </div>
     </div>
