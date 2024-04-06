@@ -10,12 +10,12 @@ const userUseCases = new UserUseCases
 const authUser = asyncHandler( async(req,res)=>{
     try{
         const {email,password} = req.body
+        console.log(email)
         const auth = await userUseCases.authUser(res,email,password);
         if(auth.user){
             res.status(200).json(auth.user)
         }else{
-            res.status(401)
-            throw new Error(auth.message) 
+            res.status(404).json(auth.message) 
         }
     }catch(err){
         res.status(500).json(err.message)
