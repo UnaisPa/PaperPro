@@ -6,8 +6,11 @@ class UserUseCases{
         const user = await User.findOne({email:email})
         if(user){
             if(await user.matchPassword(password)){
-                generateToken(res,user);
-                return {user:user}
+                const token = await generateToken(res,user._id);
+
+                //remove password from the response
+                const {password:pass,...rest} = user._doc
+                return {user:rest,token}
             }else{
                 return {message:'Invalid password. Please try again.'}
             }

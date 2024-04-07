@@ -13,6 +13,8 @@ export const generateToken = async (res, userId) =>{
             maxAge:30 * 24 * 60 *1000
         });
 
+        return token
+
     } catch (error) {
         console.error('Error generating token:', error);
     }

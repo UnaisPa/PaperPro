@@ -33,7 +33,9 @@ const Login = () => {
         await axios.post("/users/auth", formData).then((response) => {
           setTimeout(() => {
             toast.success("Login Success");
-            dispatch(signInSuccess(response.data));
+            dispatch(signInSuccess(response.data.user));
+            localStorage.setItem('jwt', response.data.token);
+            navigate('/')
           }, 1500);
         });
       } catch (err) {

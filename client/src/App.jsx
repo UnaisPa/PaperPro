@@ -5,6 +5,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 import Login from "./pages/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import Home from "./pages/Home";
+import HideRoutes from "./components/HideRoutes";
 
 function App() {
   return (
@@ -12,8 +15,12 @@ function App() {
       <Router>
         <ToastContainer theme="dark" />
         <Routes>
-          <Route exact path="/" element={<LandingPage/>} />
-          <Route path="/login" element={<Login/>} />
+          <Route path="" element={<PrivateRoute/>}>
+            <Route exact path="/" element={<Home/>} />
+          </Route>
+          <Route path="" element={<HideRoutes/>}>
+            <Route path="/login" element={<Login/>} />
+          </Route> 
         </Routes>
       </Router>
     </>

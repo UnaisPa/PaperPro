@@ -13,7 +13,7 @@ const authUser = asyncHandler( async(req,res)=>{
         console.log(email)
         const auth = await userUseCases.authUser(res,email,password);
         if(auth.user){
-            res.status(200).json(auth.user)
+            res.status(200).json({ user: auth.user, token: auth.token });
         }else{
             res.status(404).json(auth.message) 
         }
