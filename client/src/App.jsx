@@ -9,15 +9,25 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import HideRoutes from "./components/HideRoutes";
 import Register from "./pages/Register";
+import {NextUIProvider} from "@nextui-org/react";
+import Profile from "./pages/Profile";
+import Portfolio from "./pages/Portfolio";
+import News from "./pages/News";
+import Stocks from "./pages/Stocks";
 
 function App() {
   return (
     <>
+      <NextUIProvider>
       <Router>
         <ToastContainer theme="dark" />
         <Routes>
           <Route path="" element={<PrivateRoute/>}>
             <Route exact path="/" element={<Home/>} />
+            <Route path="/portfolio" element={<Portfolio/>}/>
+            <Route path="/news" element={<News/>}/>
+            <Route path="/stocks" element={<Stocks/>}/>
+            <Route path="/profile" element={<Profile/>}/>
           </Route>
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />
@@ -25,6 +35,7 @@ function App() {
           </Route> 
         </Routes>
       </Router>
+      </NextUIProvider>
     </>
   );
 }

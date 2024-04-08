@@ -1,14 +1,13 @@
 import React from 'react'
-import Header from '../components/Header'
 import NavBar2 from '../components/Header2'
 
-const Home = () => {
+const Stocks = () => {
   return (
     <div>
-      <NavBar2/>
-    Home
+        <NavBar2/>
+    Stocks
     </div>
   )
 }
 
-export default Home
+export default Stocks
