@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { signInStart, signInSuccess ,signInFailure} from "../redux/userSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "../axios.js";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
@@ -69,9 +69,9 @@ const Login = () => {
     <>
       <div className="flex p-2 ">
         <div className=" w-2/4 p-5">
-          <h5 className="text-primary w-fit cursor-pointer md:pl-20 font-semibold text-2xl hover:text-[#8fb848]">
+          <Link to='/'><h5 className="text-primary w-fit cursor-pointer md:pl-20 font-semibold text-2xl hover:text-[#8fb848]">
             Paper pro
-          </h5>
+          </h5></Link>
         </div>
       </div>
       <div className="flex p-2 h-[80vh] sm:h-full align-middle justify-center">
@@ -86,9 +86,9 @@ const Login = () => {
           </p>
           <p className="text-secondary text-xs opacity-75 mt-3">
             Don't have an account?{" "}
-            <span className="text-indigo-300 cursor-pointer hover:text-indigo-200">
+            <Link to='/register'><span className="text-indigo-300 cursor-pointer hover:text-indigo-200">
               Sign Up
-            </span>
+            </span></Link>
           </p>
         </div>
         <div className=" my-auto w-full sm:w-3/5 p-5">

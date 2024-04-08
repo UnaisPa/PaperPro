@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import HideRoutes from "./components/HideRoutes";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           </Route>
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />
+            <Route path="/register" element={<Register/>}/>
           </Route> 
         </Routes>
       </Router>
