@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import UserUseCases from "../../useCases/userUseCases.js";
+import expressAsyncHandler from "express-async-handler";
 const userUseCases = new UserUseCases
 
 
@@ -37,8 +38,24 @@ const registerUser = asyncHandler( async (req,res) =>{
     }
 })
 
+//@desk      auth with google
+//route      POST api/users/google_auth
+//@access    Public
+const googleAuth = expressAsyncHandler(async(req,res)=>{
+    try{
+        const googleAuth = await userUseCases.googlAuth(res,req.body);
+        if(googleAuth.user){
+            res.status(200).json({ user: googleAuth.user, token: googleAuth.token });
+        }else{
+            res.status(404).json(googleAuth.message) 
+        }
+    }catch(err){
+        res.status(500).json(err.message)
+    }
+})
 
 export {
     registerUser,
-    authUser
+    authUser,
+    googleAuth
 };

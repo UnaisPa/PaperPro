@@ -45,7 +45,7 @@ export default function NavBar2() {
           </Button> */}
         <div className="flex">
             <BiSolidUserCircle size={30} className="text-primary" />
-            <p className="text-secondary text-sm ml-2 my-auto">{currentUser.name}</p>
+            <p className="text-secondary text-sm ml-2 my-auto">{currentUser.name.split(' ')[0]}</p>
                
         </div>
         </NavbarItem>

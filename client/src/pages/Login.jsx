@@ -6,6 +6,7 @@ import { Link, useNavigate, } from "react-router-dom";
 import axios from "../axios.js";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import GoogleBtn from "../components/GoogleBtn.jsx";
 
 const Login = () => {
   const initialState = {
@@ -176,10 +177,11 @@ const Login = () => {
               <p className="text-center text-secondary text-xs opacity-65 m-5">
                 Or continue with
               </p>
-              <FcGoogle
+              {/* <FcGoogle
                 size={27}
                 className="mx-auto hover:animate-spin cursor-pointer"
-              />
+              /> */}
+              <GoogleBtn/>
             </div>
           </div>
         </div>
