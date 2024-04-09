@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Portfolio from "./pages/Portfolio";
 import News from "./pages/News";
 import Stocks from "./pages/Stocks";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>}/>
-          </Route> 
+          </Route>
+          <Route path="*" element={<NotFound/>}/> 
         </Routes>
       </Router>
       </NextUIProvider>

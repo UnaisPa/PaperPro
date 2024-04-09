@@ -1,10 +1,10 @@
 import React from 'react'
-import NavBar2 from '../components/Header2'
+import Header from '../components/Header'
 
 const Portfolio = () => {
   return (
     <div>
-        <NavBar2/>
+        <Header/>
         portfolio
     </div>
   )
