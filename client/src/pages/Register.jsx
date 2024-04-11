@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { signInStart, signInSuccess, signInFailure } from "../redux/userSlice";
+import { signInSuccess } from "../redux/tempUserSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate,Link } from "react-router-dom";
 import axios from "../axios.js";
@@ -17,10 +17,11 @@ const Register = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.user);
+  const {  } = useSelector((state) => state.tempUser);
   const [formData, setFormData] = useState(initialState);
   const [validateErrors, setValidateErrors] = useState({});
   const [err, setErr] = useState("");
+  const [loading ,setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,18 +33,24 @@ const Register = () => {
     if (Object.keys(formErrors).length == 0) {
       try {
         //dispatch(signInStart());
+        setLoading(true)
         console.log(formData)
-        // await axios.post("/users/auth", formData).then((response) => {
-        //   setTimeout(() => {
-        //     toast.success("Login Success");
-        //     dispatch(signInSuccess(response.data.user));
-        //     localStorage.setItem("jwt", response.data.token);
-        //     navigate("/");
-        //   }, 1500);
-        // });
+        await axios.post("/users/register", formData).then((response) => {
+          setTimeout(() => {
+            setLoading(false)
+            if(response.data.success){
+              toast.success(response.data.message);
+              dispatch(signInSuccess(formData));
+              navigate("/verification");
+            }else{
+              toast.error(response.data.message);
+            }
+            
+          }, 1500);
+        });
       } catch (err) {
         console.log(err.response ? err.response.data : err.message);
-        dispatch(signInFailure());
+        setLoading(false)
         toast.error(err.response ? err.response.data : err.message);
       }
     }

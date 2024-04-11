@@ -1,7 +1,9 @@
 import User from "../entities/User.js";
 import { generateToken } from "../utils/generateToken.js";
-
+import { sendOtpEmail,verfyOtp } from "./otpUseCase.js";
+import { generateOTP } from "../helper/otpGenarator.js";
 class UserUseCases {
+  
   async authUser(res, email, password) {
     const user = await User.findOne({ email: email });
     if (user) {
@@ -18,13 +20,31 @@ class UserUseCases {
       return { message: "User not found. Please check your credentials." };
     }
   }
-  async createUser({ name, email, mobile, password }) {
+
+  // Sending OTP to User's email
+  async sendOTP({email}){
     const existUser = await User.findOne({ email });
 
     //Checking if user account is existing or not
     if (existUser) {
-      return { message: "User already exist" };
+      return {success:false, message: "User already exist" };
+    }else{
+      const otp = generateOTP()
+      sendOtpEmail(email,otp)
+      return {success:true, message:`OTP sent to your email successfully.`}
     }
+  }
+
+  async verfyOTP(email,otp){
+    try{
+      return verfyOtp(email,otp);  
+    }catch(err){
+      return {success:false,message:'OTP verification failed', err:err.message}
+    }
+  }
+
+
+  async createUser( name, email, mobile, password ) {
 
     const newUser = await new User({
       name,
@@ -34,7 +54,7 @@ class UserUseCases {
     });
 
     await newUser.save();
-    return { message: "User created successfully" };
+    return {success:true, message: "Registration completed successfully. Please proceed to login." };
   }
 
   async googlAuth(res,{ name, email }) {

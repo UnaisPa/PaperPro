@@ -24,15 +24,39 @@ const authUser = asyncHandler( async(req,res)=>{
 })
 
 
-//@desk      Register a new User
+//@desk      send otp to user
 //route      POST api/users/register
 //@access    Public
 
 const registerUser = asyncHandler( async (req,res) =>{
     try{
-        const newUser = await userUseCases.createUser(req.body);
-        console.log(newUser.message);
-        res.status(201).json(newUser.message);
+        const sendOtpEmail = await userUseCases.sendOTP(req.body);
+        //console.log(sendOtpEmail.message);
+        res.status(201).json(sendOtpEmail);
+    }catch(err){
+        res.status(500).json(err.message)
+    }
+}
+
+)
+//@desk      Verify otp and create new user
+//route      POST api/users/verify_otp
+//@access    Public
+
+const verfyOTP = expressAsyncHandler(async(req,res)=>{
+    try{
+        let {name,email,mobile,password,otp} = req.body
+        console.log(name,email,mobile,password,otp)
+
+        const verify = await userUseCases.verfyOTP(email,otp);
+        if(verify===true){
+            let newUser = await userUseCases.createUser(name,email,mobile,password);
+            res.status(200).json(newUser);
+        }else{
+            //console.log(verify)
+            //if verify variable is not true, then it returns error messages
+            res.status(400).json({success:false, message:verify.message})
+        }
     }catch(err){
         res.status(500).json(err.message)
     }
@@ -66,8 +90,9 @@ const logoutUser = expressAsyncHandler(async(req,res)=>{
     }
 })
 export {
-    registerUser,
     authUser,
+    registerUser,
+    verfyOTP,
     googleAuth,
-    logoutUser
+    logoutUser,
 };

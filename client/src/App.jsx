@@ -15,6 +15,7 @@ import Portfolio from "./pages/Portfolio";
 import News from "./pages/News";
 import Stocks from "./pages/Stocks";
 import { NotFound } from "./pages/NotFound";
+import OtpVerification from "./pages/OtpVerification";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>}/>
+            <Route path="/verification" element={<OtpVerification/>}/>
           </Route>
           <Route path="*" element={<NotFound/>}/> 
         </Routes>
