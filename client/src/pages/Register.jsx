@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { signInSuccess } from "../redux/tempUserSlice.js";
 import { useSelector, useDispatch } from "react-redux";
+import { changeToRegister,changeToVerification } from "../redux/condRenderSlice.js";
 import { useNavigate,Link } from "react-router-dom";
 import axios from "../axios.js";
 import { toast } from "react-toastify";
@@ -24,6 +25,7 @@ const Register = () => {
   const [loading ,setLoading] = useState(false);
 
   const handleChange = (e) => {
+    
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -41,7 +43,8 @@ const Register = () => {
             if(response.data.success){
               toast.success(response.data.message);
               dispatch(signInSuccess(formData));
-              navigate("/verification");
+              dispatch(changeToVerification())
+              //navigate("/verification");
             }else{
               toast.error(response.data.message);
             }

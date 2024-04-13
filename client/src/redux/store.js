@@ -3,8 +3,8 @@ import { persistReducer,persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./userSlice";
 import tempUserSlice from "./tempUserSlice";
-
-const rootReducer = combineReducers({user:userReducer,tempUser:tempUserSlice});
+import condRenderSlice from "./condRenderSlice";
+const rootReducer = combineReducers({user:userReducer,tempUser:tempUserSlice,condRender:condRenderSlice});
 const persistConfig = {
     key:'root',
     version:1,

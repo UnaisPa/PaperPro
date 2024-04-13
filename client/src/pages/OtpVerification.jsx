@@ -1,20 +1,49 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { changeToRegister } from '../redux/condRenderSlice.js';
 import { Link, useNavigate, } from "react-router-dom";
 import axios from "../axios.js";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { BiMobile } from 'react-icons/bi';
-
+import OtpTimer from "otp-timer";
 
 const OtpVerification = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [resend, setResend] = useState(false);
+    const [minutes, setMinutes] = useState(1);
+    const [seconds, setSeconds] = useState(0);
+
     const [inputs, setInputs] = useState(Array(6).fill(''));
     const inputRefs = useRef([]);
     const {currentUser} = useSelector((state)=>state.tempUser);
 
     useEffect(() => {
+        
+        const interval = setInterval(() => {
+            if (seconds > 0) {
+              setSeconds(seconds - 1);
+            }
+        
+            if (seconds === 0) {
+              if (minutes === 0) {
+                clearInterval(interval);
+              } else {
+                setSeconds(59);
+                setMinutes(minutes - 1);
+              }
+            }
+          }, 1000);
+        
+          return () => {
+            clearInterval(interval);
+          };
+    }, [seconds,resend]);
+
+    useEffect(()=>{
         inputRefs.current[0].focus();
-    }, []);
+    },[])
 
     const handleKeyDown = (e, index) => {
         if (
@@ -59,6 +88,9 @@ const OtpVerification = () => {
         if (!/^[0-9]{6}$/.test(text)) {
             return;
         }
+        const digits = text.split('');
+        setInputs(digits);
+        inputRefs.current[5].focus();
         
     };
 
@@ -81,10 +113,16 @@ const OtpVerification = () => {
                 otp:number
             }
             await axios.post("/users/verify_otp",data).then((response)=>{
-                if(response.success){
-                    toast.success(response.message);
+                //console.log(response.data)
+                if(response.data.success){
+                    toast.success(response.data.message);
+                    toast.info('Redirecting to Login Page!')
+                    setTimeout(()=>{
+                        setResend(false)
+                        navigate("/login");
+                    },1500)
                 }else{
-                    toast.error(response.message);
+                    toast.error(response.data.message);
                 }
             })
         }catch(err){
@@ -92,6 +130,27 @@ const OtpVerification = () => {
         }
         // Add your verification logic here
     };
+
+    const resendOtp = async (e)=>{
+        e.preventDefault();
+        setResend(true)
+        try{
+            await axios.post('/users/resend_otp',{email:currentUser.email}).then((response)=>{
+                if(response.data.success){
+                    toast.success(response.data.message);
+                    setMinutes(1);
+                    // dispatch(signInSuccess(formData));
+                    // dispatch(changeToVerification())
+                    
+                    
+                }else{
+                    toast.error(response.data.message);
+                }
+            })
+        }catch(err){
+            toast.error(err.response?err.response.data : err.message);
+        }
+    }
 
     return (
         <div className='max-w-md sm:mx-auto text-center mt-[27vh] sm:mt-[20vh] sm:bg-slate-600 sm:bg-opacity-15 mx-2 px-4 sm:px-8 py-10 rounded-xl shadow' >
@@ -122,6 +181,26 @@ const OtpVerification = () => {
                         Account
                     </button>
                 </div>
+                <div className="countdown-text mt-5">
+      {seconds > 0 || minutes > 0 ? (
+        <p className='text-xs text-slate-400' >
+          Time Remaining: {minutes < 10 ? `0${minutes}` : minutes}:
+          {seconds < 10 ? `0${seconds}` : seconds}
+        </p>
+      ) : (
+        <p className='text-xs text-slate-400' >Didn't recieve code?</p>
+      )}
+
+      <button onClick={resendOtp}
+        disabled={seconds > 0 || minutes > 0}
+        style={{
+          color: seconds > 0 || minutes > 0 ? "grey" : "#fff",
+        }}
+        
+      >
+        Resend OTP
+      </button>
+    </div>
             </form>
         </div>
     );

@@ -23,7 +23,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.4",
     "nodemailer": "^6.9.13",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "otp-timer": "^1.1.5"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

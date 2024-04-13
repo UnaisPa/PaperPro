@@ -16,8 +16,9 @@ import News from "./pages/News";
 import Stocks from "./pages/Stocks";
 import { NotFound } from "./pages/NotFound";
 import OtpVerification from "./pages/OtpVerification";
-
+import { useSelector, useDispatch } from "react-redux";
 function App() {
+  const {registerPage} = useSelector((state)=>state.condRender);
   return (
     <>
       <NextUIProvider>
@@ -33,8 +34,8 @@ function App() {
           </Route>
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />
-            <Route path="/register" element={<Register/>}/>
-            <Route path="/verification" element={<OtpVerification/>}/>
+            <Route path="/register" element={registerPage?<Register/>:<OtpVerification/>}/>
+            {/* <Route path="/verification" element={<OtpVerification/>}/> */}
           </Route>
           <Route path="*" element={<NotFound/>}/> 
         </Routes>

@@ -12,7 +12,8 @@ export default {
         primary: '#BEF264', // Green
         secondary: '#D6DFD4', // gray
         body: '#1E2530', // dark gray
-        hoverColor: '#acea42'
+        hoverColor: '#acea42',
+        boxSecondary: '#3C424D'
       },
     },
   },

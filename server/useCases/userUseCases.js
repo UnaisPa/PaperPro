@@ -37,7 +37,7 @@ class UserUseCases {
 
   async verfyOTP(email,otp){
     try{
-      return verfyOtp(email,otp);  
+     return await verfyOtp(email,otp);  
     }catch(err){
       return {success:false,message:'OTP verification failed', err:err.message}
     }

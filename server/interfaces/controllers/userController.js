@@ -53,9 +53,9 @@ const verfyOTP = expressAsyncHandler(async(req,res)=>{
             let newUser = await userUseCases.createUser(name,email,mobile,password);
             res.status(200).json(newUser);
         }else{
-            //console.log(verify)
+            console.log(verify.message)
             //if verify variable is not true, then it returns error messages
-            res.status(400).json({success:false, message:verify.message})
+            res.status(200).json({success:false, message:verify.message})
         }
     }catch(err){
         res.status(500).json(err.message)

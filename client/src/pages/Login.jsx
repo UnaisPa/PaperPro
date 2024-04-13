@@ -7,13 +7,16 @@ import axios from "../axios.js";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import GoogleBtn from "../components/GoogleBtn.jsx";
-
+import { changeToRegister,changeToVerification } from "../redux/condRenderSlice.js";
 const Login = () => {
   const initialState = {
     email: "",
     password: "",
   };
 
+  useEffect(()=>{
+    dispatch(changeToRegister())
+  },[])
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);

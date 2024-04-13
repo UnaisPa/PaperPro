@@ -14,7 +14,7 @@ async function verfyOtp(email,otp){
   const otpData = otpMap.get(email);
     if (!otpData || otpData.expirationTime < Date.now()) {
       //otpMap.delete(email);
-      //console.log('error')
+      console.log('error')
       return {message:"The OTP has expired. Please request a new OTP."}; // OTP is expired or not found
     }
     
