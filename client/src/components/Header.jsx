@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button } from "@nextui-org/react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { BiSolidUserCircle } from "react-icons/bi";
+import { useNavigate, useLocation} from "react-router-dom";
+import { BiSolidUserCircle } from "react-icons/bi"; 
 import {useSelector} from "react-redux"
 
 export default function Header() {
@@ -20,8 +20,8 @@ export default function Header() {
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
-        <NavbarBrand>
-          <h5 className='text-primary w-fit cursor-pointer md:pl-20 font-semibold text-2xl hover:text-[#a6d752]'>Paper pro</h5>
+        <NavbarBrand onClick={()=>history('/')} >
+           <h5 className='text-primary w-fit cursor-pointer md:pl-20 font-semibold text-2xl hover:text-[#a6d752]'>Paper pro</h5>
         </NavbarBrand>
       </NavbarContent>
 

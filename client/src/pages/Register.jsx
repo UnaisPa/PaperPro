@@ -10,7 +10,7 @@ import { ClipLoader } from "react-spinners";
 
 const Register = () => {
   const initialState = {
-    name: "",
+    name: "", 
     email: "",
     password: "",
     mobile: "",

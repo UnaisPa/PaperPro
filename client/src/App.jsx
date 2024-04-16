@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LandingPage from "./pages/LandingPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
@@ -19,6 +19,7 @@ import OtpVerification from "./pages/OtpVerification";
 import { useSelector, useDispatch } from "react-redux";
 function App() {
   const {registerPage} = useSelector((state)=>state.condRender);
+
   return (
     <>
       <NextUIProvider>
