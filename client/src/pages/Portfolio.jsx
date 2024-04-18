@@ -1,11 +1,12 @@
 import React from 'react'
 import Header from '../components/Header'
+import PostSkeleton from '../components/postSkeleton'
 
 const Portfolio = () => {
   return (
     <div>
         <Header/>
-        portfolio
+        <PostSkeleton/>
     </div>
   )
 }

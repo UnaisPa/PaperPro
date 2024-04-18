@@ -14,6 +14,7 @@
     width: calc(334% + 6.3px);
     height: 1000px;
     transform: rotateY(360deg);
+    /* color:  rgb(51, 58, 69); */
 }
 
 .custom-shape-divider-top-1712135298 .shape-fill {

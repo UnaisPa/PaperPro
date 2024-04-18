@@ -36,11 +36,11 @@ const userSchema = mongoose.Schema({
     },
     watchlist:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'watchlist'
+        ref:'Watchlist'
     },
     posts:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'post'
+        ref:'Post'
     }],
     createdAt:{
         type:Date,

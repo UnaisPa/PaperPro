@@ -3,12 +3,13 @@ import mongoose from "mongoose";
 const postSchema =  mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'user'
+        ref:'User'
     },
     content:{
         type:String,
         required:true
     },
+    mediaUrls:[String],
     likes:{
         type:Number
     },

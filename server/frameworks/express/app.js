@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
 import { errorHandler,notFound} from "../../interfaces/middlewares/errorMiddleware.js";
 import userRoutes from "../../interfaces/routes/userRoutes.js"
+import postRoutes from "../../interfaces/routes/postRoutes.js"
 const app = express();
 
 const port = process.env.PORT || 8000
@@ -21,7 +22,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
 
 //Routes
- app.use('/api/users',userRoutes)
+app.use('/api/users',userRoutes);
+app.use('/api/post',postRoutes);
 
 //Error handler middlewares
 app.use(notFound);
