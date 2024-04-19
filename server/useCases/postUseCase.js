@@ -29,6 +29,19 @@ class PostUseCase {
         const posts = await this.Post.find({hide:false}).populate('user')
         return posts
     }
+
+    async postAction(postId,action){
+        if(action=='like'){
+            await this.Post.findByIdAndUpdate(postId,{$inc:{likes:1}},{new:true});
+            //console.log('liked')
+            return {message:'liked'}
+        }else if(action=='dislike'){
+           
+            await this.Post.findByIdAndUpdate(postId,{$inc:{likes:-1}},{new:true});
+             //console.log('disliked');
+            return {message:'disliked'}
+        }
+    }
 }
 
 export default PostUseCase

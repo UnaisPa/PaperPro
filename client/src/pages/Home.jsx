@@ -49,7 +49,7 @@ const Home = () => {
                     </div>
                     <UploadForm open={open} setOpen={setOpen} />
 
-                    {posts.map((post,index) => (
+                    {posts.slice().reverse().map((post,index) => (
                         <React.Fragment key={post._id}>
                             {loading && index<3 ? <PostSkeleton /> : <MemoizedPost post={post} />}
                         </React.Fragment>

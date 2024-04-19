@@ -141,6 +141,7 @@ export default function UploadForm({ open, setOpen }) {
                     console.log(response.data);
                     dispatch(addPost(response.data.post))
                     toast.success(response?.data.message)
+                    handleClose()
                 }).catch((err)=>{
                     console.log(err)
                     toast.error(err.response? err.response.data:err.message);

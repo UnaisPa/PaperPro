@@ -16,10 +16,10 @@ const PostSkeleton = () => {
 
                     </div>
                     <div className="my-2">
-                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='mt-3.5' variant="rounded" width={true} height={10} />
-                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='mt-2.5' variant="rounded" width={true} height={10} />
-                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='my-2.5 bg-slate-700' variant="rounded" width={true} height={10} />
-                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='mt-8 ' variant="rounded" width={true} height={189} />
+                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='mt-3.5' variant="rounded" height={10} />
+                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='mt-2.5' variant="rounded"  height={10} />
+                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='my-2.5 bg-slate-700' variant="rounded"  height={10} />
+                        <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} className='mt-8 ' variant="rounded"  height={189} />
                     </div>
                     <div className="flex">
                         <div className="flex hover:text-slate-100 cursor-pointer">

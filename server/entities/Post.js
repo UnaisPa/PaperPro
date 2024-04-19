@@ -11,7 +11,8 @@ const postSchema =  mongoose.Schema({
     },
     mediaUrls:[String],
     likes:{
-        type:Number
+        type:Number,
+        default:0
     },
     comments:[{
         type:mongoose.Schema.Types.ObjectId,
