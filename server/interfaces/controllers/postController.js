@@ -34,7 +34,7 @@ class PostController {
         try{
             const id = req.params.id;
             const {action} = req.body
-            console.log(id,action);
+            //console.log(id,action);
             const postAction = await postUseCase.postAction(id,action);
             res.status(200).json(postAction)
         }catch(err){

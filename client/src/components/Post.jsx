@@ -6,6 +6,7 @@ import timeAgo from "../helper/timeAgo";
 import { toast } from "react-toastify";
 import axios from "../axios";
 import { isAction } from "redux";
+import Comments from "./Comments";
 const Post = ({ post }) => {
     const description = post.content
     const [like, setLike] = useState(false);
@@ -103,7 +104,7 @@ const Post = ({ post }) => {
                         </div>}
                     </div>
                     <div className="flex">
-                        <div className="flex hover:text-slate-100 cursor-pointer">
+                        <div className="flex hover:text-slate-100 mt-4 cursor-pointer">
                             {localStorage.getItem('like' + post._id) ? (
                                 <GoHeartFill
                                     onClick={isDislike}
@@ -115,10 +116,11 @@ const Post = ({ post }) => {
                             )}
                             <p className="text-[0.86rem] mx-1">{likeCount}</p>
                         </div>
-                        <div className="flex ml-4 hover:text-slate-100 cursor-pointer">
+                        {/* <div className="flex ml-4 hover:text-slate-100 cursor-pointer">
                             <TbMessage size={18} />
                             <p className="text[0.86rem] mx-1">23</p>
-                        </div>
+                        </div> */}
+                        <Comments/>
                     </div>
                 </div>
             </div>
