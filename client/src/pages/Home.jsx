@@ -11,6 +11,7 @@ import PostSkeleton from '../components/postSkeleton'
 const Home = () => {
     const MemoizedPost = React.memo(Post);
     const [loading, setLoading] = useState(false)
+    const [page, setPage] = useState(1);
 
     const { posts } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const Home = () => {
     useEffect(() => {
         getAllPosts();
     }, [])
+
+
 
     const getAllPosts = async () => {
         setLoading(true);
@@ -34,9 +37,26 @@ const Home = () => {
         }).finally(() => {
             setTimeout(() => {
                 setLoading(false);
-            },500);
+            }, 500);
         })
     }
+
+    const handleScroll = () => {
+        if (
+            window.innerHeight + document.documentElement.scrollTop ===
+            document.documentElement.offsetHeight
+        ) {
+            
+            setPage((prevPage) => prevPage + 1);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const [open, setOpen] = React.useState(false);
     return (
@@ -49,9 +69,9 @@ const Home = () => {
                     </div>
                     <UploadForm open={open} setOpen={setOpen} />
 
-                    {posts.slice().reverse().map((post,index) => (
+                    {posts.slice().reverse().map((post, index) => (
                         <React.Fragment key={post._id}>
-                            {loading && index<3 ? <PostSkeleton /> : <MemoizedPost post={post} />}
+                            {loading && index < 3 ? <PostSkeleton /> : <MemoizedPost post={post} />}
                         </React.Fragment>
                     ))}
                 </div>

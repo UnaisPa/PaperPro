@@ -60,6 +60,10 @@ const Post = ({ post }) => {
         setLikeCount(likeCount-1);
         handlePostAction('dislike')
     }
+
+    
+    
+    
     return (
         <>
             <div className="md:w-2/5 sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]">
@@ -120,7 +124,7 @@ const Post = ({ post }) => {
                             <TbMessage size={18} />
                             <p className="text[0.86rem] mx-1">23</p>
                         </div> */}
-                        <Comments/>
+                        <Comments post={post} />
                     </div>
                 </div>
             </div>

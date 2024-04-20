@@ -15,12 +15,12 @@ const postSlice = createSlice({
             state.posts = [...state.posts,action.payload]
         },
         updatePost:(state,action)=>{
-            state.posts = state.posts.map((post)=>{
-                post.id === action.payload.id ? action.payload : post
-            })
+            state.posts = state.posts.map((post) =>
+                post._id === action.payload._id ? action.payload : post
+            );   
         },
         deletePost:(state,action)=>{
-            state.posts = state.posts.filter(post => post.id !== action.payload)
+            state.posts = state.posts.filter(post => post._id !== action.payload)
         }
     }
 })

@@ -1,8 +1,9 @@
 import PostUseCase from "../../useCases/postUseCase.js";
 import Post from "../../entities/Post.js";
 import User from "../../entities/User.js";
+import Comment from "../../entities/Comment.js";
 //instance for PostUseCase
-const postUseCase = new PostUseCase(Post,User)
+const postUseCase = new PostUseCase(Post,User,Comment)
 
 class PostController {
     async createPost(req,res) {
@@ -37,6 +38,20 @@ class PostController {
             //console.log(id,action);
             const postAction = await postUseCase.postAction(id,action);
             res.status(200).json(postAction)
+        }catch(err){
+            res.status(500).json({ message: err.message });
+        }
+    }
+
+    //@desk      To add a comment
+    //route      POST api/post/add_comment
+    //@access    Private
+    async createComment(req,res){
+        try{
+            const updatedPost = await postUseCase.createComment(req.body);
+            if(updatedPost){
+                res.status(201).json({success:true,post:updatedPost,message:'Your comment has been added successfully!'})
+            }
         }catch(err){
             res.status(500).json({ message: err.message });
         }

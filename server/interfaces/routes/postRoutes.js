@@ -14,4 +14,6 @@ router.get('/get_all_posts',protect,postController.getAllPosts);
 //Like or Dislike
 router.put('/post_action/:id',protect,postController.postAction);
 
+router.post('/add_comment',protect,postController.createComment)
+
 export default router
