@@ -21,6 +21,9 @@ export default function Comments({ post }) {
 
     const [text, setText] = useState('')
     const [loading, setLoading] = useState(false)
+    const [limit,setLimit] = useState(2)
+    const limitedCommentsArray = post.comments.slice(0,limit)
+
     //handle comment submit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -79,7 +82,7 @@ export default function Comments({ post }) {
                         {loading ? <div style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)' }}><MoonLoader color='white' size={18} /></div> : <button onClick={handleSubmit} type='submit' className='mr-6 sm:mr-0 text-blue-300' style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)' }}>Post</button>}
                     </form>
                     {post.comments.length > 0 ? <><p className='text-slate-400 mb-2 mt-4 opacity-70' >{post.comments.length} Comments</p>
-                        {post.comments.slice().reverse().map((comment, index) => (
+                        {limitedCommentsArray.map((comment, index) => (
                             <React.Fragment key={comment._id} >
 
                                 <div className='flex text-slate-300' >
@@ -94,6 +97,7 @@ export default function Comments({ post }) {
 
                             </React.Fragment>
                         ))}
+                        {limitedCommentsArray.length<post.comments.length &&<p className='cursor-pointer text-slate-400 mt-3 text-center ' onClick={()=>setLimit((prevPage) => prevPage + 4)} >Show more</p>}
                     </> : <p className='text-center text-slate-300 opacity-65 mt-4' >No comments yet.</p>}
                 </AccordionDetails>
             </Accordion>

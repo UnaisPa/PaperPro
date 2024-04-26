@@ -57,6 +57,12 @@ class UserUseCases {
     return {success:true, message: "Registration completed successfully. Please proceed to login." };
   }
 
+  async getUserById(userId){
+    const user = await User.findById(userId);
+    //console.log(user)
+    return user
+  }
+
   async googlAuth(res,{ name, email }) {
     const user = await User.findOne({ email });
     if (user) {

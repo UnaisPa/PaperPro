@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import UserUseCases from "../../useCases/userUseCases.js";
 import expressAsyncHandler from "express-async-handler";
+import mongoose from 'mongoose';
 const userUseCases = new UserUseCases
 
 
@@ -78,6 +79,22 @@ const googleAuth = expressAsyncHandler(async(req,res)=>{
     }
 })
 
+//@desk      Getting User profile
+//route      GET api/users/profile
+//@access    Private
+const getUserProfile = expressAsyncHandler(async(req,res)=>{
+    try{
+        // const userId = new mongoose.Types.ObjectId('661ca75291543d8591172d63')
+        const userId = req.query.userId || 'no'
+        console.log(userId);
+        const user = await userUseCases.getUserById(userId);
+        res.json({success:true,user});
+    }catch(err){
+        res.status(500).json(err.message)
+    }
+})
+
+
 //@desk      User logout
 //route      POST api/users/logout
 //@access    Private
@@ -95,4 +112,5 @@ export {
     verfyOTP,
     googleAuth,
     logoutUser,
+    getUserProfile
 };

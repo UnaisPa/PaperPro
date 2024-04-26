@@ -12,7 +12,7 @@ const postSlice = createSlice({
             state.posts = action.payload
         },
         addPost:(state,action)=>{
-            state.posts = [...state.posts,action.payload]
+            state.posts = [action.payload, ...state.posts]
         },
         updatePost:(state,action)=>{
             state.posts = state.posts.map((post) =>

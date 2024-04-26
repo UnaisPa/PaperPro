@@ -35,8 +35,8 @@ class PostUseCase {
         }
     }
 
-    async getAllPosts() {
-        const posts = await this.Post.find({ hide: false }).populate('user').populate({
+    async getAllPosts(limit) {
+        const posts = await this.Post.find({ hide: false }).sort({ createdAt: -1 }).limit(limit).populate('user').populate({
             path: 'comments',
             populate: {
                 path: 'user',
@@ -45,6 +45,7 @@ class PostUseCase {
         })
         return posts
     }
+
 
     async postAction(postId, action) {
         if (action == 'like') {

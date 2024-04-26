@@ -21,11 +21,15 @@ class PostController {
     //@access    Private
     async getAllPosts(req,res){
         try{
-            const posts = await postUseCase.getAllPosts();
-            res.status(200).json({success:true,posts:posts});
+            const page = parseInt(req.query.page) || 1;
+            const limits = 3
+            const limit = page * limits
+            const posts = await postUseCase.getAllPosts(limit);
+            const count = await Post.countDocuments({hide:false})
+            res.status(200).json({success:true,posts:posts,count});
         }catch(err){
             res.status(500).json({ message: err.message });
-        }
+        }  
     }
 
     //@desk      Like/dislike a post

@@ -12,24 +12,27 @@ const Home = () => {
     const MemoizedPost = React.memo(Post);
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1);
+    const [count, setCount] = useState(0);
 
     const { posts } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
 
     useEffect(() => {
         getAllPosts();
-    }, [])
+        //console.log(page)
+    }, [page])
 
 
 
     const getAllPosts = async () => {
         setLoading(true);
-        await axios.get('/post/get_all_posts', {
+        await axios.get(`/post/get_all_posts?page=${page}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
         }).then((response) => {
             dispatch(setPosts(response.data.posts))
+            setCount(response.data.count);
             //console.log(response.data)
         }).catch((err) => {
             console.log(err.response ? err.response.data : err.message);
@@ -40,23 +43,6 @@ const Home = () => {
             }, 500);
         })
     }
-
-    const handleScroll = () => {
-        if (
-            window.innerHeight + document.documentElement.scrollTop ===
-            document.documentElement.offsetHeight
-        ) {
-            
-            setPage((prevPage) => prevPage + 1);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
     const [open, setOpen] = React.useState(false);
     return (
@@ -69,11 +55,12 @@ const Home = () => {
                     </div>
                     <UploadForm open={open} setOpen={setOpen} />
 
-                    {posts.slice().reverse().map((post, index) => (
+                    {posts.map((post, index) => (
                         <React.Fragment key={post._id}>
                             {loading && index < 3 ? <PostSkeleton /> : <MemoizedPost post={post} />}
                         </React.Fragment>
                     ))}
+                    {posts.length<count && <h5 className='border border-primary rounded-lg text-slate-300 text-center text-xs py-1.5 w-28 my-5 mx-auto cursor-pointer hover:text-slate-200' onClick={()=>setPage((prevPage) => prevPage + 1)} >Show more</h5>}
                 </div>
             </section>
         </div>

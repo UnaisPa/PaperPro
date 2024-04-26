@@ -22,25 +22,31 @@ body{
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+*/
+
+
+/* For WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+::-webkit-scrollbar-thumb {
+  background-color: #495261;
+  border-radius: 4px;
 }
 
-.card {
-  padding: 2em;
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4a5568;
 }
 
-.read-the-docs {
-  color: #888;
-} */
+::-webkit-scrollbar-track {
+  background-color: #232a36;
+}
+
+/* For Firefox */
+/* Note: Firefox does not support styling the scrollbar directly,
+   but you can style the thumb */
+/* Use the following CSS, but note that it may not work perfectly in Firefox */
+/* scrollbar-width: thin;
+scrollbar-color: #718096 #cbd5e0; */
+
