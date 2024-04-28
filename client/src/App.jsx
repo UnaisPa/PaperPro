@@ -19,13 +19,14 @@ import OtpVerification from "./pages/OtpVerification";
 import { useSelector, useDispatch } from "react-redux";
 function App() {
   const {registerPage} = useSelector((state)=>state.condRender);
-
+  const token = localStorage.getItem('jwt');
   return (
     <>
       <NextUIProvider>
       <Router>
         <ToastContainer theme="dark" />
         <Routes>
+            {/* <Route path="/" element={token?<Home/>:<LandingPage/>} /> */}
           <Route path="" element={<PrivateRoute/>}>
             <Route exact path="/" element={<Home/>} />
             <Route path="/portfolio" element={<Portfolio/>}/>

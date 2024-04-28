@@ -1,68 +1,69 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import React, { useState } from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css'; // Import the styles
+import Post from './Post';
+import PostSkeleton from './postSkeleton';
+import { CiStickyNote } from "react-icons/ci";
+import UploadForm from '../components/UploadForm'
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
+const TabsComponent = ({ user, loading }) => {
+    const [open, setOpen] = useState(false)
+    return (
+        <div className="flex justify-center mt-8 w-full px-2">
+            <div className="w-full">
+                <Tabs >
+                    <TabList className="flex">
+                        <Tab
+                            className="px-4 py-2 cursor-pointer text-slate-300 focus:outline-none"
+                            selectedClassName="font-semibold border-opacity-85  border-b-primary  border-b-2 text-white"
+                        >
+                            Posts
+                        </Tab>
+                        <Tab
+                            className="px-4 py-2 cursor-pointer text-slate-300 focus:outline-none"
+                            selectedClassName="font-semibold border-opacity-85  border-b-primary  border-b-2 text-white"
+                        >
+                            Trades
+                        </Tab>
+                        <Tab
+                            className="px-4 py-2 cursor-pointer text-slate-300 focus:outline-none"
+                            selectedClassName="font-semibold border-opacity-85  border-b-primary  border-b-2 text-white"
+                        >
+                            Stocks
+                        </Tab>
+                    </TabList>
+                    <TabPanel>
+                        <div className="mt-4 p-1 border-t border-slate-500 rounded-md w-full">
+                            {user.posts.length > 0 ? user.posts.map((post, index) => (
+                                <React.Fragment key={post._id}>
+                                    {loading && index < 3 ? <PostSkeleton fromProfile={true} /> : <Post fromProfile={true} post={post} />}
+                                </React.Fragment>
+                            )) : (
+                                <div className='text-center my-9' >
+                                    <CiStickyNote className='mx-auto' size={40} />
+                                    <h3 className='text-xl text-slate-100 mt-1' > Oops! Nothing yet?</h3>
+                                    <p className='opacity-75 text-xs mt-2' >Today is the day to take a leap forward</p>
+                                    <button onClick={()=>setOpen(true)}
+                                        className="rounded-lg text-xs bg-primary px-3.5 py-2.5 font-semibold text-black shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5"
+                                    >
+                                        Add a Post
+                                    </button>
+                                </div>
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
+                            )}
+                            <UploadForm open={open} setOpen={setOpen} />
+                        </div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="mt-4 p-4 bg-gray-100">Content for Tab 2</div>
+                    </TabPanel>
+                    <TabPanel>
+                        <div className="mt-4 p-4 bg-gray-100">Content for Tab 3</div>
+                    </TabPanel>
+                </Tabs>
+            </div>
+        </div>
+    );
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs className=' ' textColor='inherit' indicatorColor='primary' value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab  label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel>
-    </Box>
-  );
-}
+export default TabsComponent;

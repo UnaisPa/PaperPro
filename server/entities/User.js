@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -38,9 +38,9 @@ const userSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Watchlist'
     },
-    posts:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Post'
+    posts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post' // This tells Mongoose to use the Post model for population
     }],
     createdAt:{
         type:Date,

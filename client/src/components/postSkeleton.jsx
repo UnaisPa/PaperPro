@@ -1,11 +1,11 @@
 import React from 'react'
 import Skeleton from '@mui/material/Skeleton';
 
-const PostSkeleton = () => {
+const PostSkeleton = ({fromProfile}) => {
     return (
         <>
 
-            <div className="md:w-2/5 sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-opacity-50 bg-[#2f3238]">
+            <div className={`${fromProfile?`md:w-3/5`:`md:w-2/5`} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-opacity-50 bg-[#2f3238]`}>
                 <div className="text-slate-300 py-4 px-6">
                     <div className=" flex">
                         <Skeleton sx={{ bgcolor: '  rgb(51, 58, 69)' }} variant="circular" width={42} height={42} />

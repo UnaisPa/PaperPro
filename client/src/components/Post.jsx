@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import axios from "../axios";
 import { isAction } from "redux";
 import Comments from "./Comments";
-const Post = ({ post }) => {
+const Post = ({ post,fromProfile }) => {
     const description = post.content
     const [like, setLike] = useState(false);
     const [postAction,setPostAction] = useState('initialValue');
@@ -66,7 +66,7 @@ const Post = ({ post }) => {
     
     return (
         <>
-            <div className="md:w-2/5 sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]">
+            <div className={`${fromProfile? `md:w-3/5`:'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
                 <div className="text-slate-300 py-4 px-6">
                     <div className=" flex">
 
