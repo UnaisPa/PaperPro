@@ -1,7 +1,7 @@
 import PostUseCase from "../../useCases/postUseCase.js";
-import Post from "../../entities/Post.js";
-import User from "../../entities/User.js";
-import Comment from "../../entities/Comment.js";
+import Post from "../../frameworks/mongoDb/database/entities/Post.js";
+import User from "../../frameworks/mongoDb/database/entities/User.js";
+import Comment from "../../frameworks/mongoDb/database/entities/Comment.js";
 //instance for PostUseCase
 const postUseCase = new PostUseCase(Post,User,Comment)
 

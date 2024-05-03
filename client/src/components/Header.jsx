@@ -45,7 +45,7 @@ export default function Header() {
           </Button> */}
         <div onClick={()=>history('/profile')} className="flex cursor-pointer">
             
-            {currentUser?.profilePicture?<img src={currentUser?.profilePicture}/>:<BiSolidUserCircle size={30} className="text-primary" />}
+            {currentUser?.profilePicture?<img className="w-8 h-8 rounded-full" src={currentUser?.profilePicture}/>:<BiSolidUserCircle size={30} className="text-primary" />}
             <p className="text-secondary text-sm ml-2 my-auto">{currentUser.name.split(' ')[0]}</p>
                
         </div>

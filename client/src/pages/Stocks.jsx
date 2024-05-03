@@ -1,11 +1,12 @@
 import React from 'react'
 import Header from '../components/Header'
+import TradingViewWidget from '../components/ListedStocks'
 
 const Stocks = () => {
   return (
-    <div>
+    <div className='min-full' >
         <Header/>
-    Stocks
+        <TradingViewWidget/>
     </div>
   )
 }

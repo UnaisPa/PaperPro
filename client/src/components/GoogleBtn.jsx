@@ -29,6 +29,7 @@ const GoogleBtn = () => {
       console.log(response.data);
       setTimeout(() => {
         toast.success("Login Success");
+        console.log(response.data)
         dispatch(signInSuccess(response.data.user));
         localStorage.setItem("jwt", response.data.token);
         navigate("/");

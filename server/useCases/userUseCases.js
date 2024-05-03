@@ -1,6 +1,6 @@
-import User from "../entities/User.js";
+import User from "../frameworks/mongoDb/database/entities/User.js";
 import { generateToken } from "../utils/generateToken.js";
-import { sendOtpEmail, verfyOtp } from "./otpUseCase.js";
+import { sendOtpEmail, verfyOtp } from "../helper/otpHelper.js";
 import { generateOTP } from "../helper/otpGenarator.js";
 class UserUseCases {
 
@@ -106,6 +106,23 @@ class UserUseCases {
                 return { user: rest, token };
             }
         }
+    }
+
+    async updateFollowList({currentUserId, userId}) {
+        // Assuming 'User' is your Mongoose model for users
+        const currentUser = await User.findById(currentUserId);
+        const userToFollow = await User.findById(userId);
+
+        // Update the 'followers' array of the user being followed
+        userToFollow.followers.push(currentUser._id);
+        await userToFollow.save();
+
+        // Update the 'following' array of the current user
+        currentUser.following.push(userToFollow._id);
+        await currentUser.save();
+
+        return currentUser
+
     }
 }
 

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import User from "../../entities/User.js"
+import User from "../../frameworks/mongoDb/database/entities/User.js"
 import expressAsyncHandler from "express-async-handler"
 
 export const protect = expressAsyncHandler(async(req,res,next)=>{

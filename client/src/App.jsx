@@ -17,6 +17,7 @@ import Stocks from "./pages/Stocks";
 import { NotFound } from "./pages/NotFound";
 import OtpVerification from "./pages/OtpVerification";
 import { useSelector, useDispatch } from "react-redux";
+import UserProfile from "./pages/UserProfile";
 function App() {
   const {registerPage} = useSelector((state)=>state.condRender);
   const token = localStorage.getItem('jwt');
@@ -33,6 +34,7 @@ function App() {
             <Route path="/news" element={<News/>}/>
             <Route path="/stocks" element={<Stocks/>}/>
             <Route path="/profile" element={<Profile/>}/>
+            <Route path="/user/:id" element={<UserProfile/>} />
           </Route>
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />

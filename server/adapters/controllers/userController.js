@@ -84,9 +84,9 @@ const googleAuth = expressAsyncHandler(async(req,res)=>{
 //@access    Private
 const getUserProfile = expressAsyncHandler(async(req,res)=>{
     try{
-        // const userId = new mongoose.Types.ObjectId('661ca75291543d8591172d63')
+         //const userId = new mongoose.Types.ObjectId('661ca75291543d8591172d63')
         const userId = req.query.userId || 'no'
-        //console.log(userId);
+        console.log(userId);
         const user = await userUseCases.getUserById(userId);
         res.json({success:true,user});
     }catch(err){
@@ -106,11 +106,26 @@ const logoutUser = expressAsyncHandler(async(req,res)=>{
         res.status(500).json(err.message)
     }
 })
+
+
+//@desk      To update following list, and other user's followers list;
+//route      PUT api/users/update_follow_list
+//@access    Private
+const updateFollowList = expressAsyncHandler(async(req,res)=>{
+    try{
+        const updateUser = await userUseCases.updateFollowList(req.body);
+        res.status(201).json({status:'success',user:updateUser});
+    }catch(err){
+        res.status(500).json(err.message)
+    }
+})
+
 export {
     authUser,
     registerUser,
     verfyOTP,
     googleAuth,
     logoutUser,
-    getUserProfile
-};
+    getUserProfile,
+    updateFollowList
+};  

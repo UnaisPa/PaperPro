@@ -7,7 +7,12 @@ import { toast } from "react-toastify";
 import axios from "../axios";
 import { isAction } from "redux";
 import Comments from "./Comments";
+import { useSelector,useDispatch } from "react-redux";
+import { useNavigate, } from "react-router-dom";
+
 const Post = ({ post,fromProfile }) => {
+    const navigate = useNavigate()
+    const {currentUser} = useSelector((state)=>state.user);
     const description = post.content
     const [like, setLike] = useState(false);
     const [postAction,setPostAction] = useState('initialValue');
@@ -17,7 +22,7 @@ const Post = ({ post,fromProfile }) => {
 
     const toggleExpanded = () => {
         //console.log(expanded);
-        setExpanded(!expanded);
+        setExpanded(!expanded); 
     };
 
     //Handle like or Dislike actions
@@ -61,23 +66,41 @@ const Post = ({ post,fromProfile }) => {
         handlePostAction('dislike')
     }
 
+    //When User clicks follow button,
+    const handleFollowBtn = async() =>{
+        const currentUserId = currentUser._id;
+        const userId = post.user._id
+
+        // console.log(currentUserId);
+        // console.log(userId);
+        await axios.put('/users/update_follow_list',{currentUserId,userId},{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        }).then((response)=>{
+            console.log(response.data);
+        })
+    }    
     
-    
-    
+    const onProfileClick = () =>{
+        
+        navigate(`/user/${post.user._id}`)
+    }
+
     return (
         <>
             <div className={`${fromProfile? `md:w-3/5`:'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
                 <div className="text-slate-300 py-4 px-6">
                     <div className=" flex">
 
-                        {post?.user.profilePicture ? <img className="w-10 h-10 rounded-full" src={post?.user.profilePicture} /> : <div className=" bg-primary w-10 h-10 rounded-full text-center text-black text-xl pt-1.5 font-semibold">{post?.user.name.split('')[0].toUpperCase()}</div>}
+                        {post?.user.profilePicture ? <img onClick={onProfileClick} className="w-10 h-10 rounded-full" src={post?.user.profilePicture} /> : <div onClick={onProfileClick} className=" bg-primary w-10 h-10 rounded-full text-center text-black text-xl pt-1.5 font-semibold">{post?.user.name.split('')[0].toUpperCase()}</div>}
                         <div className="ml-2">
-                            <h5 className="text-lg font-semibold text-white">
+                            <h5 onClick={onProfileClick} className="text-lg font-semibold text-white">
                                 {post?.user.name}
                             </h5>
                             <p className="text-[0.65rem]">{timeAgo(post.createdAt)}</p>
                         </div>
-                        <p className="ml-2 mt-2 text-blue-300">Follow</p>
+                        <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>
                         <BiDotsVerticalRounded size={20} className="ml-auto mt-2 mr-2" />
                     </div>
                     <div className="my-2 mt-4">
