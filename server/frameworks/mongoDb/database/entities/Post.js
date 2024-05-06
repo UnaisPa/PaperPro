@@ -10,10 +10,10 @@ const postSchema = new mongoose.Schema({
         required:true
     },
     mediaUrls:[String],
-    likes:{
-        type:Number,
-        default:0
-    },
+    likes:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }],
     comments:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Comment'

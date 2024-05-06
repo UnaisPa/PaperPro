@@ -11,7 +11,8 @@ import {
 
     createCommentRepo,
     createPostRepo,
-    getAllPostsRepo
+    getAllPostsRepo,
+    postActionRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -26,7 +27,8 @@ import {
 
     createCommentUseCase,
     createPostUseCase,
-    getAllPostsUseCase
+    getAllPostsUseCase,
+    postActionUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -42,7 +44,8 @@ const useCase = {
 
     createCommentUseCase,
     createPostUseCase,
-    getAllPostsUseCase
+    getAllPostsUseCase,
+    postActionUseCase
 
 }
 
@@ -57,7 +60,8 @@ const repository = {
 
     createCommentRepo,
     createPostRepo,
-    getAllPostsRepo
+    getAllPostsRepo,
+    postActionRepo
 }
 
 export default { useCase, repository } 

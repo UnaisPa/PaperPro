@@ -6,6 +6,7 @@ const updateFollowListRepo = async (currentUserId, userId) => {
 
     // Update the 'followers' array of the user being followed
     userToFollow.followers.push(currentUser._id);
+    //console.log(userToFollow.followers[0]);
     await userToFollow.save();
 
     // Update the 'following' array of the current user

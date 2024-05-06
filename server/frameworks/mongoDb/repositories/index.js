@@ -9,7 +9,7 @@ import {
 }
     from "./userRepo/index.js"
 
-import {createCommentRepo,createPostRepo,getAllPostsRepo} from "./postRepo/index.js"
+import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo} from "./postRepo/index.js"
 
 export {
     authUserRepo,
@@ -21,5 +21,6 @@ export {
 
     createCommentRepo,
     createPostRepo,
-    getAllPostsRepo
+    getAllPostsRepo,
+    postActionRepo
 }

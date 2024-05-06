@@ -51,7 +51,7 @@ const Profile = () => {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
         }).then((response) => {
-            //dispatch(setProfile(response.data.user));
+            dispatch(setProfile(response.data.user));
             console.log(response.data)
         }).catch((err) => {
             console.log(err)
@@ -81,11 +81,11 @@ const Profile = () => {
                             </div>
                             <div className='mt-3  text-center' >
                                 <h5 className=''>Followers</h5>
-                                <h6 className='font-bold'>{currentUser.followers}</h6>
+                                <h6 className='font-bold'>{currentUser.followers.length}</h6>
                             </div>
                             <div className='mt-3  text-center' >
                                 <h5 className=''>Following</h5>
-                                <h6 className='font-bold'>{currentUser.following}</h6>
+                                <h6 className='font-bold'>{currentUser.following.length}</h6>
                             </div>
                         </div>
                         <div className='m-5' >

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { TbMessage } from "react-icons/tb";
@@ -7,100 +7,130 @@ import { toast } from "react-toastify";
 import axios from "../axios";
 import { isAction } from "redux";
 import Comments from "./Comments";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, } from "react-router-dom";
+import { updateFollowList } from "../redux/userSlice";
 
-const Post = ({ post,fromProfile }) => {
+const Post = ({ post, fromProfile }) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {currentUser} = useSelector((state)=>state.user);
+    const { currentUser } = useSelector((state) => state.user);
     const description = post.content
     const [like, setLike] = useState(false);
-    const [postAction,setPostAction] = useState('initialValue');
-    const [likeCount,setLikeCount] = useState(post?.likes);
+    const [postAction, setPostAction] = useState('initialValue');
+    const [likeCount, setLikeCount] = useState(post?.likes.length);
     const [expanded, setExpanded] = useState(false);
+
+    const [checkAlreadyFollow, setCheckAlreadyFollow] = useState(false)
+    const [checkAlreadyLike,setCheckAlreadyLike] = useState(false)
 
 
     const toggleExpanded = () => {
         //console.log(expanded);
-        setExpanded(!expanded); 
+        setExpanded(!expanded);
     };
 
+    const checkAlreadyLiked = () => {
+        const currentUserId = currentUser._id
+        return post.likes.includes(currentUserId);
+    }
+
     //Handle like or Dislike actions
-    const handlePostAction = async(action) =>{
-        //let action = like;
-        
-        
-        //console.log(action);
+    const handlePostAction = async (action) => {
         const id = post._id
-        try{
-            await axios.put(`/post/post_action/${id}`,{action:action},{
+        const userId = currentUser._id
+        try {
+            await axios.put(`/post/post_action/${id}`, { action: action, userId }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('jwt')}`
                 }
-            }).then((response)=>{
+            }).then((response) => {
+                //action=='like'?setCheckAlreadyLike(true):setCheckAlreadyLike(false);
                 console.log(response.data);
             })
-        }catch(err){
+        } catch (err) {
             toast.error(err.response?.message || err.message)
         }
     }
 
     //run if liked
-    const isLike = ()=>{
-        setLike(true);
-        localStorage.setItem('like' + post._id, 'liked');
-        //const likeState = localStorage.getItem('like' + post._id);
-        
-        //setPostAction('like')
-        setLikeCount(likeCount+1)
+    const isLike = () => {
+        //setLike(true);
+        setCheckAlreadyLike(true)
+        setLikeCount(likeCount + 1)
         handlePostAction('like')
     }
 
     //run if disLiked
-    const isDislike = ()=>{
-        setLike(false);
-        //setPostAction('dislike');
-        localStorage.removeItem('like' + post._id, 'liked');
-        
-        setLikeCount(likeCount-1);
+    const isDislike = () => {
+        //setLike(false)
+        setCheckAlreadyLike(false)
+        setLikeCount(likeCount - 1);
         handlePostAction('dislike')
     }
 
     //When User clicks follow button,
-    const handleFollowBtn = async() =>{
+    const handleFollowBtn = async () => {
         const currentUserId = currentUser._id;
         const userId = post.user._id
 
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list',{currentUserId,userId},{
+        await axios.put('/users/update_follow_list', { currentUserId, userId }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
-        }).then((response)=>{
+        }).then((response) => {
+            dispatch(updateFollowList(userId))
+            setCheckAlreadyFollow(true);
+            toast.success(`Now you are following ${post.user.name}`)
             console.log(response.data);
+        }).catch((err) => {
+            toast.error(err.message)
+            console.log(err)
         })
-    }    
-    
-    const onProfileClick = () =>{
-        
+    }
+
+    const onProfileClick = () => {
         navigate(`/user/${post.user._id}`)
     }
 
+    //Checking user is already following !
+    const checkAlreadyFollowing = () => {
+        const userId = post.user._id
+        const currentUserId = currentUser._id
+
+        if (userId === currentUserId) {
+            return true;
+        }
+
+        return currentUser.following.includes(userId);
+    }
+
+    useEffect(() => {
+        const check = checkAlreadyFollowing()
+        setCheckAlreadyFollow(check);
+
+        const checkLike = checkAlreadyLiked()
+        setCheckAlreadyLike(checkLike)
+        //console.log(check)
+
+    }, [])
+
     return (
         <>
-            <div className={`${fromProfile? `md:w-3/5`:'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
+            <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
                 <div className="text-slate-300 py-4 px-6">
                     <div className=" flex">
 
-                        {post?.user.profilePicture ? <img onClick={onProfileClick} className="w-10 h-10 rounded-full" src={post?.user.profilePicture} /> : <div onClick={onProfileClick} className=" bg-primary w-10 h-10 rounded-full text-center text-black text-xl pt-1.5 font-semibold">{post?.user.name.split('')[0].toUpperCase()}</div>}
+                        {post?.user.profilePicture ? <img onClick={onProfileClick} className="w-10 cursor-pointer h-10 rounded-full" src={post?.user.profilePicture} /> : <div onClick={onProfileClick} className=" bg-primary w-10 h-10 rounded-full cursor-pointer text-center text-black text-xl pt-1.5 font-semibold">{post?.user.name.split('')[0].toUpperCase()}</div>}
                         <div className="ml-2">
-                            <h5 onClick={onProfileClick} className="text-lg font-semibold text-white">
+                            <h5 onClick={onProfileClick} className="text-lg cursor-pointer font-semibold text-white">
                                 {post?.user.name}
                             </h5>
                             <p className="text-[0.65rem]">{timeAgo(post.createdAt)}</p>
                         </div>
-                        <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>
+                        {!checkAlreadyFollow && <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>}
                         <BiDotsVerticalRounded size={20} className="ml-auto mt-2 mr-2" />
                     </div>
                     <div className="my-2 mt-4">
@@ -132,7 +162,7 @@ const Post = ({ post,fromProfile }) => {
                     </div>
                     <div className="flex">
                         <div className="flex hover:text-slate-100 mt-4 cursor-pointer">
-                            {localStorage.getItem('like' + post._id) ? (
+                            {checkAlreadyLike ? (
                                 <GoHeartFill
                                     onClick={isDislike}
                                     color="#FF5757"
