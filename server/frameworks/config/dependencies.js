@@ -5,14 +5,15 @@ import {
     createUserRepo,
     getUserByIdRepo,
     googleAuthRepo,
-    sendOtpRepo,
+    sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo,
 
     createCommentRepo,
     createPostRepo,
     getAllPostsRepo,
-    postActionRepo
+    postActionRepo,
+    deletePostRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -28,7 +29,8 @@ import {
     createCommentUseCase,
     createPostUseCase,
     getAllPostsUseCase,
-    postActionUseCase
+    postActionUseCase,
+    deletePostUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -45,7 +47,8 @@ const useCase = {
     createCommentUseCase,
     createPostUseCase,
     getAllPostsUseCase,
-    postActionUseCase
+    postActionUseCase,
+    deletePostUseCase
 
 }
 
@@ -54,14 +57,15 @@ const repository = {
     createUserRepo,
     getUserByIdRepo,
     googleAuthRepo,
-    sendOtpRepo,
+    sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo,
 
     createCommentRepo,
     createPostRepo,
     getAllPostsRepo,
-    postActionRepo
+    postActionRepo,
+    deletePostRepo
 }
 
 export default { useCase, repository } 

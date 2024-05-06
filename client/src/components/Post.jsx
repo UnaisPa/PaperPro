@@ -10,6 +10,7 @@ import Comments from "./Comments";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, } from "react-router-dom";
 import { updateFollowList } from "../redux/userSlice";
+import TailwindDialog from "./TailwindDialog";
 
 const Post = ({ post, fromProfile }) => {
     const dispatch = useDispatch()
@@ -22,7 +23,14 @@ const Post = ({ post, fromProfile }) => {
     const [expanded, setExpanded] = useState(false);
 
     const [checkAlreadyFollow, setCheckAlreadyFollow] = useState(false)
-    const [checkAlreadyLike,setCheckAlreadyLike] = useState(false)
+    const [checkAlreadyLike, setCheckAlreadyLike] = useState(false)
+
+    //for dropdown button
+    const [isOpen,setIsOpen] = useState(false);
+
+    //for warning dialog
+    const [OpendDialog,setOpendDialog] = useState(false);
+
 
 
     const toggleExpanded = () => {
@@ -107,6 +115,8 @@ const Post = ({ post, fromProfile }) => {
         return currentUser.following.includes(userId);
     }
 
+    
+
     useEffect(() => {
         const check = checkAlreadyFollowing()
         setCheckAlreadyFollow(check);
@@ -131,8 +141,54 @@ const Post = ({ post, fromProfile }) => {
                             <p className="text-[0.65rem]">{timeAgo(post.createdAt)}</p>
                         </div>
                         {!checkAlreadyFollow && <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>}
-                        <BiDotsVerticalRounded size={20} className="ml-auto mt-2 mr-2" />
+                        
+                        <div className="relative z-10 inline-block text-left ml-auto mt-2 mr-2">
+                            <button
+                                className="inline-flex justify-end  hover:bg-gray-600 rounded-full p-1 bg- text-sm font-medium text-slate-300 hover:text-gray-200 focus:outline-non"
+                                onClick={() => setIsOpen(!isOpen)}
+                            >
+                                <BiDotsVerticalRounded size={20} className="" />
+                                
+                            </button>
+
+                            {isOpen && (
+                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                        <p
+                                            onClick={() => { setOrderType('Intraday'), setIsOpen(false) }}
+                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            Intraday
+                                        </p>
+                                        <p
+                                            onClick={() => { setOrderType('Tomorrow'), setIsOpen(false) }}
+                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            Tomorrow
+                                        </p>
+                                        <p
+                                            onClick={() => { setOrderType('One Week'), setIsOpen(false) }}
+                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            One Week
+                                        </p>
+                                        {post.user._id===currentUser._id&&<p
+                                            onClick={() =>{setOpendDialog(true),setIsOpen(false)}}
+                                            className="block px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            Delete
+                                        </p>}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
+                    {OpendDialog&&<TailwindDialog type={'delete_post'} title={'Delete Post'}  description={`Are you sure you want to Delete this post !`} setOpendDialog={setOpendDialog} post={post} />}
+
                     <div className="my-2 mt-4">
                         <pre style={{ fontFamily: '"Poppins", sans-serif', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}
                             className={`${expanded

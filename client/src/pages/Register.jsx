@@ -52,7 +52,7 @@ const Register = () => {
           }, 1500);
         });
       } catch (err) {
-        console.log(err.response ? err.response.data : err.message);
+        console.log(err);
         setLoading(false)
         toast.error(err.response ? err.response.data : err.message);
       }

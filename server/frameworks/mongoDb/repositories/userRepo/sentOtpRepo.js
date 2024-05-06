@@ -2,7 +2,7 @@ import User from "../../database/entities/User.js";
 import { generateOTP } from "../../../../helper/otpGenarator.js";
 import { sendOtpEmail } from "../../../../helper/otpHelper.js";
 
-const sendOtpRepo = async ( email ) => {
+const sentOtpRepo = async ( email ) => {
     try {
         const existUser = await User.findOne({ email });
 
@@ -19,4 +19,4 @@ const sendOtpRepo = async ( email ) => {
     }
 }
 
-export default sendOtpRepo
+export default sentOtpRepo

@@ -8,9 +8,10 @@ import { setProfile } from '../redux/userSlice.js';
 import TabsComponent from '../components/Tabs.jsx';
 import { LuClipboardEdit } from "react-icons/lu";
 import { CiSaveDown1 } from "react-icons/ci";
-
+import { setPosts } from '../redux/postSlice.js';
 const Profile = () => {
     const { currentUser } = useSelector((state) => state.user);
+    const {posts} = useSelector((state)=>state.posts)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
 
@@ -52,6 +53,7 @@ const Profile = () => {
             }
         }).then((response) => {
             dispatch(setProfile(response.data.user));
+            dispatch(setPosts(response.data.user.posts))
             console.log(response.data)
         }).catch((err) => {
             console.log(err)
@@ -77,7 +79,7 @@ const Profile = () => {
                             </div>
                             <div className='mt-3  text-center' >
                                 <h5 >Posts</h5>
-                                <h6 className='font-bold'>{currentUser.posts.length}</h6>
+                                <h6 className='font-bold'>{posts.length}</h6>
                             </div>
                             <div className='mt-3  text-center' >
                                 <h5 className=''>Followers</h5>

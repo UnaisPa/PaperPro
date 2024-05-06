@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom"
 import TabsComponent from '../components/Tabs.jsx';
 import { useDispatch } from 'react-redux';
 import { setProfile } from '../redux/userSlice.js';
+import { setPosts } from '../redux/postSlice.js';
 import { MoonLoader, ScaleLoader } from 'react-spinners';
 import { RiUserFollowLine } from "react-icons/ri"
 import { useSelector } from 'react-redux';
@@ -15,6 +16,7 @@ const UserProfile = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
      const { currentUser } = useSelector((state) => state.user);
+     const {posts} = useSelector((state)=>state.posts);
     const [user,setUser] = useState(null)
     const [loading, setLoading] = useState(false)
     const [checkAlreadyFollow,setCheckAlreadyFollow] = useState(false)
@@ -39,6 +41,7 @@ const UserProfile = () => {
         }).then((response) => {
             //dispatch(setProfile(response.data.user));
             setUser(response.data.user);
+            dispatch(setPosts(response.data.user.posts));
             console.log(response.data)
         }).catch((err) => {
             console.log(err)
@@ -60,6 +63,11 @@ const UserProfile = () => {
             }
         }).then((response)=>{
             //dispatch(updateFollowList(userId))
+            //const updatedUser = user.followers.push(currentUserId)
+            const updatedUser = { ...user, followers: [...user.followers, currentUserId] };
+            setUser(updatedUser);
+            console.log(updatedUser);
+            //setUser()
             setCheckAlreadyFollow(true);
             toast.success(`Now you are following ${user.name}`)
             //console.log(response.data);
@@ -142,7 +150,7 @@ const UserProfile = () => {
 
                     </div>
                 </div>
-                {OpendDialog&&<TailwindDialog user={user.name} setOpendDialog={setOpendDialog} />}
+                {OpendDialog&&<TailwindDialog type={'unfollow'} title={'Unfollow Account'}  description={`Are you sure you want to unfollow ${user.name} !`} setOpendDialog={setOpendDialog} />}
                 <div className=' sm:w-4/6 mx-auto mt-10 flex text-slate-300'>
 
                     <TabsComponent loading={loading} user={user} />

@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 import Post from './Post';
 import PostSkeleton from './postSkeleton';
 import { CiStickyNote } from "react-icons/ci";
 import UploadForm from '../components/UploadForm'
-
+import { useSelector,useDispatch } from 'react-redux';
+import { setPosts,deletePost,updatePost,addPost } from '../redux/postSlice';
 const TabsComponent = ({ user, loading }) => {
+    const {posts} = useSelector((state)=>state.posts);
+    //const [posts,setPosts] = useState(user.posts);
+
+    // const deletePost = async(postId)=>{
+    //     const updatedPosts = posts.filter(post =>post._id !==postId)
+    //     setPosts(updatedPosts)
+    //     // state.posts = state.posts.filter(post => post._id !== action.payload)
+    // }
+    const dispatch = useDispatch()
+    // useEffect(()=>{
+    //     dispatch(setPosts(user.posts))
+    // },[])
+
     const [open, setOpen] = useState(false)
     return (
         <div className="flex justify-center mt-8 w-full px-2">
@@ -34,7 +48,7 @@ const TabsComponent = ({ user, loading }) => {
                     </TabList>
                     <TabPanel>
                         <div className="mt-4 p-1 border-t border-slate-500 rounded-md w-full">
-                            {user.posts.length > 0 ? user.posts.map((post, index) => (
+                            {posts.length > 0 ? posts.slice().reverse().map((post, index) => (
                                 <React.Fragment key={post._id}>
                                     {loading && index < 3 ? <PostSkeleton fromProfile={true} /> : <Post fromProfile={true} post={post} />}
                                 </React.Fragment>

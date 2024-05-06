@@ -22,7 +22,8 @@ const userSlice = createSlice({
         },
         updateFollowList:(state,action) =>{
             state.currentUser.following = [...state.currentUser.following,action.payload]
-        }
+        },
+    
     }
 })
 

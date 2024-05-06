@@ -2,7 +2,7 @@ import authUserRepo from './authUserRepo.js';
 import createUserRepo from './createUserRepo.js';
 import getUserByIdRepo from './getUserByIdRepo.js';
 import googleAuthRepo from './googleAuthRepo.js';
-import sendOtpRepo from './sentOtpRepo.js';
+import sentOtpRepo from './sentOtpRepo.js';
 import updateFollowListRepo from './updateFollowListRepo.js';
 import verifyOTPRepo from './verifyOtpRepo.js';
 export {
@@ -10,7 +10,7 @@ export {
     createUserRepo,
     getUserByIdRepo,
     googleAuthRepo,
-    sendOtpRepo,
+    sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo
 }

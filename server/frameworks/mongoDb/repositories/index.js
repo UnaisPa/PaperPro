@@ -3,24 +3,26 @@ import {
     createUserRepo,
     getUserByIdRepo,
     googleAuthRepo,
-    sendOtpRepo,
+    sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo
 }
     from "./userRepo/index.js"
 
-import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo} from "./postRepo/index.js"
+import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePostRepo} from "./postRepo/index.js"
 
 export {
     authUserRepo,
     createUserRepo,
     getUserByIdRepo,
-    googleAuthRepo, sendOtpRepo,
+    googleAuthRepo, sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo,
 
     createCommentRepo,
     createPostRepo,
     getAllPostsRepo,
-    postActionRepo
+    postActionRepo,
+    deletePostRepo
+    
 }
