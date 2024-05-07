@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -27,9 +28,10 @@ export default function UploadForm({ open, setOpen }) {
     const {currentUser} = useSelector((state)=>state.user)
 
     const fileInputRef = React.useRef(null);
+    const fileInputRefVid = React.useRef(null)
     const [loading, setLoading] = React.useState(false);
     const [images, setImages] = React.useState([])
-    const [videos, setVideos] = React.useState([])
+    const [videos, setVideos] = useState([])
     const [mediaUrls,setMediaUrls] = React.useState([])
     const [content, setcontent] = React.useState('');
 
@@ -39,7 +41,13 @@ export default function UploadForm({ open, setOpen }) {
         fileInputRef.current.click();
     }
 
+    const handleVidButtonClick = (e) =>{
+        e.preventDefault()
+        fileInputRefVid.current.click()
+    }
+
     const [prevImgages, setPrevImages] = React.useState([])
+    const [prevVideos, setPrevVideos] = React.useState([])
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -47,16 +55,21 @@ export default function UploadForm({ open, setOpen }) {
         //images
         if (file.type.startsWith('image')) {
             setImages((prev) => [...prev, file]);
+            const imageUrl = URL.createObjectURL(file);
+            setPrevImages((prev) => [...prev, imageUrl])
             
         }
         //videos
         else if (file.type.startsWith('video')) {
+            console.log('vidosss')
             setVideos((prev) => [...prev, file])
+            const videoUrl = URL.createObjectURL(file);
+            setPrevVideos((prev)=>[...prev,videoUrl]);
         }
 
         // Do something with the selected file
-        const imageUrl = URL.createObjectURL(file);
-        setPrevImages((prev) => [...prev, imageUrl])
+        // const imageUrl = URL.createObjectURL(file);
+        // setPrevImages((prev) => [...prev, imageUrl])
 
     }
 
@@ -70,7 +83,7 @@ export default function UploadForm({ open, setOpen }) {
         
         try {
             const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-            const uploadPreset = type === 'image' ? 'images_preset' : 'videos_preset';
+            const uploadPreset = type === 'image' ? 'images_preset' : 'video_preset';
             const resourceType = type
 
             const uploadedUrls = [];
@@ -83,6 +96,7 @@ export default function UploadForm({ open, setOpen }) {
                 const api = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
 
                 const response = await Axios.post(api, data);
+                console.log(response)
                 const { secure_url } = response.data;
                 uploadedUrls.push(secure_url);
             }
@@ -115,7 +129,7 @@ export default function UploadForm({ open, setOpen }) {
 
                 //Upload images
                 let mediaUrl = [];
-                if (images) {
+                if (images[0]) {
                     console.log(images)
                     const imageUrls = await uploadFile(images, 'image');
                         console.log(imageUrls);
@@ -125,11 +139,14 @@ export default function UploadForm({ open, setOpen }) {
 
                 //Upload videos
                 if (videos) {
+                    console.log(videos)
                     const videoUrls = await uploadFile(videos, 'video');
-                    mediaUrl = [...mediaUrl,...videoUrls];
+                    //mediaUrl = [...mediaUrl,...videoUrls];
+                    mediaUrl = videoUrls
+                    console.log('success',mediaUrl);
                     //setMediaUrls((prev)=>[...prev,...videoUrls]) 
                 }
-                console.log(mediaUrl)
+                //console.log(mediaUrl)
                 //Api call to server for save post details
                 setcontent(content.replace(/\r?\n/g, '\n'))
                 const userId = currentUser?._id
@@ -167,10 +184,15 @@ export default function UploadForm({ open, setOpen }) {
 
     //remove image from form
     const removeImage = (index) => {
-        console.log()
+        
         setPrevImages(prevImgages.filter((_, i) => i !== index));
         setImages(images.filter((_, i) => i !== index));
 
+    }
+
+    const removeVideo = (index) =>{
+        setPrevVideos(prevVideos.filter((_, i) => i !== index));
+        setVideos(videos.filter((_, i) => i !== index));
     }
 
     return (
@@ -228,6 +250,17 @@ export default function UploadForm({ open, setOpen }) {
                                         )
                                     })
                                 )}
+                                {prevVideos && (
+                                    prevVideos.map((vdo, index) => {
+                                        return (
+                                            <>
+                                                <video src={vdo} className="w-12 h-12" />
+                                                <Badge key={index} onClick={() => removeVideo(index)} className="cursor-pointer" badgeContent={<IoClose />} color="primary"></Badge>
+
+                                            </>
+                                        )
+                                    })
+                                )}
                             </div>
                         </DialogContent>
 
@@ -244,10 +277,19 @@ export default function UploadForm({ open, setOpen }) {
                                     style={{ display: "none" }}
                                     onChange={handleFileChange}
                                 />
+                                <input
+                                    multiple
+                                    name="image"
+                                    ref={fileInputRefVid}
+                                    type="file"
+                                    accept="video/*"
+                                    style={{ display: "none" }}
+                                    onChange={handleFileChange}
+                                />
                                 <IconButton onClick={handleImgButtonCLick} className="" variant="" color="inherit">
                                     <IoImageOutline className="" size={20} />
                                 </IconButton>
-                                <IconButton className="" variant="" color="inherit">
+                                <IconButton className="" onClick={handleVidButtonClick} variant="" color="inherit">
                                     <IoVideocamOutline className="mr-auto" size={20} />
                                 </IconButton>
                                 <div className="ml-auto mr-3 flex" >

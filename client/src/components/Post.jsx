@@ -127,6 +127,19 @@ const Post = ({ post, fromProfile }) => {
 
     }, [])
 
+    const [isPlaying, setIsPlaying] = useState(false);
+    const videoRef = useRef(null);
+
+    const togglePlayPause = () => {
+        if (videoRef.current.paused) {
+            videoRef.current.play();
+            setIsPlaying(true);
+        } else {
+            videoRef.current.pause();
+            setIsPlaying(false);
+        }
+    };
+
     return (
         <>
             <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
@@ -213,7 +226,8 @@ const Post = ({ post, fromProfile }) => {
                             {expanded ? "Read Less" : "Read More"}
                         </button>)}
                         {post?.mediaUrls[0] && <div className=" mt-2 h-48 rounded-md">
-                            <img className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />
+                            {post?.mediaUrls[0].includes('/image/upload/')&&<img className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />}
+                            {post?.mediaUrls[0].includes('/video/upload/')&&<video onClick={togglePlayPause} ref={videoRef} className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />}
                         </div>}
                     </div>
                     <div className="flex">
