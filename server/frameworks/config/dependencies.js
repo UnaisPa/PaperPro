@@ -13,7 +13,8 @@ import {
     createPostRepo,
     getAllPostsRepo,
     postActionRepo,
-    deletePostRepo
+    deletePostRepo,
+    savePostRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -30,7 +31,8 @@ import {
     createPostUseCase,
     getAllPostsUseCase,
     postActionUseCase,
-    deletePostUseCase
+    deletePostUseCase,
+    savePostUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -48,7 +50,8 @@ const useCase = {
     createPostUseCase,
     getAllPostsUseCase,
     postActionUseCase,
-    deletePostUseCase
+    deletePostUseCase,
+    savePostUseCase
 
 }
 
@@ -65,7 +68,8 @@ const repository = {
     createPostRepo,
     getAllPostsRepo,
     postActionRepo,
-    deletePostRepo
+    deletePostRepo,
+    savePostRepo
 }
 
 export default { useCase, repository } 

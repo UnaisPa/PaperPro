@@ -6,7 +6,7 @@ import postController from "../controllers/postController/index.js";
 
 export default (dependencies) => {
 
-    const {createCommentController,createPostController,getAllPostsController,postActionController,deletePostController} = postController(dependencies)
+    const {createCommentController,createPostController,getAllPostsController,postActionController,deletePostController,savePostController} = postController(dependencies)
 
     const router = express.Router();
 
@@ -15,8 +15,9 @@ export default (dependencies) => {
     router.get('/get_all_posts', protect, getAllPostsController); 
     //Like or Dislike
     router.put('/post_action/:id', protect,postActionController);
-    router.post('/add_comment', protect, createCommentController)
-    router.delete('/delete_post/:id',protect,deletePostController)
+    router.post('/add_comment', protect, createCommentController);
+    router.delete('/delete_post/:id',protect,deletePostController);
+    router.post('/save_post',protect,savePostController)
 
     return router
 }

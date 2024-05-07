@@ -11,6 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, } from "react-router-dom";
 import { updateFollowList } from "../redux/userSlice";
 import TailwindDialog from "./TailwindDialog";
+import { MdOutlineSaveAlt } from "react-icons/md";
+import { GoReport } from "react-icons/go";
+import { FaRegShareSquare } from "react-icons/fa";
 
 const Post = ({ post, fromProfile }) => {
     const dispatch = useDispatch()
@@ -140,6 +143,27 @@ const Post = ({ post, fromProfile }) => {
         }
     };
 
+    // Handling save post
+    const handleSavePost = async()=>{
+        const userId = currentUser._id;
+        const postId = post._id
+        await axios.post('/post/save_post',{userId,postId}, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        }).then((response)=>{
+            if(response.data.success){
+                toast.success(response.data.message);
+            }else{
+                toast.error(response.data.message);
+            }
+            console.log(response.data)
+            setIsOpen(false);
+        }).catch((err)=>[
+            toast.error(err.response?.data || err.message)
+        ])
+    }
+
     return (
         <>
             <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
@@ -168,32 +192,38 @@ const Post = ({ post, fromProfile }) => {
                                 <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <p
-                                            onClick={() => { setOrderType('Intraday'), setIsOpen(false) }}
-                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            onClick={handleSavePost}
+                                            className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
-                                            Intraday
+                                            <MdOutlineSaveAlt className="mr-2" size={18} />Save Post
                                         </p>
                                         <p
                                             onClick={() => { setOrderType('Tomorrow'), setIsOpen(false) }}
-                                            className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
-                                            Tomorrow
+                                            <FaRegShareSquare size={18} className="mr-2" />Share Post
                                         </p>
-                                        <p
+                                        {/* <p
                                             onClick={() => { setOrderType('One Week'), setIsOpen(false) }}
                                             className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
                                             One Week
-                                        </p>
-                                        {post.user._id===currentUser._id&&<p
+                                        </p> */}
+                                        {post.user._id===currentUser._id?<p
                                             onClick={() =>{setOpendDialog(true),setIsOpen(false)}}
                                             className="block px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
                                             Delete
+                                        </p>:<p
+                                            onClick={() => { setOrderType('One Week'), setIsOpen(false) }}
+                                            className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            <GoReport size={18} className="mr-2" />Report Post
                                         </p>}
                                     </div>
                                 </div>
