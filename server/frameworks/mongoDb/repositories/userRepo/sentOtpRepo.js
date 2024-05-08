@@ -4,8 +4,8 @@ import { sendOtpEmail } from "../../../../helper/otpHelper.js";
 
 const sentOtpRepo = async ( email ) => {
     try {
-        const existUser = await User.findOne({ email });
-
+        const existUser = await User.findOne({ email:email });
+        console.log(email)
         //Checking if user account is existing or not
         if (existUser) {
             return { success: false, message: "User already exist" };

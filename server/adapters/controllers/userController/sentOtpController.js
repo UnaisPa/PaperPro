@@ -7,7 +7,7 @@ export default (dependencies) =>{
         try{
             const response = await sentOtpUseCase(dependencies).executeFunction(email);
             //console.log(sendOtpEmail.message);
-            if(response.success){
+            if(response){
             res.status(201).json(response);
             }
         }catch(err){
