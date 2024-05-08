@@ -11,6 +11,7 @@ import { MoonLoader, ScaleLoader } from 'react-spinners';
 import { RiUserFollowLine } from "react-icons/ri"
 import { useSelector } from 'react-redux';
 import TailwindDialog from '../components/TailwindDialog.jsx';
+import { updateFollowList } from '../redux/userSlice.js';
 
 const UserProfile = () => {
     const dispatch = useDispatch()
@@ -54,15 +55,15 @@ const UserProfile = () => {
     const handleFollowBtn = async() =>{
         const currentUserId = currentUser._id;
         const userId = id
-
+        const action = 'follow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list',{currentUserId,userId},{
+        await axios.put('/users/update_follow_list',{currentUserId,userId,action},{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
         }).then((response)=>{
-            //dispatch(updateFollowList(userId))
+            dispatch(updateFollowList(userId))
             //const updatedUser = user.followers.push(currentUserId)
             const updatedUser = { ...user, followers: [...user.followers, currentUserId] };
             setUser(updatedUser);
@@ -134,7 +135,7 @@ const UserProfile = () => {
                             <div className=' mt-3 flex text-slate-300'>
                                 {checkAlreadyFollow?<button onClick={()=>setOpendDialog(true)}
                                     className="rounded-lg flex text-xs border border-slate-400 mr-3  px-3.5 py-2 hover:text-blue-200  text-blue-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
-                                    <RiUserFollowLine size={13} className='mr-2' /> Following
+                                    <RiUserFollowLine  size={13} className='mr-2' /> Following
                                 </button>:<button onClick={handleFollowBtn}
                                     className=" rounded-lg flex text-xs border border-slate-400 mr-3  px-3.5 py-2 hover:text-blue-200  text-blue-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                      Follow
@@ -150,7 +151,7 @@ const UserProfile = () => {
 
                     </div>
                 </div>
-                {OpendDialog&&<TailwindDialog type={'unfollow'} title={'Unfollow Account'}  description={`Are you sure you want to unfollow ${user.name} !`} setOpendDialog={setOpendDialog} />}
+                {OpendDialog&&<TailwindDialog setCheckAlreadyFollow={setCheckAlreadyFollow} user={user} setUser={setUser} type={'unfollow'} title={'Unfollow Account'}  description={`Are you sure you want to unfollow ${user.name} !`} setOpendDialog={setOpendDialog} />}
                 <div className=' sm:w-4/6 mx-auto mt-10 flex text-slate-300'>
 
                     <TabsComponent loading={loading} user={user} />

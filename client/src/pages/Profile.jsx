@@ -102,7 +102,7 @@ const Profile = () => {
                                     className="rounded-lg flex text-xs border border-slate-400 mr-3  px-3.5 py-2.5 hover:text-slate-50  text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                     <LuClipboardEdit size={13} className='mr-2' /> Edit Profile
                                 </button>
-                                <button
+                                <button onClick={()=>navigate('/saved_posts')}
                                     className="rounded-lg flex text-xs border border-slate-400 px-3.5 py-2.5 hover:text-slate-50   text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                    <CiSaveDown1 size={16} className='mr-2' /> Saved Posts
                                 </button>

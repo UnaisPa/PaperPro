@@ -8,7 +8,7 @@ import {
     verifyOtpUseCase
 } from "./userUseCases/index.js"
 
-import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase} from "./postUseCases/index.js"
+import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase} from "./postUseCases/index.js"
 
 export {
     authUserUseCase,
@@ -24,5 +24,6 @@ export {
     getAllPostsUseCase,
     postActionUseCase,
     deletePostUseCase,
-    savePostUseCase
+    savePostUseCase,
+    getSavedPostsUseCase
 }

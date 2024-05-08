@@ -14,8 +14,9 @@ import TailwindDialog from "./TailwindDialog";
 import { MdOutlineSaveAlt } from "react-icons/md";
 import { GoReport } from "react-icons/go";
 import { FaRegShareSquare } from "react-icons/fa";
+import { LuThumbsDown } from "react-icons/lu";
 
-const Post = ({ post, fromProfile }) => {
+const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { currentUser } = useSelector((state) => state.user);
@@ -84,10 +85,10 @@ const Post = ({ post, fromProfile }) => {
     const handleFollowBtn = async () => {
         const currentUserId = currentUser._id;
         const userId = post.user._id
-
+        const action = 'follow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list', { currentUserId, userId }, {
+        await axios.put('/users/update_follow_list', { currentUserId, userId,action }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
@@ -120,6 +121,8 @@ const Post = ({ post, fromProfile }) => {
 
     
 
+    
+
     useEffect(() => {
         const check = checkAlreadyFollowing()
         setCheckAlreadyFollow(check);
@@ -143,15 +146,19 @@ const Post = ({ post, fromProfile }) => {
         }
     };
 
-    // Handling save post
-    const handleSavePost = async()=>{
+    // Handling save post and Unsave post by action (save/unsave)
+    const handleSavePost = async(action)=>{
         const userId = currentUser._id;
         const postId = post._id
-        await axios.post('/post/save_post',{userId,postId}, {
+        
+        await axios.post('/post/save_post',{userId,postId,action}, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
         }).then((response)=>{
+            if(action==='unsave'){
+                handleUnsave(postId)
+            }
             if(response.data.success){
                 toast.success(response.data.message);
             }else{
@@ -162,6 +169,12 @@ const Post = ({ post, fromProfile }) => {
         }).catch((err)=>[
             toast.error(err.response?.data || err.message)
         ])
+    }
+
+    //handle unsave post from frontend;
+    const handleUnsave = (id) =>{
+        const updatedSavedPosts = savedPosts.filter(post =>post._id !==id);
+        setSavedPosts(updatedSavedPosts);
     }
 
     return (
@@ -192,11 +205,13 @@ const Post = ({ post, fromProfile }) => {
                                 <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <p
-                                            onClick={handleSavePost}
+                                            onClick={fromSavedPosts?()=>handleSavePost('unsave'):()=> handleSavePost('save')}
                                             className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
-                                            <MdOutlineSaveAlt className="mr-2" size={18} />Save Post
+                                           {fromSavedPosts?
+                                           <><LuThumbsDown className="mr-2" size={18} />Unsave </>:
+                                           <><MdOutlineSaveAlt className="mr-2" size={18} />Save Post</>}
                                         </p>
                                         <p
                                             onClick={() => { setOrderType('Tomorrow'), setIsOpen(false) }}

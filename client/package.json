@@ -20,6 +20,7 @@
     "@nextui-org/react": "^2.2.10",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
+    "chart.js": "^4.4.2",
     "cloudinary-react": "^1.8.1",
     "dotenv": "^16.4.5",
     "firebase": "^10.10.0",

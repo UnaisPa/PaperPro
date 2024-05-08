@@ -7,8 +7,9 @@ import { deletePost } from '../redux/postSlice';
 import axios from "../axios.js"
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
+import { updateFollowList,updateFollowListMinus } from '../redux/userSlice.js';
 
-export default function TailwindDialog({ type, title, description, setOpendDialog, post }) {
+export default function TailwindDialog({setCheckAlreadyFollow,user,setUser, type, title, description, setOpendDialog, post }) {
     const dispatch = useDispatch()
     const {currentUser} = useSelector((state)=>state.user);
     const [open, setOpen] = useState(true)
@@ -41,6 +42,37 @@ export default function TailwindDialog({ type, title, description, setOpendDialo
     // useEffect(()=>{
     //     console.log(post._id)
     // })
+
+    const handleFollowBtn = async() =>{
+        const currentUserId = currentUser._id;
+        const userId = user._id
+        const action = 'unfollow'
+        // console.log(currentUserId);
+        // console.log(userId);
+        await axios.put('/users/update_follow_list',{currentUserId,userId,action},{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        }).then((response)=>{
+            dispatch(updateFollowListMinus(userId))
+            setOpen(false);
+            //dispatch(updateFollowList(userId))
+            //const updatedUser = user.followers.push(currentUserId)
+            const updatedUser = {
+                ...user,
+                followers: user.followers.filter(userId => userId !== currentUserId)
+            };
+            setUser(updatedUser);
+            console.log(updatedUser);
+            //setUser()
+            setCheckAlreadyFollow(false);
+            toast.success(`Now you are Unfollowed ${user.name}`)
+            //console.log(response.data);
+        }).catch((err)=>{
+            toast.error(err.message)
+            console.log(err)
+        })
+    } 
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -93,7 +125,8 @@ export default function TailwindDialog({ type, title, description, setOpendDialo
                                         type="button"
                                         disabled={loading}
                                         className={`inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 sm:ml-3 sm:w-auto`}
-                                        onClick={type=='delete_post'?deleteUserPost:''}
+                                        onClick={type=='delete_post'?deleteUserPost:handleFollowBtn}
+                                        
                                     >
                                         {loading?<><ClipLoader className='mx-2' color='white' size={20} /> Loading..</> : title.split(" ")[0]}
                                     </button>
