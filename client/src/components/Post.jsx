@@ -5,6 +5,7 @@ import { TbMessage } from "react-icons/tb";
 import timeAgo from "../helper/timeAgo";
 import { toast } from "react-toastify";
 import axios from "../axios";
+import axiosInstance from "../axiosInstance.js"
 import { isAction } from "redux";
 import Comments from "./Comments";
 import { useSelector, useDispatch } from "react-redux";
@@ -151,11 +152,7 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
         const userId = currentUser._id;
         const postId = post._id
         
-        await axios.post('/post/save_post',{userId,postId,action}, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response)=>{
+        await axiosInstance.post('/post/save_post',{userId,postId,action}).then((response)=>{
             if(action==='unsave'){
                 handleUnsave(postId)
             }
@@ -166,9 +163,10 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
             }
             console.log(response.data)
             setIsOpen(false);
-        }).catch((err)=>[
-            toast.error(err.response?.data || err.message)
-        ])
+        }).catch((err)=>{
+            toast.error(err.response?.data.message || err.message)
+            console.log(err)
+        })
     }
 
     //handle unsave post from frontend;

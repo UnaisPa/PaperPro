@@ -9,12 +9,12 @@ import TabsComponent from '../components/Tabs.jsx';
 import { LuClipboardEdit } from "react-icons/lu";
 import { CiSaveDown1 } from "react-icons/ci";
 import { setPosts } from '../redux/postSlice.js';
+import EditModel from "../components/Dialogs/EditDialog.jsx"
 const Profile = () => {
     const { currentUser } = useSelector((state) => state.user);
     const {posts} = useSelector((state)=>state.posts)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
-
     const navigate = useNavigate()
     const handleLogout = (e) => {
         e.preventDefault();
@@ -98,10 +98,11 @@ const Profile = () => {
                                 <p className='text-sm mt-1 opacity-80' > you can use the scrollbar variants in your CSS. However, it's important to note that this feature is experimental and may not work perfectly in all browsers. Here's how you can style the default scrollbar with Tailwind CSS</p>
                             </div>
                             <div className=' mt-3 flex text-slate-300'>
-                                <button
+                                <button onClick={()=>navigate('/edit_profile')}
                                     className="rounded-lg flex text-xs border border-slate-400 mr-3  px-3.5 py-2.5 hover:text-slate-50  text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                     <LuClipboardEdit size={13} className='mr-2' /> Edit Profile
                                 </button>
+                                
                                 <button onClick={()=>navigate('/saved_posts')}
                                     className="rounded-lg flex text-xs border border-slate-400 px-3.5 py-2.5 hover:text-slate-50   text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                    <CiSaveDown1 size={16} className='mr-2' /> Saved Posts

@@ -21,6 +21,7 @@ import UserProfile from "./pages/UserProfile";
 import StockData from "./pages/StockData";
 import SavedPosts from "./pages/SavedPosts";
 import TradingLoader from "./components/loader/TradingLoader";
+import EditProfile from "./pages/EditProfile";
 function App() {
   const {registerPage} = useSelector((state)=>state.condRender);
   const token = localStorage.getItem('jwt');
@@ -40,6 +41,7 @@ function App() {
             <Route path="/user/:id" element={<UserProfile/>} />
             <Route path="/symbol/:stock" element={<StockData/>} />
             <Route path="/saved_posts" element={<SavedPosts/>} />
+            <Route path="/edit_profile" element={<EditProfile/>} />
           </Route>
           <Route path="" element={<HideRoutes/>}>
             <Route path="/login" element={<Login/>} />
