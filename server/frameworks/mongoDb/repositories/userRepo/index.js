@@ -5,6 +5,8 @@ import googleAuthRepo from './googleAuthRepo.js';
 import sentOtpRepo from './sentOtpRepo.js';
 import updateFollowListRepo from './updateFollowListRepo.js';
 import verifyOTPRepo from './verifyOtpRepo.js';
+import editProfileRepo from './editProfileRepo.js';
+import checkUsernameRepo from './checkUsernameRepo.js';
 export {
     authUserRepo,
     createUserRepo,
@@ -12,5 +14,8 @@ export {
     googleAuthRepo,
     sentOtpRepo,
     updateFollowListRepo,
-    verifyOTPRepo
+    verifyOTPRepo,
+    editProfileRepo,
+    checkUsernameRepo
+    
 }

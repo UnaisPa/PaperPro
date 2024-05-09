@@ -13,7 +13,9 @@ export default (dependencies) => {
         logoutUserController,
         registerUserController,
         sentOtpController,
-        updateFollowListController
+        updateFollowListController,
+        editProfileController,
+        checkUsernameController
     } = userController(dependencies)
 
 
@@ -27,6 +29,8 @@ export default (dependencies) => {
     router.get('/profile', protect, getUserByIdController)
     router.post('/logout', protect, logoutUserController)
     router.put('/update_follow_list', protect, updateFollowListController);
+    router.put('/edit_profile/:id',protect,editProfileController)
+    router.get('/check_username',protect,checkUsernameController);
     return router
 }
 

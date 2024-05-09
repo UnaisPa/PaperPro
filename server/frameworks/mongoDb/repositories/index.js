@@ -5,7 +5,9 @@ import {
     googleAuthRepo,
     sentOtpRepo,
     updateFollowListRepo,
-    verifyOTPRepo
+    verifyOTPRepo,
+    editProfileRepo,
+    checkUsernameRepo
 }
     from "./userRepo/index.js"
 
@@ -18,6 +20,8 @@ export {
     googleAuthRepo, sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo,
+    editProfileRepo,
+    checkUsernameRepo,
 
     createCommentRepo,
     createPostRepo,

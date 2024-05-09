@@ -25,6 +25,7 @@
     "dotenv": "^16.4.5",
     "firebase": "^10.10.0",
     "framer-motion": "^11.0.25",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",

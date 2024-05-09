@@ -8,6 +8,8 @@ import {
     sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo,
+    checkUsernameRepo,
+    
 
     createCommentRepo,
     createPostRepo,
@@ -15,7 +17,8 @@ import {
     postActionRepo,
     deletePostRepo,
     savePostRepo,
-    getSavedPostsRepo
+    getSavedPostsRepo,
+    editProfileRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -27,6 +30,7 @@ import {
     sentOtpUseCase,
     updateFollowListUseCase,
     verifyOtpUseCase,
+    checkUsernameUseCase,
 
     createCommentUseCase,
     createPostUseCase,
@@ -34,7 +38,8 @@ import {
     postActionUseCase,
     deletePostUseCase,
     savePostUseCase,
-    getSavedPostsUseCase
+    getSavedPostsUseCase,
+    editProfileUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -47,6 +52,8 @@ const useCase = {
     sentOtpUseCase,
     updateFollowListUseCase,
     verifyOtpUseCase,
+    editProfileUseCase,
+    checkUsernameUseCase,
 
     createCommentUseCase,
     createPostUseCase,
@@ -66,6 +73,8 @@ const repository = {
     sentOtpRepo,
     updateFollowListRepo,
     verifyOTPRepo,
+    editProfileRepo,
+    checkUsernameRepo,
 
     createCommentRepo,
     createPostRepo,

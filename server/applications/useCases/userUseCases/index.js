@@ -5,6 +5,8 @@ import { googleAuthUseCase } from "./googleAuthUseCase.js";
 import { sentOtpUseCase } from "./sentOtpUseCase.js";
 import { updateFollowListUseCase } from "./updateFollowListUseCase.js";
 import { verifyOtpUseCase } from "./verifyOtpUseCase.js";
+import { editProfileUseCase } from "./editProfileUseCase.js";
+import { checkUsernameUseCase } from "./checkUsernameUseCase.js";
 
 export {authUserUseCase,
     createUserUseCase,
@@ -12,5 +14,7 @@ export {authUserUseCase,
     googleAuthUseCase,
     sentOtpUseCase,
     updateFollowListUseCase,
-    verifyOtpUseCase
+    verifyOtpUseCase,
+    editProfileUseCase,
+    checkUsernameUseCase
 }

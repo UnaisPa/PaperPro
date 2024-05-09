@@ -5,7 +5,9 @@ import {
     googleAuthUseCase,
     sentOtpUseCase,
     updateFollowListUseCase,
-    verifyOtpUseCase
+    verifyOtpUseCase,
+    editProfileUseCase,
+    checkUsernameUseCase
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase} from "./postUseCases/index.js"
@@ -18,6 +20,9 @@ export {
     sentOtpUseCase,
     updateFollowListUseCase,
     verifyOtpUseCase,
+    editProfileUseCase,
+    checkUsernameUseCase,
+    
 
     createCommentUseCase,
     createPostUseCase,
