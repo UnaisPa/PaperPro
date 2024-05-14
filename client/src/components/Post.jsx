@@ -16,6 +16,7 @@ import { MdOutlineSaveAlt } from "react-icons/md";
 import { GoReport } from "react-icons/go";
 import { FaRegShareSquare } from "react-icons/fa";
 import { LuThumbsDown } from "react-icons/lu";
+import LikedUsers from "./Dialogs/LikedUsers.jsx";
 
 const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => {
     const dispatch = useDispatch()
@@ -175,6 +176,9 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
         setSavedPosts(updatedSavedPosts);
     }
 
+    // view liked users
+    const [displayLikedUsers,setDisplayLikedUsers] = useState(false)
+
     return (
         <>
             <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
@@ -284,8 +288,9 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             ) : (
                                 <GoHeart onClick={isLike} size={18} />
                             )}
-                            <p className="text-[0.86rem] mx-1">{likeCount}</p>
+                            <p onClick={()=>setDisplayLikedUsers(true)} className="text-[0.86rem] mx-1">{likeCount}</p>
                         </div>
+                        {displayLikedUsers&&<LikedUsers postId={post._id} displayLikedUsers={displayLikedUsers} setDisplayLikedUsers={setDisplayLikedUsers} />}
                         {/* <div className="flex ml-4 hover:text-slate-100 cursor-pointer">
                             <TbMessage size={18} />
                             <p className="text[0.86rem] mx-1">23</p>

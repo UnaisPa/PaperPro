@@ -1,4 +1,4 @@
-import React, { useEffect, useState,Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import LandingPage from "./pages/LandingPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
@@ -22,6 +22,8 @@ import StockData from "./pages/StockData";
 import SavedPosts from "./pages/SavedPosts";
 import TradingLoader from "./components/loader/TradingLoader";
 import EditProfile from "./pages/EditProfile";
+import AdminRoute from "./components/admin/AdminRoute";
+import AdminLogin from "./pages/admin/AdminLogin";
 const EditProfilePage = React.lazy(() => import("./pages/EditProfile"))
 function App() {
     const { registerPage } = useSelector((state) => state.condRender);
@@ -42,7 +44,7 @@ function App() {
                             <Route path="/user/:id" element={<UserProfile />} />
                             <Route path="/symbol/:stock" element={<StockData />} />
                             <Route path="/saved_posts" element={<SavedPosts />} />
-                            <Route path="/edit_profile" element={<EditProfile/>} />
+                            <Route path="/edit_profile" element={<EditProfile />} />
                             {/* <Route path='/edit_profile' element={<Suspense fallback={<TradingLoader/>}>
                                 <EditProfilePage />
                             </Suspense>} /> */}
@@ -51,8 +53,16 @@ function App() {
                         <Route path="" element={<HideRoutes />}>
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={registerPage ? <Register /> : <OtpVerification />} />
+                            <Route path="/admin" element={<AdminLogin/>} />
                             {/* <Route path="/verification" element={<OtpVerification/>}/> */}
                         </Route>
+
+                        <Route path='' element={<AdminRoute />}>
+                            {/* <Route path='/admin/dashboard' element={<AdminDashboard />} />
+                            <Route path='/admin/edit_user/:id' element={<EditUser />} />
+                            <Route path='/admin/add_user' element={<AddUser />} /> */}
+                        </Route>
+                        
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>

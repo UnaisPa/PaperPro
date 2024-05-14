@@ -42,9 +42,17 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post' // This tells Mongoose to use the Post model for population
     }],
+    margin:{
+        type:Number,
+        default:1000000
+    },
     createdAt:{
         type:Date,
         default:Date.now
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
     }
 })
 

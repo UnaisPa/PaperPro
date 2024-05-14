@@ -5,6 +5,7 @@ import { postActionUseCase } from "./postActionUseCase.js";
 import { deletePostUseCase } from "./deletePostUseCase.js";
 import { savePostUseCase } from "./savePostUseCase.js";
 import { getSavedPostsUseCase } from "./getSavedPostsUseCase.js";
+import { getLikedUsersUseCase } from "./getLikedUsersUseCase.js";
 export {
     createCommentUseCase,
     createPostUseCase,
@@ -12,6 +13,7 @@ export {
     postActionUseCase,
     deletePostUseCase,
     savePostUseCase,
-    getSavedPostsUseCase
+    getSavedPostsUseCase,
+    getLikedUsersUseCase
     
 }

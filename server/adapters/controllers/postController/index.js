@@ -5,6 +5,7 @@ import postActionController from "./postActionController.js";
 import deletePostController from "./deletePostController.js";
 import savePostController from "./savePostController.js";
 import getSavedPostsController from "./getSavedPostsController.js";
+import getLikedUsersController from "./getLikedUsersController.js";
 export default (dependencies) =>{
     return {
         createCommentController:createCommentController(dependencies),
@@ -14,5 +15,6 @@ export default (dependencies) =>{
         deletePostController:deletePostController(dependencies),
         savePostController:savePostController(dependencies),
         getSavedPostsController:getSavedPostsController(dependencies),
+        getLikedUsersController:getLikedUsersController(dependencies)
     }
 }

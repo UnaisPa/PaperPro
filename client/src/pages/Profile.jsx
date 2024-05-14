@@ -92,10 +92,10 @@ const Profile = () => {
                         </div>
                         <div className='m-5' >
                             <h1 className='text-xl font-semibold' >{currentUser.name}</h1>
-                            <p className='opacity-75' >Beginner</p>
+                            <p className='opacity-75' >@{currentUser.userName}</p>
                             <div className='mt-6' >
-                                <h4>About</h4>
-                                <p className='text-sm mt-1 opacity-80' > you can use the scrollbar variants in your CSS. However, it's important to note that this feature is experimental and may not work perfectly in all browsers. Here's how you can style the default scrollbar with Tailwind CSS</p>
+                                {currentUser.bio&&<h4>About</h4>}
+                                <p className='text-sm mt-1 opacity-80' > {currentUser.bio?currentUser.bio:''}</p>
                             </div>
                             <div className=' mt-3 flex text-slate-300'>
                                 <button onClick={()=>navigate('/edit_profile')}

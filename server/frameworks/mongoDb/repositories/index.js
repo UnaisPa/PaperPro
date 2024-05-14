@@ -12,7 +12,7 @@ import {
     from "./userRepo/index.js"
 
 import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePostRepo,savePostRepo,getSavedPostsRepo} from "./postRepo/index.js"
-
+import authAdminRepo from "./adminRepo/authAdminRepo.js"
 export {
     authUserRepo,
     createUserRepo,
@@ -29,7 +29,8 @@ export {
     postActionRepo,
     deletePostRepo,
     savePostRepo,
-    getSavedPostsRepo
+    getSavedPostsRepo,
     
+    authAdminRepo
     
 }

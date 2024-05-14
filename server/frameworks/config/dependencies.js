@@ -18,7 +18,8 @@ import {
     deletePostRepo,
     savePostRepo,
     getSavedPostsRepo,
-    editProfileRepo
+    editProfileRepo,
+    authAdminRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -39,10 +40,12 @@ import {
     deletePostUseCase,
     savePostUseCase,
     getSavedPostsUseCase,
-    editProfileUseCase
+    editProfileUseCase,
+    getLikedUsersUseCase
 
 
 } from "../../applications/useCases/index.js";
+import getLikedUsersRepo from "../mongoDb/repositories/postRepo/getLikedUsersRepo.js";
 
 const useCase = {
     authUserUseCase,
@@ -61,7 +64,10 @@ const useCase = {
     postActionUseCase,
     deletePostUseCase,
     savePostUseCase,
-    getSavedPostsUseCase
+    getSavedPostsUseCase,
+    getLikedUsersUseCase,
+
+    authUserUseCase
 
 }
 
@@ -82,7 +88,10 @@ const repository = {
     postActionRepo,
     deletePostRepo,
     savePostRepo,
-    getSavedPostsRepo
+    getSavedPostsRepo,
+    getLikedUsersRepo,
+
+    authAdminRepo
 }
 
 export default { useCase, repository } 

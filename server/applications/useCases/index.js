@@ -10,8 +10,8 @@ import {
     checkUsernameUseCase
 } from "./userUseCases/index.js"
 
-import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase} from "./postUseCases/index.js"
-
+import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
+import { authAdminUseCase } from "./adminUseCases/authAdminUseCase.js"
 export {
     authUserUseCase,
     createUserUseCase,
@@ -30,5 +30,8 @@ export {
     postActionUseCase,
     deletePostUseCase,
     savePostUseCase,
-    getSavedPostsUseCase
+    getSavedPostsUseCase,
+    getLikedUsersUseCase,
+
+    authAdminUseCase
 }

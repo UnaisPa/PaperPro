@@ -7,6 +7,7 @@ import updateFollowListRepo from './updateFollowListRepo.js';
 import verifyOTPRepo from './verifyOtpRepo.js';
 import editProfileRepo from './editProfileRepo.js';
 import checkUsernameRepo from './checkUsernameRepo.js';
+import getLikedUsersRepo from '../postRepo/getLikedUsersRepo.js';
 export {
     authUserRepo,
     createUserRepo,
@@ -16,6 +17,7 @@ export {
     updateFollowListRepo,
     verifyOTPRepo,
     editProfileRepo,
-    checkUsernameRepo
+    checkUsernameRepo,
+    getLikedUsersRepo
     
 }
