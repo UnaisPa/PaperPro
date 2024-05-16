@@ -11,7 +11,8 @@ import {
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
-import { authAdminUseCase } from "./adminUseCases/authAdminUseCase.js"
+import { authAdminUseCase } from "./adminUseCases/index.js"
+import {createTradeUseCase, getPositionsUseCase,updatePositionUseCase} from "./portfolioUseCase/index.js"
 export {
     authUserUseCase,
     createUserUseCase,
@@ -33,5 +34,10 @@ export {
     getSavedPostsUseCase,
     getLikedUsersUseCase,
 
-    authAdminUseCase
+    authAdminUseCase,
+
+    //portfolio
+    createTradeUseCase,
+    getPositionsUseCase,
+    updatePositionUseCase
 }

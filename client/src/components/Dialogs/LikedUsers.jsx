@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 export default function LikedUsers({ postId,setDisplayLikedUsers,displayLikedUsers }) {
     const [open, setOpen] = useState(true);
-    const [users, setUsers] = useState(null);
+    const [users, setUsers] = useState([]);
 
     const cancelButtonRef = useRef(null)
 
@@ -29,7 +29,7 @@ export default function LikedUsers({ postId,setDisplayLikedUsers,displayLikedUse
 
     return (
         <div  >
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={open} as={Fragment}> 
             <Dialog onClose={()=>setDisplayLikedUsers(false)} className="relative z-10" initialFocus={cancelButtonRef}>
                 <Transition.Child
                     as={Fragment}
@@ -66,10 +66,10 @@ export default function LikedUsers({ postId,setDisplayLikedUsers,displayLikedUse
                                         </div>
                                     </div>
                                 </div>
-                                {users ?
+                                {users.length>0 ?
                                     users.map((user) => {
                                         return (
-                                            <div className='mb-10 '>
+                                            <div key={user._id} className='mb-10 '>
                                                 <div className=' flex mx-10' >
                                                     <div className=' w-1/6 h-10' >
                                                         {user.profilePicture?<img className='rounded-full  h-12 w-12' src={user.profilePicture} />:<div className='bg-primary border rounded-full h-12 w-12' >

@@ -6,6 +6,8 @@ import { errorHandler,notFound} from "./adapters/middlewares/errorMiddleware.js"
 import userRoutes from "./adapters/routes/userRoutes.js";
 import postRoutes from "./adapters/routes/postRoutes.js"
 import adminRoutes from "./adapters/routes/adminRoutes.js";
+import portfolioRoutes from "./adapters/routes/portfolioRoutes.js";
+
 import dependencies from "./frameworks/config/dependencies.js";
 import {Server,Socket} from "socket.io"
 import socketConfig from "./socket.js";
@@ -50,7 +52,8 @@ app.use(cookieParser())
 //Routes
 app.use('/api/users',userRoutes(dependencies));
 app.use('/api/post',postRoutes(dependencies));
-app.use('/api/admin',adminRoutes(dependencies))
+app.use('/api/admin',adminRoutes(dependencies));
+app.use('/api/portfolio',portfolioRoutes(dependencies))
 
 //Error handler middlewares
 app.use(notFound);

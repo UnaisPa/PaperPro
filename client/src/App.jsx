@@ -24,6 +24,8 @@ import TradingLoader from "./components/loader/TradingLoader";
 import EditProfile from "./pages/EditProfile";
 import AdminRoute from "./components/admin/AdminRoute";
 import AdminLogin from "./pages/admin/AdminLogin";
+import Dashboard from "./pages/admin/Dashboard";
+import BaseRoute from "./components/BaseRoute";
 const EditProfilePage = React.lazy(() => import("./pages/EditProfile"))
 function App() {
     const { registerPage } = useSelector((state) => state.condRender);
@@ -36,7 +38,8 @@ function App() {
                     <Routes>
                         {/* <Route path="/" element={token?<Home/>:<LandingPage/>} /> */}
                         <Route path="" element={<PrivateRoute />}>
-                            <Route exact path="/" element={<Home />} />
+                            {/* <Route exact path="/" element={<Home />} /> */}
+                            <Route exact path="/" element={<BaseRoute/>} />
                             <Route path="/portfolio" element={<Portfolio />} />
                             <Route path="/news" element={<News />} />
                             <Route path="/stocks" element={<Stocks />} />
@@ -58,11 +61,10 @@ function App() {
                         </Route>
 
                         <Route path='' element={<AdminRoute />}>
-                            {/* <Route path='/admin/dashboard' element={<AdminDashboard />} />
-                            <Route path='/admin/edit_user/:id' element={<EditUser />} />
+                        <Route path='/admin/dashboard' element={<Dashboard />} />
+                            {/* <Route path='/admin/edit_user/:id' element={<EditUser />} />
                             <Route path='/admin/add_user' element={<AddUser />} /> */}
                         </Route>
-                        
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>

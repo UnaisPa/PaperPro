@@ -12,7 +12,9 @@ import {
     from "./userRepo/index.js"
 
 import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePostRepo,savePostRepo,getSavedPostsRepo} from "./postRepo/index.js"
-import authAdminRepo from "./adminRepo/authAdminRepo.js"
+import {authAdminRepo} from "./adminRepo/index.js"
+
+import {createTradeRepo,getPositionsRepo,updatePositionRepo} from "./portfolioRepo/index.js"
 export {
     authUserRepo,
     createUserRepo,
@@ -31,6 +33,11 @@ export {
     savePostRepo,
     getSavedPostsRepo,
     
-    authAdminRepo
-    
+    //admin
+    authAdminRepo,
+
+    //portfolio
+    createTradeRepo,
+    getPositionsRepo,
+    updatePositionRepo
 }

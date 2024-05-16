@@ -1,4 +1,4 @@
-import { authAdminUseCase } from "./authAdminUseCase";
+import { authAdminUseCase } from "./authAdminUseCase.js";
 
 export {
     authAdminUseCase

@@ -4,6 +4,10 @@ const portfolioSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
+    totalProfit:{
+        type:Number,
+        default:0
+    },
     transactions:[{ 
         type:mongoose.Schema.Types.ObjectId,
         ref:'Transaction'

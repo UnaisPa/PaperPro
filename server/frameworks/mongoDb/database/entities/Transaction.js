@@ -7,7 +7,7 @@ const transactionSchema = new mongoose.Schema({
     },
     type:{
         type:String,
-        enum: ['buy', 'sell'],
+        enum: ['Buy', 'Sell'],
         required:true
     },
     quantity:{
@@ -18,9 +18,21 @@ const transactionSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    currentPrice:{
+        type:Number,
+        default:0
+    },
+    companyName:{
+        type:String,
+        default:'company' 
+    },
+    totalPrice:{
+        type:Number,
+        default:0,
+    },
     timeFrame:{
         type:String,
-        enum:['intraday','tomorrow','one_week','one_month']
+        // enum:['intraday','tomorrow','one_week','one_month']
     },
     target:{
         type:Number
@@ -32,14 +44,20 @@ const transactionSchema = new mongoose.Schema({
     },
     profit:{
         //Profit&Loss
-        type:Number
+        type:Number,
+        default:0
     },
-    profilPercentage:{
-        type:Number
+    profitPercentage:{
+        type:Number,
+        default:0
     },
     active:{
         type:Boolean,
         default:true
+    },
+    exitedReason:{
+        type:String,
+        default:''
     },
     createdAt:{
         type:Date,

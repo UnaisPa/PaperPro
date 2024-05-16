@@ -1,9 +1,12 @@
+import { generateToken } from "../../../../utils/generateToken.js";
 import User from "../../database/entities/User.js";
 
 const authAdminRepo = async(res,email,password) =>{
     try{
+        //console.log(email,password);
         const admin = await User.findOne({ email: email,isAdmin:true});
         if (admin) {
+             
             if (await admin.matchPassword(password)) {
                 const token = await generateToken(res, admin._id);
 
@@ -11,6 +14,7 @@ const authAdminRepo = async(res,email,password) =>{
                 const { password: pass, ...rest } = admin._doc;
                 return {success:true, admin: rest, token };
             } else {
+                console.log('hi') 
                 return {success:false, message: "Invalid password. Please try again." };
             }
         } else {

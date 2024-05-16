@@ -13,7 +13,7 @@ const socketConfig = () => {
     let token = process.env.FINNHUB_API_KEY
     let isSocketConnected = false;
     function processQueue(symbol) {
-        if (!isRequesting && isSocketConnected) { 
+        if (!isRequesting && isSocketConnected) {
             isRequesting = true;
             console.log(symbol);
             requestQueue.shift();
@@ -25,9 +25,19 @@ const socketConfig = () => {
                             client.send(JSON.stringify(response.data));
                         }
                     });
+                    var indianTime = moment().tz('Asia/Kolkata');
+                    var isBetween = indianTime.isBetween(
+                        moment.tz('19:00', 'HH:mm', 'Asia/Kolkata'),
+                        moment.tz('01:30', 'HH:mm', 'Asia/Kolkata'),
+                        null,
+                        '[)'
+                    );
                     setTimeout(() => {
                         isRequesting = false;
-                        processQueue(symbol);
+                        if(isBetween){
+                            processQueue(symbol);
+                        }
+                        
                     }, 1000); // Delay 1 second between requests
                 })
                 .catch(error => {
@@ -72,13 +82,13 @@ const socketConfig = () => {
             //     processQueue(); 
             // }
             isSocketConnected = true
-            if(typeof message.toString() === 'string' && message.toString().length > 0){
+            if (typeof message.toString() === 'string' && message.toString().length > 0) {
                 let symbol = message.toString().toUpperCase()
                 requestQueue.push(true);
                 //console.log(symbol);
                 processQueue(symbol);
-                
-            } 
+
+            }
         });
 
         socket.on('close', () => {

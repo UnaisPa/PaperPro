@@ -25,10 +25,13 @@ const userSlice = createSlice({
         },
         updateFollowListMinus:(state,action) =>{
             state.currentUser.following = state.currentUser.following.filter(userId => userId !== action.payload);
+        },
+        updateMargin :(state,action) =>{
+            state.currentUser.margin = action.payload
         }
     
     }
 })
 
-export const {signInStart,signInSuccess,signInFailure,setProfile,updateFollowList,updateFollowListMinus} = userSlice.actions
+export const {signInStart,signInSuccess,signInFailure,setProfile,updateFollowList,updateFollowListMinus,updateMargin} = userSlice.actions
 export default userSlice.reducer

@@ -19,7 +19,10 @@ import {
     savePostRepo,
     getSavedPostsRepo,
     editProfileRepo,
-    authAdminRepo
+    authAdminRepo,
+    createTradeRepo,
+    getPositionsRepo,
+    updatePositionRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -41,7 +44,11 @@ import {
     savePostUseCase,
     getSavedPostsUseCase,
     editProfileUseCase,
-    getLikedUsersUseCase
+    getLikedUsersUseCase,
+    authAdminUseCase,
+    createTradeUseCase,
+    getPositionsUseCase,
+    updatePositionUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -67,8 +74,12 @@ const useCase = {
     getSavedPostsUseCase,
     getLikedUsersUseCase,
 
-    authUserUseCase
+    authAdminUseCase,
 
+    //portfolio
+    createTradeUseCase,
+    getPositionsUseCase,
+    updatePositionUseCase
 }
 
 const repository = {
@@ -91,7 +102,13 @@ const repository = {
     getSavedPostsRepo,
     getLikedUsersRepo,
 
-    authAdminRepo
+    authAdminRepo,
+    
+
+    //portfolio
+    createTradeRepo,
+    getPositionsRepo,
+    updatePositionRepo
 }
 
 export default { useCase, repository } 

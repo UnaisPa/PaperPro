@@ -1,4 +1,4 @@
-import authAdminRepo from "./authAdminRepo";
+import authAdminRepo from "./authAdminRepo.js";
 
 export {
     authAdminRepo

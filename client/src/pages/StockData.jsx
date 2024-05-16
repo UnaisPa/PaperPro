@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Header from '../components/Header'
 import SymbolDetails from '../components/SymbolOverview'
 import { useParams } from 'react-router-dom'
@@ -6,8 +6,19 @@ import { CompanyProfile, SymbolOverview, FundamentalData, TechnicalAnalysis, Tim
 import { useSelector, useDispatch } from 'react-redux'
 import formatNumber from '../helper/formatNumber'
 import { toast } from 'react-toastify'
+import axios from '../axiosInstance'
+import { ClipLoader } from 'react-spinners'
+import { addTrade } from '../redux/positionsSlice'
+import { useNavigate } from 'react-router-dom'
+import { updateMargin } from '../redux/userSlice'
+import isUSMarketOpen from '../helper/isUSMarketOpen'
+import ErrorDialog from '../components/Dialogs/ErrorDialog'
+
 const ENDPOINT = 'ws://localhost:5050';
+
 const StockData = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { currentUser } = useSelector((state) => state.user);
     const { stock } = useParams()
     const enteredSymbol = stock.toUpperCase()
@@ -22,8 +33,8 @@ const StockData = () => {
 
     let initialData = {
         quantity: Number,
-        stopLoss: null,
-        target: null,
+        stopLoss: 0,
+        target: 0,
         // orderType:orderType,// Time frame,
         // type:activeButton, // Buy or Sell
 
@@ -37,15 +48,52 @@ const StockData = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const [dialogOpen,setDialogOpen] = useState(false)
 
+
+    const [loading, setLoading] = useState(false);
     const handleSubmit = (e) => {
         e.preventDefault();
         const formErrors = validate(formData);
         if (Object.keys(formErrors).length == 0) {
+            let isMarketOpen;
+            if (orderType == 'Intraday') {
+                isMarketOpen = isUSMarketOpen()
+            } else {
+                isMarketOpen = true
+            }
+            console.log(orderType,isMarketOpen);
+            if (isMarketOpen) {
+                let timeFrame = orderType
+                let type = activeButton
+                const price = priceRef.current.innerText
+                const symbol = enteredSymbol
+                //console.log(price);
+                // console.log(orderType,activeButton);
+
+                setLoading(true);
+                const userId = currentUser._id
+                axios.post(`/portfolio/create_trade/${userId}`, { formData, timeFrame, type, price, symbol }).then((response) => {
+                    console.log(response.data);
+                    dispatch(addTrade(response.data.trade))
+                    toast.success('Stock successflly added to portfolio')
+
+                    dispatch(updateMargin(response.data.margin))
+                    setTimeout(() => {
+                        navigate('/portfolio');
+                    }, 1500)
+                }).catch((err) => {
+                    console.log(err);
+                    toast.error(err.response?.data);
+                }).finally(() => {
+                    setLoading(false)
+                })
+            }else{
+                setDialogOpen(true)
+                //toast.error('Market closed')
+            }
 
 
-            console.log(formData);
-            console.log(orderType,activeButton);
         }
     }
 
@@ -58,9 +106,9 @@ const StockData = () => {
         if (!formDatas.quantity) {
             formErrors.quantity = "Enter Quantity"
         } else if (!numberRegex.test(formDatas.quantity)) {
-            formErrors.quantity = "Please enter proper quantity"
+            formErrors.quantity = "Enter quantity to buy"
             setTimeout(() => {
-                formErrors.quantity = null
+                formErrors.quantity = ''
             }, 2000)
         }
 
@@ -68,18 +116,31 @@ const StockData = () => {
         // if (formDatas.target.trim() == "") {
         //     formErrors.target = "Username is required"
         // } else
-
-        if (formDatas.target!==null && !numberRegex.test(formDatas.target)) {
+        if (formDatas.target == 0) {
+            formErrors.target = "Enter Target"
+        } else if (!numberRegex.test(formDatas.target)) {
             formErrors.target = "Please provide proper target price"
             setTimeout(() => {
-                formErrors.target = null
+                formErrors.target = ''
+            }, 2000)
+        } else if (checkTarget == false) {
+            formErrors.target = 'Please Enter a price greater than current price'
+            setTimeout(() => {
+                formErrors.target = ''
             }, 2000)
         }
 
-        if ( formDatas.stopLoss!==null && !numberRegex.test(formDatas.stopLoss)) {
+        if (formDatas.stopLoss == 0) {
+            formErrors.stopLoss = "Enter Stop loss"
+        } else if (formDatas.stopLoss !== null && !numberRegex.test(formDatas.stopLoss)) {
             formErrors.stopLoss = "Please provide proper stop Loss price"
             setTimeout(() => {
-                formErrors.stopLoss = null
+                formErrors.stopLoss = ''
+            }, 2000)
+        } else if (checkStopLoss == false) {
+            formErrors.stopLoss = 'stop loss should be less than current price';
+            setTimeout(() => {
+                formErrors.stopLoss = ''
             }, 2000)
         }
 
@@ -91,45 +152,54 @@ const StockData = () => {
         return formErrors;
     };
 
-    
+
     //const [data, setData] = useState({});
-    let newData = {}       
+    const [checkTarget, setCheckTarget] = useState(false);
+    const [checkStopLoss, setCheckStopLoss] = useState(true)
+    let newData = {}
     useEffect(() => {
         const socket = new WebSocket(ENDPOINT);
 
-        socket.onopen = () => {   
+        socket.onopen = () => {
             console.log('Connected to server');
             // Request real-time data based on current time
-            socket.send(symbols);      
-        };   
+            socket.send(symbols);
+        };
 
-        socket.onmessage = (event) => { 
+        socket.onmessage = (event) => {
             newData = JSON.parse(event.data);
-            
-            console.log('Received data:', newData.c);
 
+            console.log('Received data:', newData.c);
+            if (formData.target > newData.c) {
+                setCheckTarget(true);
+            }
+            if (formData.stopLoss > newData.c) {
+                setCheckStopLoss(false);
+            } else {
+                setCheckStopLoss(true)
+            }
             priceRef.current.innerText = newData.c.toFixed(2);
-            
+
             //console.log(formData?.quantity>0);
-            if(formData?.quantity>0){
+            if (formData?.quantity > 0) {
                 let totalPrice = (formData.quantity) * (newData.c.toFixed(2))
-                totalRef.current.innerText = totalPrice.toFixed(2);
-            }else{
+                totalRef.current.innerText = "$ " + totalPrice.toFixed(2);
+            } else {
                 totalRef.current.innerText = 0
             }
-           
-           // setData(newData);
-           //data = newData
+
+            // setData(newData);
+            //data = newData
         };
 
         socket.onclose = () => {
             console.log('Disconnected from server');
-        }; 
-        
+        };
+
         return () => {
             socket.close();
-        }; 
-        
+        };
+
     }, [newData]);
 
     //console.log(data) 
@@ -142,10 +212,10 @@ const StockData = () => {
                 </div>
 
                 <div className=' w-full lg:w-2/5 ' >
-                    <div className={`${(activeButton ==='Buy' ||activeButton=='Sell') && 'border-b-transparent'} border-2 border-slate-600 p-3 mx-8 h-96 rounded-lg`} >
+                    <div className={`${(activeButton === 'Buy' || activeButton == 'Sell') && 'border-b-transparent'} border-2 border-slate-600 p-3 mx-8 h-full rounded-lg`} >
                         <div className='flex  text-slate-100 border-b border-slate-600' >
                             <button className={`${activeButton == 'Buy' && 'border-b-2 border-[#39E739] text-[#39E739]'} w-1/2 p-2 font-semibold`} onClick={() => handleButtonClick('Buy')}>Buy</button>
-                            <button className={`${activeButton == 'Sell' && 'border-b-2 border-[#FF5757] text-[#FF5757]'} w-1/2 p-2 font-semibold`} onClick={() =>toast.warning('The sell functionality is currently under development.')}>Sell</button>
+                            <button className={`${activeButton == 'Sell' && 'border-b-2 border-[#FF5757] text-[#FF5757]'} w-1/2 p-2 font-semibold`} onClick={() => toast.warning('The sell functionality is currently under development.')}>Sell</button>
 
                         </div>
                         <div className=' mt-2' >
@@ -155,8 +225,18 @@ const StockData = () => {
                         </div>
                         <form onSubmit={handleSubmit} >
                             <div className='mt-8' >
-                                <label style={validateErrors.quantity && { color: "rgb(194 65 12)" }} className={`text-slate-300 text-sm`} >{validateErrors?.quantity? validateErrors.quantity: "Quantity"}</label>
-                                <input name='quantity' onChange={handleChange} type='number' placeholder='Ex: 12' className='w-full mt-2 text-slate-200 px-3 py-1 outline-none border border-slate-500 bg-transparent rounded-md' />
+                                <label htmlFor='quantity' style={validateErrors.quantity ? { color: "rgb(194 65 12)" } : { color: 'white' }} className='text-slate-300 text-xs' >{validateErrors?.quantity ? validateErrors.quantity : "Quantity"}</label>
+                                <input id='quantity' name='quantity' onChange={handleChange} type='number' placeholder='Ex: 12' className='w-full mt-2 text-slate-200 px-3 py-1 outline-none border border-slate-500 bg-transparent rounded-md' />
+                            </div>
+                            <div className='mt-2 flex ' >
+                                <div className='mr-1' >
+                                    <label htmlFor='target' style={validateErrors.target ? { color: "rgb(194 65 12)" } : { color: 'white' }} className='text-slate-300 text-xs' >{validateErrors?.target ? validateErrors.target : "Target"}</label>
+                                    <input id='target' name='target' onChange={handleChange} type='number' placeholder='Ex: 12' className='w-full mt-2 text-slate-200 px-3 py-1 outline-none border border-slate-500 bg-transparent rounded-md' />
+                                </div>
+                                <div className='ml-1' >
+                                    <label htmlFor='stopLoss' style={validateErrors.stopLoss ? { color: "rgb(194 65 12)" } : { color: 'white' }} className='text-slate-300 text-xs' >{validateErrors?.stopLoss ? validateErrors.stopLoss : "Stop Loss"}</label>
+                                    <input id='stopLoss' name='stopLoss' onChange={handleChange} type='number' placeholder='Ex: 12' className='w-full mt-2 text-slate-200 px-3 py-1 outline-none border border-slate-500 bg-transparent rounded-md' />
+                                </div>
                             </div>
                             <div className='flex border-b border-slate-500 mt-3 pb-1' >
                                 <div className="w-1/2  rounded-md shadow-sm py-2  text-sm font-medium text-slate-300 hover:text-gray-200 focus:outline-non">
@@ -164,25 +244,25 @@ const StockData = () => {
                                 </div>
                                 <div className="relative w-1/2 inline-block text-left">
                                     <div>
-                                    <button
-                                        className="inline-flex justify-end w-full rounded-md shadow-sm  py-2 bg- text-sm font-medium text-slate-300 hover:text-gray-200 focus:outline-non"
-                                        onClick={() => setIsOpen(!isOpen)}
-                                    >
-                                        {orderType}
-                                        <svg
-                                            className="-mr-1 ml-2 h-5 w-5"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                            aria-hidden="true"
+                                        <button
+                                            className="inline-flex justify-end w-full rounded-md shadow-sm  py-2 bg- text-sm font-medium text-slate-300 hover:text-gray-200 focus:outline-non"
+                                            onClick={() => setIsOpen(!isOpen)}
                                         >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </button>
+                                            {orderType}
+                                            <svg
+                                                className="-mr-1 ml-2 h-5 w-5"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
                                     </div>
                                     {isOpen && (
                                         <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -219,7 +299,7 @@ const StockData = () => {
                                     Share price
                                 </p>
                                 <p ref={priceRef} className='w-1/2  inline-flex justify-end font-semibold' >
-                                    
+                                    loading..
                                 </p>
                             </div>
                             <div className=' flex border-b mt-2 border-slate-500 py-2.5 w-full text-slate-300 text-sm font-medium' >
@@ -227,7 +307,7 @@ const StockData = () => {
                                     Number of Shares
                                 </p>
                                 <p className='w-1/2  inline-flex justify-end font-semibold' >
-                                    {formData?.quantity>0?formData.quantity:0}
+                                    {formData?.quantity > 0 ? formData.quantity : 0}
                                 </p>
                             </div>
                             <div className=' flex border-b mt-2 border-slate-500 py-2.5 w-full text-slate-300 text-sm font-medium' >
@@ -241,14 +321,14 @@ const StockData = () => {
 
                             {activeButton && <button type='submit'
                                 className={`${activeButton == 'Buy' ? 'bg-[#39E739]' : 'bg-[#FF5757]'} rounded-lg bg-opacity-35 font-semibold   mr-3  px-3.5 py-2.5 hover:text-slate-50  text-slate-300 shadow-sm hover:bg-opacity-80 w-full mt-5`}>
-                                {activeButton}
+                                {loading ? <><ClipLoader color='white' size={15} /> Loading</> : activeButton}
                             </button>}
                         </form>
                     </div>
                 </div>
 
             </div>
-
+            {dialogOpen&&<ErrorDialog setDialogOpen={setDialogOpen} />}
             <div className='h-96 mx-auto w-11/12 sm:w-4/5 mt-10' >
                 <CompanyProfile symbol={enteredSymbol} isTransparent autosize colorTheme='dark' />
             </div>
