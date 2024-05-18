@@ -12,6 +12,7 @@ import { RiUserFollowLine } from "react-icons/ri"
 import { useSelector } from 'react-redux';
 import TailwindDialog from '../components/TailwindDialog.jsx';
 import { updateFollowList } from '../redux/userSlice.js';
+import { setUserIdForGettingTrades } from '../redux/userSlice.js';
 
 const UserProfile = () => {
     const dispatch = useDispatch()
@@ -25,7 +26,9 @@ const UserProfile = () => {
 
     
     useEffect(()=>{
+        
         getUserProfile()
+        
         const check = checkAlreadyFollowing()
         setCheckAlreadyFollow(check);
     },[])
@@ -43,6 +46,7 @@ const UserProfile = () => {
             //dispatch(setProfile(response.data.user));
             setUser(response.data.user);
             dispatch(setPosts(response.data.user.posts));
+            dispatch(setUserIdForGettingTrades(response.data.user._id))
             console.log(response.data)
         }).catch((err) => {
             console.log(err)
@@ -154,7 +158,7 @@ const UserProfile = () => {
                 {OpendDialog&&<TailwindDialog setCheckAlreadyFollow={setCheckAlreadyFollow} user={user} setUser={setUser} type={'unfollow'} title={'Unfollow Account'}  description={`Are you sure you want to unfollow ${user.name} !`} setOpendDialog={setOpendDialog} />}
                 <div className=' sm:w-4/6 mx-auto mt-10 flex text-slate-300'>
 
-                    <TabsComponent loading={loading} user={user} />
+                    <TabsComponent anotherUser={user._id} loading={loading} user={user} />
                 </div>
             </section>:
             <div className='flex justify-center align-middle pt-48' >

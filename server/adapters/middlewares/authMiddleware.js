@@ -25,3 +25,26 @@ export const protect = expressAsyncHandler(async(req,res,next)=>{
     }
 })
 
+export const verifyRefreshToken = expressAsyncHandler((async(req,res)=>{
+    //const authHeader = req.headers.authorization;
+    //const token = authHeader.split(' ')[1];
+    //console.log(token) 
+
+    const {token} = req.body
+
+    if(token){ 
+        try{
+            const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+            req.user = await User.findById(decoded.userId).select('-password');
+            next();
+           
+        }catch(err){
+            res.status(401);
+            throw new Error('Not authorized, invalid token')
+        }
+    }else{
+        res.status(401)
+        throw new Error('Not authorized, invalid token')
+    }
+}))
+

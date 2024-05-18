@@ -7,7 +7,7 @@ export default (dependencies) =>{
         console.log(email)
         const auth = await authUserUseCase(dependencies).executeFunction(res,email,password);
         if(auth.user){
-            res.status(200).json({ user: auth.user, token: auth.token });
+            res.status(200).json({ user: auth.user, token: auth.token, refreshToken:auth.refreshToken });
         }else{
             res.status(404).json(auth.message) 
         }

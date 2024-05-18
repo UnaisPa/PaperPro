@@ -6,9 +6,9 @@ export default (dependencies) =>{
         const {name,email} = req.body
         const response = await googleAuthUseCase(dependencies).executeFunction(res,name,email);
         if(response.success){
-            res.status(200).json({success:true, user: response.user, token: response.token });
+            res.status(200).json({success:true, user: response.user, token: response.token,refreshToken:response.refreshToken });
         }else{
-            res.status(404).json(response.message) 
+            res.status(400).json(response.message) 
         }
     })
     return googleAuthController

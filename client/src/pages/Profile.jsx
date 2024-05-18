@@ -10,6 +10,7 @@ import { LuClipboardEdit } from "react-icons/lu";
 import { CiSaveDown1 } from "react-icons/ci";
 import { setPosts } from '../redux/postSlice.js';
 import EditModel from "../components/Dialogs/EditDialog.jsx"
+import { setUserIdForGettingTrades } from '../redux/userSlice.js';
 const Profile = () => {
     const { currentUser } = useSelector((state) => state.user);
     const {posts} = useSelector((state)=>state.posts)
@@ -29,6 +30,7 @@ const Profile = () => {
             console.log(response.data)
             localStorage.removeItem('jwt');
             localStorage.removeItem('root');
+            localStorage.removeItem('refreshToken')
             window.location.href = '/'
         }).catch((err) => {
             console.log(err.response ? err.response.data : err.message);
@@ -54,6 +56,7 @@ const Profile = () => {
         }).then((response) => {
             dispatch(setProfile(response.data.user));
             dispatch(setPosts(response.data.user.posts))
+            dispatch(setUserIdForGettingTrades(response.data.user._id))
             console.log(response.data)
         }).catch((err) => {
             console.log(err)
@@ -117,7 +120,7 @@ const Profile = () => {
                 
                 <div className=' sm:w-4/6 mx-auto mt-10 flex text-slate-300'>
 
-                    <TabsComponent loading={loading} user={currentUser} />
+                    <TabsComponent loading={loading} />
                 </div>
             </section>
             <button className='border text-white' onClick={handleLogout} >

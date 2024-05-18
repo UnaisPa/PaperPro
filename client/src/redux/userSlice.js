@@ -2,6 +2,7 @@ import  {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     currentUser:null,
     loading:false,
+    userIdForGettingTrades:''
 }
 const userSlice = createSlice({
     name:'user',
@@ -28,10 +29,13 @@ const userSlice = createSlice({
         },
         updateMargin :(state,action) =>{
             state.currentUser.margin = action.payload
+        },
+        setUserIdForGettingTrades:(state,action) =>{
+            state.userIdForGettingTrades = action.payload
         }
     
     }
 })
 
-export const {signInStart,signInSuccess,signInFailure,setProfile,updateFollowList,updateFollowListMinus,updateMargin} = userSlice.actions
+export const {signInStart,signInSuccess,signInFailure,setProfile,updateFollowList,updateFollowListMinus,updateMargin,setUserIdForGettingTrades} = userSlice.actions
 export default userSlice.reducer

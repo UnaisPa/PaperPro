@@ -7,7 +7,9 @@ import { CiStickyNote } from "react-icons/ci";
 import UploadForm from '../components/UploadForm'
 import { useSelector,useDispatch } from 'react-redux';
 import { setPosts,deletePost,updatePost,addPost } from '../redux/postSlice';
-const TabsComponent = ({ user, loading }) => {
+import PortfolioComponent from './PortfolioComponent';
+import TradesComponent from './TradesComponent';
+const TabsComponent = ({ user, loading,anotherUser }) => {
     const {posts} = useSelector((state)=>state.posts);
     //const [posts,setPosts] = useState(user.posts);
 
@@ -69,7 +71,8 @@ const TabsComponent = ({ user, loading }) => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div className="mt-4 p-4 bg-gray-100">Content for Tab 2</div>
+                        {anotherUser&&<h1>helo</h1>}
+                        {anotherUser?<TradesComponent user={user._id} />:<PortfolioComponent />}
                     </TabPanel>
                     <TabPanel>
                         <div className="mt-4 p-4 bg-gray-100">Content for Tab 3</div>

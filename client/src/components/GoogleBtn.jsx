@@ -29,9 +29,10 @@ const GoogleBtn = () => {
       console.log(response.data);
       setTimeout(() => {
         toast.success("Login Success");
-        console.log(response.data)
+        //console.log(response.data)
         dispatch(signInSuccess(response.data.user));
-        localStorage.setItem("jwt", response.data.token);
+        localStorage.setItem("jwt", response.data.token); 
+        localStorage.setItem('refreshToken',response.data.refreshToken);
         navigate("/");
       }, 1000);
     } catch (err) {
