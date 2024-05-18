@@ -12,7 +12,7 @@ import {
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
 import { authAdminUseCase } from "./adminUseCases/index.js"
-import {createTradeUseCase, getPositionsUseCase,updatePositionUseCase} from "./portfolioUseCase/index.js"
+import {createTradeUseCase, getPositionsUseCase,updatePositionUseCase,getTotalProfitUseCase,getPastTradesUseCase} from "./portfolioUseCase/index.js"
 export {
     authUserUseCase,
     createUserUseCase,
@@ -39,5 +39,7 @@ export {
     //portfolio
     createTradeUseCase,
     getPositionsUseCase,
-    updatePositionUseCase
+    updatePositionUseCase,
+    getTotalProfitUseCase,
+    getPastTradesUseCase
 }

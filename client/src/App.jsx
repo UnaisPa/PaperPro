@@ -26,6 +26,7 @@ import AdminRoute from "./components/admin/AdminRoute";
 import AdminLogin from "./pages/admin/AdminLogin";
 import Dashboard from "./pages/admin/Dashboard";
 import BaseRoute from "./components/BaseRoute";
+import AdvancedChart from "./components/AdvancedChart";
 const EditProfilePage = React.lazy(() => import("./pages/EditProfile"))
 function App() {
     const { registerPage } = useSelector((state) => state.condRender);
@@ -48,9 +49,10 @@ function App() {
                             <Route path="/symbol/:stock" element={<StockData />} />
                             <Route path="/saved_posts" element={<SavedPosts />} />
                             <Route path="/edit_profile" element={<EditProfile />} />
+                            <Route path="/advanced_chart/:symbol" element={<AdvancedChart/>} />
                             {/* <Route path='/edit_profile' element={<Suspense fallback={<TradingLoader/>}>
                                 <EditProfilePage />
-                            </Suspense>} /> */}
+                            </Suspense>} /> */} 
 
                         </Route>
                         <Route path="" element={<HideRoutes />}>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import Header from '../components/Header'
-import SymbolDetails from '../components/SymbolOverview'
+ import SymbolDetails from '../components/SymbolOverview'
+
 import { useParams } from 'react-router-dom'
 import { CompanyProfile, SymbolOverview, FundamentalData, TechnicalAnalysis, Timeline } from "react-ts-tradingview-widgets"
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,6 +14,8 @@ import { useNavigate } from 'react-router-dom'
 import { updateMargin } from '../redux/userSlice'
 import isUSMarketOpen from '../helper/isUSMarketOpen'
 import ErrorDialog from '../components/Dialogs/ErrorDialog'
+import { RiStockLine } from "react-icons/ri";
+import SuccessDialog from '../components/Dialogs/successDialog'
 
 const ENDPOINT = 'ws://localhost:5050';
 
@@ -30,6 +33,8 @@ const StockData = () => {
     const [validateErrors, setValidateErrors] = useState({});
     const priceRef = useRef(null)
     const totalRef = useRef(null)
+
+    const [successDialogOpen,setSuccessDialogOpen] = useState(false);
 
     let initialData = {
         quantity: Number,
@@ -76,12 +81,13 @@ const StockData = () => {
                 axios.post(`/portfolio/create_trade/${userId}`, { formData, timeFrame, type, price, symbol }).then((response) => {
                     console.log(response.data);
                     dispatch(addTrade(response.data.trade))
-                    toast.success('Stock successflly added to portfolio')
-
+                    //toast.success('Stock successflly added to portfolio')
+                    setSuccessDialogOpen(true)
                     dispatch(updateMargin(response.data.margin))
                     setTimeout(() => {
                         navigate('/portfolio');
-                    }, 1500)
+                        setSuccessDialogOpen(false)
+                    }, 2000)
                 }).catch((err) => {
                     console.log(err);
                     toast.error(err.response?.data);
@@ -124,7 +130,7 @@ const StockData = () => {
                 formErrors.target = ''
             }, 2000)
         } else if (checkTarget == false) {
-            formErrors.target = 'Please Enter a price greater than current price'
+            activeButton=='Buy'?formErrors.target = 'Please Enter a price greater than current price':formErrors.target = 'Please Enter a price less than current price'
             setTimeout(() => {
                 formErrors.target = ''
             }, 2000)
@@ -138,7 +144,7 @@ const StockData = () => {
                 formErrors.stopLoss = ''
             }, 2000)
         } else if (checkStopLoss == false) {
-            formErrors.stopLoss = 'stop loss should be less than current price';
+            activeButton=='Buy'?formErrors.stopLoss = 'stop loss should be less than current price':formErrors.stopLoss = 'stop loss should be greater than current price';
             setTimeout(() => {
                 formErrors.stopLoss = ''
             }, 2000)
@@ -152,10 +158,13 @@ const StockData = () => {
         return formErrors;
     };
 
+    useEffect(()=>{
+        window.scrollTo(0, 0);
+    },[])
 
     //const [data, setData] = useState({});
     const [checkTarget, setCheckTarget] = useState(false);
-    const [checkStopLoss, setCheckStopLoss] = useState(true)
+    const [checkStopLoss, setCheckStopLoss] = useState(false)
     let newData = {}
     useEffect(() => {
         const socket = new WebSocket(ENDPOINT);
@@ -170,14 +179,33 @@ const StockData = () => {
             newData = JSON.parse(event.data);
 
             console.log('Received data:', newData.c);
-            if (formData.target > newData.c) {
-                setCheckTarget(true);
+            if(activeButton=='Buy'){
+                console.log('Buyt')
+                if (formData.target > newData.c) {
+                    setCheckTarget(true);
+                }else{
+                    setCheckTarget(false);
+                }
+                if (formData.stopLoss < newData.c) {
+                    setCheckStopLoss(true)
+                }else{
+                    setCheckStopLoss(false)
+                }
+            }else if(activeButton=='Sell'){
+                console.log('sellt')
+
+                if (formData.target < newData.c) {
+                    setCheckTarget(true);
+                }else{
+                    setCheckTarget(false);
+                }
+                if (formData.stopLoss > newData.c) {
+                    setCheckStopLoss(true)
+                }else{
+                    setCheckStopLoss(false)
+                }
             }
-            if (formData.stopLoss > newData.c) {
-                setCheckStopLoss(false);
-            } else {
-                setCheckStopLoss(true)
-            }
+            
             priceRef.current.innerText = newData.c.toFixed(2);
 
             //console.log(formData?.quantity>0);
@@ -202,20 +230,21 @@ const StockData = () => {
 
     }, [newData]);
 
+
     //console.log(data) 
     return (
         <div>
             <Header />
             <div className='md:flex mx-auto w-11/12 sm:w-4/5  mt-10' >
                 <div className=' w-full lg:w-3/5 h-96' >
-                    <SymbolOverview isTransparent symbols={symbols} autosize colorTheme='dark' />
+                    <SymbolOverview symbols={symbols} colorTheme='dark' isTransparent autosize />
                 </div>
 
                 <div className=' w-full lg:w-2/5 ' >
                     <div className={`${(activeButton === 'Buy' || activeButton == 'Sell') && 'border-b-transparent'} border-2 border-slate-600 p-3 mx-8 h-full rounded-lg`} >
                         <div className='flex  text-slate-100 border-b border-slate-600' >
                             <button className={`${activeButton == 'Buy' && 'border-b-2 border-[#39E739] text-[#39E739]'} w-1/2 p-2 font-semibold`} onClick={() => handleButtonClick('Buy')}>Buy</button>
-                            <button className={`${activeButton == 'Sell' && 'border-b-2 border-[#FF5757] text-[#FF5757]'} w-1/2 p-2 font-semibold`} onClick={() => toast.warning('The sell functionality is currently under development.')}>Sell</button>
+                            <button className={`${activeButton == 'Sell' && 'border-b-2 border-[#FF5757] text-[#FF5757]'} w-1/2 p-2 font-semibold`} onClick={() => handleButtonClick('Sell')}>Sell</button>
 
                         </div>
                         <div className=' mt-2' >
@@ -311,7 +340,7 @@ const StockData = () => {
                                 </p>
                             </div>
                             <div className=' flex border-b mt-2 border-slate-500 py-2.5 w-full text-slate-300 text-sm font-medium' >
-                                <p className='w-1/2 ' >
+                                <p  className='w-1/2 ' >
                                     Estimated Cost
                                 </p>
                                 <p ref={totalRef} className='w-1/2  inline-flex justify-end font-semibold' >
@@ -328,7 +357,11 @@ const StockData = () => {
                 </div>
 
             </div>
-            {dialogOpen&&<ErrorDialog setDialogOpen={setDialogOpen} />}
+            {dialogOpen&&<ErrorDialog setDialogOpen={setDialogOpen}  />}
+            {successDialogOpen && <SuccessDialog setDialogOpen={setSuccessDialogOpen} />}
+            <div className='w-11/12 sm:w-4/5 mx-auto mt-4 mb-2 ' >
+                <p onClick={()=>navigate(`/advanced_chart/${enteredSymbol}`)} className='float-right  border border-slate-500 rounded-xl px-3 py-1 mr-8 cursor-pointer text-slate-300 flex hover:opacity-85' ><RiStockLine className=' rounded-3xl pr-1' color='white' size={20} /><span> Advanced Chart</span></p>
+            </div>
             <div className='h-96 mx-auto w-11/12 sm:w-4/5 mt-10' >
                 <CompanyProfile symbol={enteredSymbol} isTransparent autosize colorTheme='dark' />
             </div>

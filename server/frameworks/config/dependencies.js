@@ -22,7 +22,9 @@ import {
     authAdminRepo,
     createTradeRepo,
     getPositionsRepo,
-    updatePositionRepo
+    updatePositionRepo,
+    getTotalProfitRepo,
+    getPastTradesRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -48,7 +50,9 @@ import {
     authAdminUseCase,
     createTradeUseCase,
     getPositionsUseCase,
-    updatePositionUseCase
+    updatePositionUseCase,
+    getTotalProfitUseCase,
+    getPastTradesUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -79,7 +83,9 @@ const useCase = {
     //portfolio
     createTradeUseCase,
     getPositionsUseCase,
-    updatePositionUseCase
+    updatePositionUseCase,
+    getTotalProfitUseCase,
+    getPastTradesUseCase
 }
 
 const repository = {
@@ -108,7 +114,9 @@ const repository = {
     //portfolio
     createTradeRepo,
     getPositionsRepo,
-    updatePositionRepo
+    updatePositionRepo,
+    getTotalProfitRepo,
+    getPastTradesRepo
 }
 
 export default { useCase, repository } 

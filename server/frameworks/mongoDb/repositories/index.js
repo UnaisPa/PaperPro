@@ -14,7 +14,7 @@ import {
 import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePostRepo,savePostRepo,getSavedPostsRepo} from "./postRepo/index.js"
 import {authAdminRepo} from "./adminRepo/index.js"
 
-import {createTradeRepo,getPositionsRepo,updatePositionRepo} from "./portfolioRepo/index.js"
+import {createTradeRepo,getPositionsRepo,updatePositionRepo,getTotalProfitRepo,getPastTradesRepo} from "./portfolioRepo/index.js"
 export {
     authUserRepo,
     createUserRepo,
@@ -39,5 +39,8 @@ export {
     //portfolio
     createTradeRepo,
     getPositionsRepo,
-    updatePositionRepo
+    updatePositionRepo,
+    getTotalProfitRepo,
+    getPastTradesRepo
+    
 }

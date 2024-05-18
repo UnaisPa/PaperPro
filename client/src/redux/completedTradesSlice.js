@@ -8,11 +8,11 @@ export const completedTradesSlice = createSlice({
             state.push(action.payload);
         },
         setCompletedTrades:(state,action) =>{
-            state = action.payload
+            return action.payload;
         }
     },
 });
 
-export const { addCompletedTrade } = completedTradesSlice.actions;
+export const { addCompletedTrade,setCompletedTrades } = completedTradesSlice.actions;
 
 export default completedTradesSlice.reducer;
