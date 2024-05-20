@@ -246,7 +246,7 @@ const Portfolio = () => {
                                                 <p className='text-[10px] sm:text-xs text-slate-400' >Total Margin</p>
                                             </div>
                                             <div className='text-center py-6 sm:py-4 w-1/3' >
-                                                <h2 className='text-[13px] sm:text font-semibold text-green-400' >{totalInvested} <span className='text-[9px] sm:text-xs'  >USD</span></h2>
+                                                <h2 className='text-[13px] sm:text font-semibold text-green-400' >{formatNumber(totalInvested)} <span className='text-[9px] sm:text-xs'  >USD</span></h2>
                                                 <p className='text-[10px] sm:text-xs text-slate-400' >Invested Amount</p>
                                             </div>
                                         </div>

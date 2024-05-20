@@ -131,10 +131,10 @@ const UserProfile = () => {
                         </div>
                         <div className='m-5' >
                             <h1 className='text-xl font-semibold' >{user.name}</h1>
-                            <p className='opacity-75' >Beginner</p>
+                            <p className='opacity-75' >{user.userName}</p>
                             <div className='mt-6' >
                                 <h4>About</h4>
-                                <p className='text-sm mt-1 opacity-80' > you can use the scrollbar variants in your CSS. However, it's important to note that this feature is experimental and may not work perfectly in all browsers. Here's how you can style the default scrollbar with Tailwind CSS</p>
+                                <p className='text-sm mt-1 opacity-80' > {user.bio}</p>
                             </div>
                             <div className=' mt-3 flex text-slate-300'>
                                 {checkAlreadyFollow?<button onClick={()=>setOpendDialog(true)}
@@ -151,8 +151,8 @@ const UserProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='border hidden lg:block w-1/2'>
-
+                    <div className=' hidden lg:block w-1/2'>
+                        <h1 className='text-6xl text- font-bold my-6 opacity-10' >PLAN YOUR TRADE AND TRADE YOUR PLAN.</h1>
                     </div>
                 </div>
                 {OpendDialog&&<TailwindDialog setCheckAlreadyFollow={setCheckAlreadyFollow} user={user} setUser={setUser} type={'unfollow'} title={'Unfollow Account'}  description={`Are you sure you want to unfollow ${user.name} !`} setOpendDialog={setOpendDialog} />}

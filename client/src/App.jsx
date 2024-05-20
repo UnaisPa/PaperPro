@@ -39,8 +39,8 @@ function App() {
                     <Routes>
                         {/* <Route path="/" element={token?<Home/>:<LandingPage/>} /> */}
                         <Route path="" element={<PrivateRoute />}>
-                            {/* <Route exact path="/" element={<Home />} /> */}
-                            <Route exact path="/" element={<BaseRoute/>} />
+                            <Route exact path="/" element={<Home />} />
+                            {/* <Route exact path="/" element={<BaseRoute/>} /> */}
                             <Route path="/portfolio" element={<Portfolio />} />
                             <Route path="/news" element={<News />} />
                             <Route path="/stocks" element={<Stocks />} />

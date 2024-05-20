@@ -46,6 +46,7 @@ const AdminLogin = () => {
                             toast.success("Login Success");
                             dispatch(signInSuccess(response.data.admin));
                             localStorage.setItem('jwt', response.data.token);
+                            localStorage.setItem('refreshToken',response.data.refreshToken)
                             navigate('/admin/dashboard')
                         }, 1500);
                     }else{

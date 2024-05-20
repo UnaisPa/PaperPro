@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Post from '../components/Post'
 import UploadForm from '../components/UploadForm'
-import axios from "../axios"
+import axios from "../axiosInstance"
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux"
 import { setPosts, addPost, updatePost, deletePost } from '../redux/postSlice'
@@ -26,11 +26,7 @@ const Home = () => {
 
     const getAllPosts = async () => {
         setLoading(true);
-        await axios.get(`/post/get_all_posts?page=${page}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response) => {
+        await axios.get(`/post/get_all_posts?page=${page}`).then((response) => {
             dispatch(setPosts(response.data.posts))
             setCount(response.data.count);
             //console.log(response.data)

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import axios from "../axios.js"
+import axios from "../axiosInstance.js"
 import { toast } from "react-toastify";
 import { useNavigate , useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,11 +21,7 @@ const Profile = () => {
         e.preventDefault();
         const token = localStorage.getItem('jwt');
         console.log(token)
-        axios.post('/users/logout', null, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }, { withCredentials: true }).then((response) => {
+        axios.post('/users/logout', null, { withCredentials: true }).then((response) => {
             toast.success(response.data.message)
             console.log(response.data)
             localStorage.removeItem('jwt');
@@ -49,11 +45,7 @@ const Profile = () => {
     const getUserProfile = async () => {
         const userId = currentUser._id
         setLoading(true);
-        await axios.get(`/users/profile?userId=${userId}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response) => {
+        await axios.get(`/users/profile?userId=${userId}`).then((response) => {
             dispatch(setProfile(response.data.user));
             dispatch(setPosts(response.data.user.posts))
             dispatch(setUserIdForGettingTrades(response.data.user._id))

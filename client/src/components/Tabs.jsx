@@ -19,9 +19,6 @@ const TabsComponent = ({ user, loading,anotherUser }) => {
     //     // state.posts = state.posts.filter(post => post._id !== action.payload)
     // }
     const dispatch = useDispatch()
-    // useEffect(()=>{
-    //     dispatch(setPosts(user.posts))
-    // },[])
 
     const [open, setOpen] = useState(false)
     return (
@@ -71,7 +68,6 @@ const TabsComponent = ({ user, loading,anotherUser }) => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        {anotherUser&&<h1>helo</h1>}
                         {anotherUser?<TradesComponent user={user._id} />:<PortfolioComponent />}
                     </TabPanel>
                     <TabPanel>

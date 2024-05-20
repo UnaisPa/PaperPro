@@ -10,6 +10,7 @@ import { generateRefreshToken } from "../../../../utils/generateToken.js";
             if (await user.matchPassword(password)) {
                 const token = await generateToken(res, user._id);
                 const refreshToken = await generateRefreshToken(res, user._id)
+                
 
                 //remove password from the response
                 const { password: pass, ...rest } = user._doc;

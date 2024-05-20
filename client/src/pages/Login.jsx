@@ -39,9 +39,9 @@ const Login = () => {
             toast.success("Login Success");
             dispatch(signInSuccess(response.data.user));
             localStorage.setItem('jwt', response.data.token);
-            localStorage.setItem('refreshToken', response.data.refreshToken)
+            //localStorage.setItem('refreshToken', response.data.refreshToken)
             navigate('/')
-          }, 1500);
+          }, 1500); 
         });
       } catch (err) {
         console.log(err.response ? err.response.data : err.message);

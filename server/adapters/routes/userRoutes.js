@@ -1,9 +1,9 @@
 import express from 'express'
-import { protect,verifyRefreshToken } from '../middlewares/authMiddleware.js';
+import { protect, verifyRefreshToken } from '../middlewares/authMiddleware.js';
 import userController from '../controllers/userController/index.js';
 
 
-import { generateToken } from '../../utils/generateToken.js';
+
 
 export default (dependencies) => {
 
@@ -15,7 +15,8 @@ export default (dependencies) => {
         sentOtpController,
         updateFollowListController,
         editProfileController,
-        checkUsernameController
+        checkUsernameController,
+        refreshTokenController
     } = userController(dependencies)
 
 
@@ -29,15 +30,10 @@ export default (dependencies) => {
     router.get('/profile', protect, getUserByIdController)
     router.post('/logout', protect, logoutUserController)
     router.put('/update_follow_list', protect, updateFollowListController);
-    router.put('/edit_profile/:id',protect,editProfileController)
-    router.get('/check_username',protect,checkUsernameController);
+    router.put('/edit_profile/:id', protect, editProfileController)
+    router.get('/check_username', protect, checkUsernameController);
 
-    router.post('/refresh_token',verifyRefreshToken,(req,res)=>{
-        const {user} = req.body
-        const token = generateToken(res,user);
-        console.log("refresh token",token)
-        res.json(token);
-    })
+    router.post('/refresh_token',refreshTokenController)
 
     return router
 }

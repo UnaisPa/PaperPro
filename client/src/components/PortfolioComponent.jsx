@@ -37,7 +37,7 @@ const PortfolioComponent = ({ totalPortfolioProfit, margin, totalProfit, }) => {
     return (
         <div className="mt-4 p-1 border-t border-slate-500  rounded-md w-full">
 
-            {totalPortfolioProfit&&<><div className='sm:flex mt-4 h-20' >
+            {totalPortfolioProfit>=0?<><div className='sm:flex mt-4 h-20' >
                 <div className='text-center sm:text-left my-4 sm:my-0' >
                     <h1 className='text-slate-200 text-2xl font-semibold' ></h1>
                     {/* <p className='text-slate-400' >Past Trades</p> */}
@@ -75,8 +75,7 @@ const PortfolioComponent = ({ totalPortfolioProfit, margin, totalProfit, }) => {
                 {completedTrades.length>0 && <div className='w-full sm:w-2/4 border m-3 mt-24 sm:mt-3 rounded-lg border-slate-600 ml-auto' >
                     <PortfolioPerformanceGraph tradingData={last15Trades} />
                 </div>}
-            </div></>}
-
+            </div></>:''}
             <p className='text-slate-400 mt-2' >Completed Trades</p>
             <div className='mt-32 sm:mt-4' >
                 {completedTrades?.length > 0 ? <>
