@@ -9,7 +9,7 @@ const AdminRoute = () => {
     // if(!token){
     //     return currentUser?.isAdmin? <AdminLogin/> : <Navigate to='/' />;
     // }
-  return currentUser?.isAdmin? <Outlet/> : <Navigate to='/' />;
+    return currentUser?.isAdmin ? <Outlet /> : <Navigate to='/' />;
 }
 
 export default AdminRoute

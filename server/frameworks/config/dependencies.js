@@ -24,7 +24,9 @@ import {
     getPositionsRepo,
     updatePositionRepo,
     getTotalProfitRepo,
-    getPastTradesRepo
+    getPastTradesRepo,
+    getAllUsersRepo,
+    blockUserRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -52,7 +54,9 @@ import {
     getPositionsUseCase,
     updatePositionUseCase,
     getTotalProfitUseCase,
-    getPastTradesUseCase
+    getPastTradesUseCase,
+    getAllUsersUseCase,
+    blockUserUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -78,7 +82,10 @@ const useCase = {
     getSavedPostsUseCase,
     getLikedUsersUseCase,
 
+    //admin
     authAdminUseCase,
+    getAllUsersUseCase,
+    blockUserUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -108,7 +115,11 @@ const repository = {
     getSavedPostsRepo,
     getLikedUsersRepo,
 
+
+    //admin
     authAdminRepo,
+    getAllUsersRepo,
+    blockUserRepo,
     
 
     //portfolio

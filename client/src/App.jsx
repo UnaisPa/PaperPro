@@ -27,6 +27,8 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import Dashboard from "./pages/admin/Dashboard";
 import BaseRoute from "./components/BaseRoute";
 import AdvancedChart from "./components/AdvancedChart";
+import UserManagement from "./pages/admin/UserManagement";
+import Sidebar from "./components/admin/SideBar";
 const EditProfilePage = React.lazy(() => import("./pages/EditProfile"))
 function App() {
     const { registerPage } = useSelector((state) => state.condRender);
@@ -58,12 +60,13 @@ function App() {
                         <Route path="" element={<HideRoutes />}>
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={registerPage ? <Register /> : <OtpVerification />} />
-                            <Route path="/admin" element={<AdminLogin/>} />
+                            <Route path="/admin_login" element={<AdminLogin/>} />
                             {/* <Route path="/verification" element={<OtpVerification/>}/> */}
                         </Route>
 
                         <Route path='' element={<AdminRoute />}>
-                        <Route path='/admin/dashboard' element={<Dashboard />} />
+                        <Route path="/admin/*" element={<Sidebar />} />
+                        {/* <Route path="/admin/users" element={<UserManagement/>} /> */}
                             {/* <Route path='/admin/edit_user/:id' element={<EditUser />} />
                             <Route path='/admin/add_user' element={<AddUser />} /> */}
                         </Route>
