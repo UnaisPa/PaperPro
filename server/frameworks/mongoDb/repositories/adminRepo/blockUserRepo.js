@@ -21,8 +21,6 @@ const blockUserRepo = async (userName,action) =>{
         return {success:true,message:message,blocked:blocked}
         
 
-
-        
     }catch(err){
         throw new Error(err)
     }
