@@ -172,6 +172,7 @@ const EditProfile = () => {
 
 
 
+
     const validate = (formDatas) => {
         const formErrors = {};
         const nameRegex = /^[A-Za-z]+(?:[\s-][A-Za-z]+)*$/;
@@ -201,6 +202,29 @@ const EditProfile = () => {
         return formErrors;
     };
 
+
+    const [cpassword,setCpassword] = useState('');
+    const [cpasswordErr,setCpasswordErr] = useState('');
+    const [isCpasswordTrue,setIsCpasswordTrue] = useState(false)
+    const checkCurrentPassword = async () =>{
+        const passwordRegex = /^.{8,}$/;
+        if(cpassword.trim()==''){
+            setCpasswordErr('Please Enter you current password!')
+        }else if(!passwordRegex.test(cpassword)){
+            setCpasswordErr('Password must be have at least 8 chars')
+        }else{
+            axios.post('/users/check_current_password',{userId:currentUser._id,password:cpassword}).then((response)=>{
+                if(response.data.isPasswordTrue){
+                    setIsCpasswordTrue(true);
+                    toast.error('Wrong Password, Please proceed to forgot password.')
+                }else{
+                    setCpasswordErr('Wrong Password!')
+                }
+            })
+            //console.log(cpassword);
+        }
+        
+    }
     return (
         <>
             {loading ? (<TradingLoader />) : <><Header />
@@ -288,7 +312,25 @@ const EditProfile = () => {
 
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <div className="w-full mb-3">
+                                        <div className="w-full mb-3">
+                                                <label  className="block text-sm font-medium leading-6 text-slate-300">
+                                                    {cpasswordErr ? cpasswordErr : "Current Password"}
+                                                </label>
+                                                <div className="mt-2" style={{ position: 'relative' }}>
+                                                    <input onChange={(e)=>setCpassword(e.target.value)}
+
+                                                        id="cpassword"
+                                                        autoComplete="true"
+                                                        name="cpassword"
+                                                        value={cpassword}
+                                                        placeholder='Your Current Password'
+                                                        className="block bg-transparent outline-none p-2 w-full rounded-md border-0 py-1.5 text-slate-300 shadow-sm ring-1 ring-inset ring-gray-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+
+                                                    />
+                                                     <div style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)' }}><button type='button' onClick={checkCurrentPassword} className=' text-slate-200 px-3 py-1 bg-slate-700 hover:bg-opacity-75 rounded-md' >Change</button></div>
+                                                </div>
+                                            </div>
+                                            {isCpasswordTrue&&<div className="w-full mb-3">
                                                 <label style={validateErrors.password && { color: "rgb(194 65 12)" }} className="block text-sm font-medium leading-6 text-slate-300">
                                                     {validateErrors.password ? validateErrors.password : "Password"}
                                                 </label>
@@ -305,7 +347,7 @@ const EditProfile = () => {
                                                     />
                                                     {/* {onChangeLoader && <div style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)' }}><MoonLoader color='white' size={18} /></div>} */}
                                                 </div>
-                                            </div>
+                                            </div>}
                                         </AccordionDetails>
                                     </Accordion>
 

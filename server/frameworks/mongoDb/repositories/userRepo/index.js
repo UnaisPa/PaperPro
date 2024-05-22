@@ -8,6 +8,7 @@ import verifyOTPRepo from './verifyOtpRepo.js';
 import editProfileRepo from './editProfileRepo.js';
 import checkUsernameRepo from './checkUsernameRepo.js';
 import getLikedUsersRepo from '../postRepo/getLikedUsersRepo.js';
+import checkCPasswordRepo from './checkCPasswordRepo.js';
 export {
     authUserRepo,
     createUserRepo,
@@ -18,6 +19,7 @@ export {
     verifyOTPRepo,
     editProfileRepo,
     checkUsernameRepo,
-    getLikedUsersRepo
+    getLikedUsersRepo,
+    checkCPasswordRepo
     
 }

@@ -7,7 +7,8 @@ import {
     updateFollowListUseCase,
     verifyOtpUseCase,
     editProfileUseCase,
-    checkUsernameUseCase
+    checkUsernameUseCase,
+    checkCPasswordUseCase
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
@@ -23,6 +24,7 @@ export {
     verifyOtpUseCase,
     editProfileUseCase,
     checkUsernameUseCase,
+    checkCPasswordUseCase,
     
 
     createCommentUseCase,

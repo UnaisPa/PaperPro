@@ -7,7 +7,8 @@ import {
     updateFollowListRepo,
     verifyOTPRepo,
     editProfileRepo,
-    checkUsernameRepo
+    checkUsernameRepo,
+    checkCPasswordRepo,
 }
     from "./userRepo/index.js"
 
@@ -24,6 +25,7 @@ export {
     verifyOTPRepo,
     editProfileRepo,
     checkUsernameRepo,
+    checkCPasswordRepo,
 
     createCommentRepo,
     createPostRepo,

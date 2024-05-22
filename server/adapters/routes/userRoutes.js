@@ -16,7 +16,8 @@ export default (dependencies) => {
         updateFollowListController,
         editProfileController,
         checkUsernameController,
-        refreshTokenController
+        refreshTokenController,
+        checkCPasswordController
     } = userController(dependencies)
 
 
@@ -34,6 +35,8 @@ export default (dependencies) => {
     router.get('/check_username', protect, checkUsernameController);
 
     router.post('/refresh_token',refreshTokenController)
+
+    router.post('/check_current_password',protect,checkCPasswordController)
 
     return router
 }

@@ -8,6 +8,7 @@ import updateFollowListController from "./updateFollowListController.js";
 import editProfileController from "./editProfileController.js";
 import checkUsernameController from "./checkUsernameController.js";
 import refreshTokenController from "./refreshTokenController.js";
+import checkCPasswordController from "./checkCPasswordController.js";
 
 export default (dependencies) =>{
     return {
@@ -21,5 +22,6 @@ export default (dependencies) =>{
         editProfileController:editProfileController(dependencies),
         checkUsernameController:checkUsernameController(dependencies),
         refreshTokenController:refreshTokenController(dependencies),
+        checkCPasswordController:checkCPasswordController(dependencies),
     }
 }
