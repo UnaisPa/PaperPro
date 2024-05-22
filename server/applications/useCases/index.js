@@ -8,7 +8,8 @@ import {
     verifyOtpUseCase,
     editProfileUseCase,
     checkUsernameUseCase,
-    checkCPasswordUseCase
+    checkCPasswordUseCase,
+    updatePasswordUseCase
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
@@ -25,6 +26,7 @@ export {
     editProfileUseCase,
     checkUsernameUseCase,
     checkCPasswordUseCase,
+    updatePasswordUseCase,
     
 
     createCommentUseCase,

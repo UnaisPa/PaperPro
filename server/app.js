@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
  import MongoDBStore from "connect-mongodb-session"
  import session, { MemoryStore } from "express-session";
- let mongoStore = (MongoDBStore)(session)
+//  let mongoStore = (MongoDBStore)(session)
 import { errorHandler, notFound } from "./adapters/middlewares/errorMiddleware.js"
 import userRoutes from "./adapters/routes/userRoutes.js";
 import postRoutes from "./adapters/routes/postRoutes.js"
@@ -16,7 +16,7 @@ import { Server, Socket } from "socket.io"
 import socketConfig from "./socket.js";
 import http from "http"
 const app = express(); 
-//const store = new MemoryStore();
+const store = new MemoryStore();
 import WebSocket from "ws"
 const port = process.env.PORT || 8000
 
@@ -44,17 +44,17 @@ app.use(cors({
 }));
 
 
-var store = new mongoStore(
-    {
-        uri: process.env.MONGO,
-        databaseName: 'paperPro',
-        collection: 'mySessions'
-    });
+// var store = new mongoStore(
+//     {
+//         uri: process.env.MONGO,
+//         databaseName: 'paperPro',
+//         collection: 'mySessions'
+//     });
 
-store.on('error', function (error) {
-    throw new Error(error)
-    // get an error here
-});
+// store.on('error', function (error) {
+//     throw new Error(error)
+//     // get an error here
+// });
 
 //Middlewares
 app.use(express.json());

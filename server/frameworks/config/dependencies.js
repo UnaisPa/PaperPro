@@ -27,7 +27,8 @@ import {
     getPastTradesRepo,
     getAllUsersRepo,
     blockUserRepo,
-    checkCPasswordRepo
+    checkCPasswordRepo,
+    updatePasswordRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -58,7 +59,8 @@ import {
     getPastTradesUseCase,
     getAllUsersUseCase,
     blockUserUseCase,
-    checkCPasswordUseCase
+    checkCPasswordUseCase,
+    updatePasswordUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -75,6 +77,7 @@ const useCase = {
     editProfileUseCase,
     checkUsernameUseCase,
     checkCPasswordUseCase,
+    updatePasswordUseCase,
 
     createCommentUseCase,
     createPostUseCase,
@@ -109,6 +112,7 @@ const repository = {
     editProfileRepo,
     checkUsernameRepo,
     checkCPasswordRepo,
+    updatePasswordRepo,
 
     createCommentRepo,
     createPostRepo,

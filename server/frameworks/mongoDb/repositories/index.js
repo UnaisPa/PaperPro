@@ -9,6 +9,7 @@ import {
     editProfileRepo,
     checkUsernameRepo,
     checkCPasswordRepo,
+    updatePasswordRepo
 }
     from "./userRepo/index.js"
 
@@ -26,6 +27,7 @@ export {
     editProfileRepo,
     checkUsernameRepo,
     checkCPasswordRepo,
+    updatePasswordRepo,
 
     createCommentRepo,
     createPostRepo,

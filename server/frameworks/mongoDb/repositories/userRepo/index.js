@@ -9,6 +9,7 @@ import editProfileRepo from './editProfileRepo.js';
 import checkUsernameRepo from './checkUsernameRepo.js';
 import getLikedUsersRepo from '../postRepo/getLikedUsersRepo.js';
 import checkCPasswordRepo from './checkCPasswordRepo.js';
+import updatePasswordRepo from './updatePasswordRepo.js';
 export {
     authUserRepo,
     createUserRepo,
@@ -20,6 +21,7 @@ export {
     editProfileRepo,
     checkUsernameRepo,
     getLikedUsersRepo,
-    checkCPasswordRepo
+    checkCPasswordRepo,
+    updatePasswordRepo
     
 }

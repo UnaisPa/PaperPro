@@ -17,6 +17,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
+import ForgotPasswordDialog from '../components/Dialogs/ForgotPasswordDialog'
 
 const EditProfile = () => {
     const dispatch = useDispatch();
@@ -216,8 +217,9 @@ const EditProfile = () => {
             axios.post('/users/check_current_password',{userId:currentUser._id,password:cpassword}).then((response)=>{
                 if(response.data.isPasswordTrue){
                     setIsCpasswordTrue(true);
-                    toast.error('Wrong Password, Please proceed to forgot password.')
+                    
                 }else{
+                    toast.error('Wrong Password, Please proceed to forgot password.')
                     setCpasswordErr('Wrong Password!')
                 }
             })
@@ -225,6 +227,8 @@ const EditProfile = () => {
         }
         
     }
+
+    const [dialogOpen,setDialogOpen] = useState(false);
     return (
         <>
             {loading ? (<TradingLoader />) : <><Header />
@@ -329,6 +333,7 @@ const EditProfile = () => {
                                                     />
                                                      <div style={{ position: 'absolute', right: '2%', top: '50%', transform: 'translateY(-50%)' }}><button type='button' onClick={checkCurrentPassword} className=' text-slate-200 px-3 py-1 bg-slate-700 hover:bg-opacity-75 rounded-md' >Change</button></div>
                                                 </div>
+                                                <p onClick={()=>setDialogOpen(true)} className='pt-4 text-sm cursor-pointer float-right text-slate-500' >Forgot password?</p>
                                             </div>
                                             {isCpasswordTrue&&<div className="w-full mb-3">
                                                 <label style={validateErrors.password && { color: "rgb(194 65 12)" }} className="block text-sm font-medium leading-6 text-slate-300">
@@ -361,6 +366,7 @@ const EditProfile = () => {
                                 {/* <p className="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about yourself.</p> */}
                             </div>
                         </form>
+                        {dialogOpen&&<ForgotPasswordDialog userId={currentUser._id} setDialogOpen={setDialogOpen} />}
                     </div>
                 </div></>}
         </>

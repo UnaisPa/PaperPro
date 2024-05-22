@@ -10,6 +10,7 @@ const authAdminRepo = async(res,email,password) =>{
             if (await admin.matchPassword(password)) {
                 const token = await generateToken(res, admin._id);
                 const refreshToken = await generateRefreshToken(res,admin._id);
+                
                 //remove password from the response
                 const { password: pass, ...rest } = admin._doc;
                 return {success:true, admin: rest, token, refreshToken };

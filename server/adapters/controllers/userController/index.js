@@ -9,6 +9,8 @@ import editProfileController from "./editProfileController.js";
 import checkUsernameController from "./checkUsernameController.js";
 import refreshTokenController from "./refreshTokenController.js";
 import checkCPasswordController from "./checkCPasswordController.js";
+import verifyOtpController from "./verifyOtpController.js";
+import updatePasswordController from "./updatePasswordController.js";
 
 export default (dependencies) =>{
     return {
@@ -23,5 +25,7 @@ export default (dependencies) =>{
         checkUsernameController:checkUsernameController(dependencies),
         refreshTokenController:refreshTokenController(dependencies),
         checkCPasswordController:checkCPasswordController(dependencies),
+        verifyOtpController:verifyOtpController(dependencies),
+        updatePasswordController:updatePasswordController(dependencies),
     }
 }

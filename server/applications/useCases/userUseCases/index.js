@@ -8,6 +8,7 @@ import { verifyOtpUseCase } from "./verifyOtpUseCase.js";
 import { editProfileUseCase } from "./editProfileUseCase.js";
 import { checkUsernameUseCase } from "./checkUsernameUseCase.js";
 import { checkCPasswordUseCase } from "./checkCPasswordUseCase.js";
+import { updatePasswordUseCase } from "./updatePasswordUseCase.js";
 
 export {authUserUseCase,
     createUserUseCase,
@@ -18,5 +19,6 @@ export {authUserUseCase,
     verifyOtpUseCase,
     editProfileUseCase,
     checkUsernameUseCase,
-    checkCPasswordUseCase
+    checkCPasswordUseCase,
+    updatePasswordUseCase
 }

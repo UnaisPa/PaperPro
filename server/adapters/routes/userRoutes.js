@@ -17,7 +17,9 @@ export default (dependencies) => {
         editProfileController,
         checkUsernameController,
         refreshTokenController,
-        checkCPasswordController
+        checkCPasswordController,
+        verifyOtpController,
+        updatePasswordController
     } = userController(dependencies)
 
 
@@ -36,7 +38,9 @@ export default (dependencies) => {
 
     router.post('/refresh_token',refreshTokenController)
 
-    router.post('/check_current_password',protect,checkCPasswordController)
+    router.post('/check_current_password',protect,checkCPasswordController);
+    router.post('/verify_otp_forgotpassword',verifyOtpController);
+    router.put('/update_password/:id',updatePasswordController)
 
     return router
 }
