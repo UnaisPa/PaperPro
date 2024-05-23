@@ -36,7 +36,7 @@ const WatchlistComponent = () => {
                                 <h1 className=' mt-3 mx-2 float-right cursor-pointer text-slate-200 hover:bg-slate-700 rounded-full p-2' ><MdOutlineBookmarkRemove size={20} /></h1>
                                 <h1 className=' mt-10 text-xl font-semibold pl-3' >{stock.symbol}</h1>
                                 <p className='text-xs pl-3 opacity-80 hover:opacity-100 cursor-pointer' >Stock Details</p>
-                            </div>
+                            </div> 
                         </div> 
                     )
                 })}
