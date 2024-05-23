@@ -45,7 +45,7 @@ const Profile = () => {
     const getUserProfile = async () => {
         const userId = currentUser._id
         setLoading(true);
-        await axios.get(`/users/profile?userId=${userId}`).then((response) => {
+        axios.get(`/users/profile?userId=${userId}`).then((response) => {
             dispatch(setProfile(response.data.user));
             dispatch(setPosts(response.data.user.posts))
             dispatch(setUserIdForGettingTrades(response.data.user._id))

@@ -9,13 +9,16 @@ import {
     editProfileUseCase,
     checkUsernameUseCase,
     checkCPasswordUseCase,
-    updatePasswordUseCase
+    updatePasswordUseCase,
+    addWatchlistUseCase,
+    getWatchlistUseCase
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
 import { authAdminUseCase,getAllUsersUseCase,blockUserUseCase } from "./adminUseCases/index.js"
 import {createTradeUseCase, getPositionsUseCase,updatePositionUseCase,getTotalProfitUseCase,getPastTradesUseCase} from "./portfolioUseCase/index.js"
 export {
+    //user
     authUserUseCase,
     createUserUseCase,
     getUserByIdUseCase,
@@ -27,8 +30,10 @@ export {
     checkUsernameUseCase,
     checkCPasswordUseCase,
     updatePasswordUseCase,
+    addWatchlistUseCase,
+    getWatchlistUseCase,
     
-
+    //post
     createCommentUseCase,
     createPostUseCase,
     getAllPostsUseCase,

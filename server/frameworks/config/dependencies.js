@@ -28,7 +28,8 @@ import {
     getAllUsersRepo,
     blockUserRepo,
     checkCPasswordRepo,
-    updatePasswordRepo
+    updatePasswordRepo,
+    addWatchlistRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -60,13 +61,17 @@ import {
     getAllUsersUseCase,
     blockUserUseCase,
     checkCPasswordUseCase,
-    updatePasswordUseCase
+    updatePasswordUseCase,
+    addWatchlistUseCase,
+    getWatchlistUseCase
 
 
 } from "../../applications/useCases/index.js";
 import getLikedUsersRepo from "../mongoDb/repositories/postRepo/getLikedUsersRepo.js";
+import getWatchlistRepo from "../mongoDb/repositories/userRepo/getWatchlistRepo.js";
 
 const useCase = {
+    //User
     authUserUseCase,
     createUserUseCase,
     getUserByIdUseCase,
@@ -78,7 +83,10 @@ const useCase = {
     checkUsernameUseCase,
     checkCPasswordUseCase,
     updatePasswordUseCase,
+    addWatchlistUseCase,
+    getWatchlistUseCase,
 
+    //Post
     createCommentUseCase,
     createPostUseCase,
     getAllPostsUseCase,
@@ -102,6 +110,7 @@ const useCase = {
 }
 
 const repository = {
+    //User
     authUserRepo,
     createUserRepo,
     getUserByIdRepo,
@@ -113,7 +122,10 @@ const repository = {
     checkUsernameRepo,
     checkCPasswordRepo,
     updatePasswordRepo,
+    addWatchlistRepo,
+    getWatchlistRepo,
 
+    //Post
     createCommentRepo,
     createPostRepo,
     getAllPostsRepo,

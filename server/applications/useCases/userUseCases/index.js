@@ -9,6 +9,8 @@ import { editProfileUseCase } from "./editProfileUseCase.js";
 import { checkUsernameUseCase } from "./checkUsernameUseCase.js";
 import { checkCPasswordUseCase } from "./checkCPasswordUseCase.js";
 import { updatePasswordUseCase } from "./updatePasswordUseCase.js";
+import { addWatchlistUseCase } from "./addWatchlistUseCase.js";
+import { getWatchlistUseCase } from "./getWatchlistUseCase.js";
 
 export {authUserUseCase,
     createUserUseCase,
@@ -20,5 +22,7 @@ export {authUserUseCase,
     editProfileUseCase,
     checkUsernameUseCase,
     checkCPasswordUseCase,
-    updatePasswordUseCase
+    updatePasswordUseCase,
+    addWatchlistUseCase,
+    getWatchlistUseCase
 }

@@ -10,6 +10,8 @@ import checkUsernameRepo from './checkUsernameRepo.js';
 import getLikedUsersRepo from '../postRepo/getLikedUsersRepo.js';
 import checkCPasswordRepo from './checkCPasswordRepo.js';
 import updatePasswordRepo from './updatePasswordRepo.js';
+import addWatchlistRepo from './addWatchlistRepo.js';
+import getWatchlistRepo from './getWatchlistRepo.js';
 export {
     authUserRepo,
     createUserRepo,
@@ -22,6 +24,8 @@ export {
     checkUsernameRepo,
     getLikedUsersRepo,
     checkCPasswordRepo,
-    updatePasswordRepo
+    updatePasswordRepo,
+    addWatchlistRepo,
+    getWatchlistRepo
     
 }

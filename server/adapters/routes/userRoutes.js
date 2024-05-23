@@ -19,7 +19,9 @@ export default (dependencies) => {
         refreshTokenController,
         checkCPasswordController,
         verifyOtpController,
-        updatePasswordController
+        updatePasswordController,
+        addWatchlistController,
+        getWatchlistController
     } = userController(dependencies)
 
 
@@ -40,7 +42,9 @@ export default (dependencies) => {
 
     router.post('/check_current_password',protect,checkCPasswordController);
     router.post('/verify_otp_forgotpassword',verifyOtpController);
-    router.put('/update_password/:id',updatePasswordController)
+    router.put('/update_password/:id',updatePasswordController);
+    router.post('/add_to_watchlist',protect,addWatchlistController);
+    router.get('/get_watchlist/:id',protect,getWatchlistController);
 
     return router
 }

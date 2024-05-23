@@ -16,6 +16,7 @@ import isUSMarketOpen from '../helper/isUSMarketOpen'
 import ErrorDialog from '../components/Dialogs/ErrorDialog'
 import { RiStockLine } from "react-icons/ri";
 import SuccessDialog from '../components/Dialogs/successDialog'
+import { IoMdAdd } from "react-icons/io";
 
 const ENDPOINT = 'ws://localhost:5050';
 
@@ -231,6 +232,20 @@ const StockData = () => {
     }, [newData]);
 
 
+    const addToWatchlist = () =>{
+        const userId = currentUser._id;
+        axios.post('/users/add_to_watchlist',{userId:userId,stockSymbol:enteredSymbol}).then((response)=>{
+            if(response.data.success){
+                toast.success(response.data.message);
+            }else{
+                toast.error(response.data.message);
+            }
+        }).catch((err)=>{
+            toast.error(err.response?.data?err.response?.data.message:err.message)
+            console.log(err);
+        })
+    }
+
     //console.log(data) 
     return (
         <div>
@@ -273,7 +288,7 @@ const StockData = () => {
                                 </div>
                                 <div className="relative w-1/2 inline-block text-left">
                                     <div>
-                                        <button
+                                        <button type='button'
                                             className="inline-flex justify-end w-full rounded-md shadow-sm  py-2 bg- text-sm font-medium text-slate-300 hover:text-gray-200 focus:outline-non"
                                             onClick={() => setIsOpen(!isOpen)}
                                         >
@@ -359,8 +374,9 @@ const StockData = () => {
             </div>
             {dialogOpen&&<ErrorDialog setDialogOpen={setDialogOpen}  />}
             {successDialogOpen && <SuccessDialog setDialogOpen={setSuccessDialogOpen} />}
-            <div className='w-11/12 sm:w-4/5 mx-auto mt-4 mb-2 ' >
-                <p onClick={()=>navigate(`/advanced_chart/${enteredSymbol}`)} className='float-right  border border-slate-500 rounded-xl px-3 py-1 mr-8 cursor-pointer text-slate-300 flex hover:opacity-85' ><RiStockLine className=' rounded-3xl pr-1' color='white' size={20} /><span> Advanced Chart</span></p>
+            <div className='w-4/5 sm:w-4/5 mx-auto  mt-4 mb-2 sm:flex  sm:justify-between' >
+                <p onClick={addToWatchlist} className='mx-auto sm:mx-0 mt-1 sm:mt-0 sm:w-1/5  text-center border border-slate-500 rounded-xl px-3 py-1 sm:mr-8 cursor-pointer text-slate-300 flex hover:opacity-85' ><IoMdAdd className=' rounded-3xl pr-1' color='white' size={20} /><span> Add to watchlist</span></p>
+                <p onClick={()=>navigate(`/advanced_chart/${enteredSymbol}`)} className='mx-auto sm:mx-0 text-center w-full mt-2 sm:mt-0 sm:w-1/5 sm:mr-8  border border-slate-500 rounded-xl px-3 py-1 mr-8 cursor-pointer text-slate-300 flex hover:opacity-85' ><RiStockLine className=' rounded-3xl pr-1' color='white' size={20} /><span> Advanced Chart</span></p>
             </div>
             <div className='h-96 mx-auto w-11/12 sm:w-4/5 mt-10' >
                 <CompanyProfile symbol={enteredSymbol} isTransparent autosize colorTheme='dark' />
