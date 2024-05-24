@@ -11,6 +11,7 @@ import { checkCPasswordUseCase } from "./checkCPasswordUseCase.js";
 import { updatePasswordUseCase } from "./updatePasswordUseCase.js";
 import { addWatchlistUseCase } from "./addWatchlistUseCase.js";
 import { getWatchlistUseCase } from "./getWatchlistUseCase.js";
+import { deleteWatchlistUseCase } from "./deleteWatchlistUseCase.js";
 
 export {authUserUseCase,
     createUserUseCase,
@@ -24,5 +25,6 @@ export {authUserUseCase,
     checkCPasswordUseCase,
     updatePasswordUseCase,
     addWatchlistUseCase,
-    getWatchlistUseCase
+    getWatchlistUseCase,
+    deleteWatchlistUseCase
 }

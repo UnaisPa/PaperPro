@@ -10,7 +10,8 @@ import {
     checkUsernameRepo,
     checkCPasswordRepo,
     updatePasswordRepo,
-    addWatchlistRepo
+    addWatchlistRepo,
+    deleteWatchlistRepo
 }
     from "./userRepo/index.js"
 
@@ -30,6 +31,7 @@ export {
     checkCPasswordRepo,
     updatePasswordRepo,
     addWatchlistRepo,
+    deleteWatchlistRepo,
 
     createCommentRepo,
     createPostRepo,

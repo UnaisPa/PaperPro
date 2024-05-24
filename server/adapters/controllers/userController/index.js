@@ -13,6 +13,7 @@ import verifyOtpController from "./verifyOtpController.js";
 import updatePasswordController from "./updatePasswordController.js";
 import addWatchlistController from "./addWatchlistController.js";
 import getWatchlistController from "./getWatchlistController.js";
+import deleteWatchlistController from "./deleteWatchlistController.js";
 
 export default (dependencies) =>{
     return {
@@ -30,6 +31,7 @@ export default (dependencies) =>{
         verifyOtpController:verifyOtpController(dependencies),
         updatePasswordController:updatePasswordController(dependencies),
         addWatchlistController:addWatchlistController(dependencies),
-        getWatchlistController:getWatchlistController(dependencies)
+        getWatchlistController:getWatchlistController(dependencies),
+        deleteWatchlistController:deleteWatchlistController(dependencies),
     }
 }

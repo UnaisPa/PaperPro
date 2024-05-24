@@ -21,7 +21,8 @@ export default (dependencies) => {
         verifyOtpController,
         updatePasswordController,
         addWatchlistController,
-        getWatchlistController
+        getWatchlistController,
+        deleteWatchlistController
     } = userController(dependencies)
 
 
@@ -33,7 +34,7 @@ export default (dependencies) => {
     router.post('/verify_otp', registerUserController)
     router.post('/google_auth', googleAuthController);
     router.get('/profile', protect, getUserByIdController)
-    router.post('/logout', protect, logoutUserController)
+    router.post('/logout', logoutUserController)
     router.put('/update_follow_list', protect, updateFollowListController);
     router.put('/edit_profile/:id', protect, editProfileController)
     router.get('/check_username', protect, checkUsernameController);
@@ -45,6 +46,7 @@ export default (dependencies) => {
     router.put('/update_password/:id',updatePasswordController);
     router.post('/add_to_watchlist',protect,addWatchlistController);
     router.get('/get_watchlist/:id',protect,getWatchlistController);
+    router.delete('/delete_watchlist_item/:id',protect,deleteWatchlistController)
 
     return router
 }

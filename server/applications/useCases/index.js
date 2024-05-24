@@ -11,7 +11,8 @@ import {
     checkCPasswordUseCase,
     updatePasswordUseCase,
     addWatchlistUseCase,
-    getWatchlistUseCase
+    getWatchlistUseCase,
+    deleteWatchlistUseCase
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
@@ -32,6 +33,7 @@ export {
     updatePasswordUseCase,
     addWatchlistUseCase,
     getWatchlistUseCase,
+    deleteWatchlistUseCase,
     
     //post
     createCommentUseCase,

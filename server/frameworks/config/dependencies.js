@@ -29,7 +29,8 @@ import {
     blockUserRepo,
     checkCPasswordRepo,
     updatePasswordRepo,
-    addWatchlistRepo
+    addWatchlistRepo,
+    deleteWatchlistRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -63,7 +64,8 @@ import {
     checkCPasswordUseCase,
     updatePasswordUseCase,
     addWatchlistUseCase,
-    getWatchlistUseCase
+    getWatchlistUseCase,
+    deleteWatchlistUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -85,6 +87,7 @@ const useCase = {
     updatePasswordUseCase,
     addWatchlistUseCase,
     getWatchlistUseCase,
+    deleteWatchlistUseCase,
 
     //Post
     createCommentUseCase,
@@ -124,6 +127,7 @@ const repository = {
     updatePasswordRepo,
     addWatchlistRepo,
     getWatchlistRepo,
+    deleteWatchlistRepo,
 
     //Post
     createCommentRepo,
