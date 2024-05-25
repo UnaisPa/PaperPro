@@ -9,31 +9,18 @@ import TabsComponent from '../components/Tabs.jsx';
 import { LuClipboardEdit } from "react-icons/lu";
 import { CiSaveDown1 } from "react-icons/ci";
 import { setPosts } from '../redux/postSlice.js';
-import EditModel from "../components/Dialogs/EditDialog.jsx"
+import { FiLogOut } from "react-icons/fi";
 import { setUserIdForGettingTrades } from '../redux/userSlice.js';
+import LogoutDialog from '../components/Dialogs/LogoutDialog.jsx';
 const Profile = () => {
     const { currentUser } = useSelector((state) => state.user);
     const {posts} = useSelector((state)=>state.posts)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const handleLogout = (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem('jwt');
-        console.log(token)
-        axios.post('/users/logout', null, { withCredentials: true }).then((response) => {
-            toast.success(response.data.message)
-            console.log(response.data)
-            localStorage.removeItem('jwt');
-            localStorage.removeItem('root');
-            localStorage.removeItem('refreshToken')
-            window.location.href = '/'
-        }).catch((err) => {
-            console.log(err.response ? err.response.data : err.message);
-            toast.error(err.response ? err.response.data.message : err.message);
-        })
+ 
 
-    }
+    const [openDialog,setOpenDialog] = useState(false)
 
     useEffect(() => {
         getUserProfile()
@@ -102,6 +89,10 @@ const Profile = () => {
                                     className="rounded-lg flex text-xs border border-slate-400 px-3.5 py-2.5 hover:text-slate-50   text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                    <CiSaveDown1 size={16} className='mr-2' /> Saved Posts
                                 </button>
+                                <button onClick={()=>setOpenDialog(true)}
+                                    className="rounded-lg flex text-xs border border-slate-400 ml-3 px-3.5 py-2.5 hover:text-red-300   text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
+                                   <FiLogOut size={16} className='mr-2' /> Logout
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -115,9 +106,7 @@ const Profile = () => {
                     <TabsComponent loading={loading} />
                 </div>
             </section>
-            <button className='border text-white' onClick={handleLogout} >
-                Logout
-            </button>
+            {openDialog&&<LogoutDialog setOpenDialog={setOpenDialog} />}
         </div>
     )
 }
