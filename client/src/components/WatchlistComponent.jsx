@@ -47,9 +47,9 @@ const WatchlistComponent = () => {
                     return (
                         <div key={stock._id} className='border mt-1.5 rounded-md border-slate-500 flex justify-between' >
                             <SingleTicker symbol={stock.symbol} isTransparent colorTheme='dark' />
-                            <div onClick={()=>navigate(`/symbol/${stock.symbol}`)} className=' w-1/2 sm:w-1/3 ' >
+                            <div  className=' w-1/2 sm:w-1/3 ' >
                                 <h1 onClick={() => removeItem(stock._id)} className=' mt-3 mx-2 float-right cursor-pointer text-slate-200 hover:bg-slate-700 rounded-full p-2' ><MdOutlineBookmarkRemove size={20} /></h1>
-                                <div className='cursor-pointer my-10  w-fit' >
+                                <div onClick={()=>navigate(`/symbol/${stock.symbol}`)} className='cursor-pointer py-10  w-3/4' >
                                     <h1 className=' text-xl font-semibold pl-3' >{stock.symbol}</h1>
                                     <p className='text-xs pl-3 opacity-80 hover:opacity-100 cursor-pointer' >Stock Details</p>
                                 </div>
