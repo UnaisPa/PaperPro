@@ -3,6 +3,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, Navba
 import { useNavigate, useLocation} from "react-router-dom";
 import { BiSolidUserCircle } from "react-icons/bi"; 
 import {useSelector} from "react-redux"
+import { GrChat } from "react-icons/gr";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -15,7 +16,8 @@ export default function Header() {
     { label: "Portfolio", path: "/portfolio" },
     { label: "News", path: "/news" },
     { label: "Stocks", path: '/stocks'},
-    { label: "Tutorial", path: '/tutorial'}
+    { label: "Tutorial", path: '/tutorial'},
+    {label: "Chat",path:'/chat'}
   ];
 
   return (
@@ -30,7 +32,7 @@ export default function Header() {
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={location.pathname === item.path}>
             <Link className={location.pathname === item.path ? "text-primary font-semibold text-sm cursor-pointer" : "text-secondary cursor-pointer text-sm"} onClick={() => history(item.path)}>
-              {item.label}
+              {item.label=='Chat'?<GrChat className="mt-2" />:item.label}
             </Link>
           </NavbarItem>
         ))}

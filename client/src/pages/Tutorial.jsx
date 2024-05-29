@@ -2,28 +2,17 @@ import React, { useRef } from 'react';
 import { useState } from 'react';
 import { Menu, Transition, Dialog } from '@headlessui/react';
 import { Fragment } from 'react';
-import { HiBell } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
-import { HiXMark, HiBars3, HiHome } from "react-icons/hi2"
-import { BiChevronDown } from 'react-icons/bi';
+import { HiXMark, HiHome } from "react-icons/hi2"
 import Header from '../components/Header';
 import { TbPointFilled } from "react-icons/tb";
 import { RiStockFill } from "react-icons/ri";
 import { MdBarChart } from "react-icons/md";
 
 const navigation = [
-    { name: 'Paper pro', href: '#paper_pro', icon: HiHome, current: true },
-    { name: 'Why paper trading', href: '#why_paper_trading', icon: RiStockFill, current: false },
-    { name: 'How to Trade', href: '#', icon: MdBarChart, current: false },
-    { name: 'Calendar', href: '#', icon: HiBell, current: false },
-    { name: 'Documents', href: '#', icon: HiBell, current: false },
-    { name: 'Reports', href: '#', icon: HiBell, current: false },
-];
-
-const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Paper pro', icon: HiHome },
+    { name: 'Why paper trading', icon: RiStockFill},
+    { name: 'How to Trade', icon: MdBarChart },
 ];
 
 function classNames(...classes) {

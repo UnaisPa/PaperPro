@@ -30,6 +30,7 @@ import AdvancedChart from "./components/AdvancedChart";
 import UserManagement from "./pages/admin/UserManagement";
 import Sidebar from "./components/admin/SideBar";
 import Tutorial from "./pages/Tutorial";
+import Chat from "./pages/Chat";
 const EditProfilePage = React.lazy(() => import("./pages/EditProfile"))
 function App() {
     const { registerPage } = useSelector((state) => state.condRender);
@@ -54,6 +55,7 @@ function App() {
                             <Route path="/edit_profile" element={<EditProfile />} />
                             <Route path="/advanced_chart/:symbol" element={<AdvancedChart/>} />
                             <Route path="/tutorial" element={<Tutorial/>} />
+                            <Route path="/chat" element={<Chat/>} />
                             {/* <Route path='/edit_profile' element={<Suspense fallback={<TradingLoader/>}>
                                 <EditProfilePage />
                             </Suspense>} /> */} 
