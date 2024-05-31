@@ -10,10 +10,12 @@ import userRoutes from "./adapters/routes/userRoutes.js";
 import postRoutes from "./adapters/routes/postRoutes.js"
 import adminRoutes from "./adapters/routes/adminRoutes.js";
 import portfolioRoutes from "./adapters/routes/portfolioRoutes.js";
+import chatRoutes from "./adapters/routes/chatRoutes.js";
 
 import dependencies from "./frameworks/config/dependencies.js";
 import { Server, Socket } from "socket.io"
 import socketConfig from "./socket.js";
+import sockeIoConfig from "./socketIo.js";
 import http from "http"
 const app = express(); 
 const store = new MemoryStore();
@@ -21,9 +23,11 @@ import WebSocket from "ws"
 const port = process.env.PORT || 8000
 
 connectDB();
-// export const io = new Server(5173, {
-//     cors: { origin: 'https://localhost:5173' }
-// });
+
+export const io = new Server(5252, {
+    cors: { origin: 'http://localhost:5173' }
+});
+ sockeIoConfig()
 // const server = http.createServer();
 export const wss = new WebSocket.Server({ port: 5050 });
 
@@ -42,7 +46,7 @@ app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true, // If frontend sends credentials (like cookies)
 }));
-
+ 
 
 // var store = new mongoStore(
 //     {
@@ -78,7 +82,8 @@ app.use(session({
 app.use('/api/users', userRoutes(dependencies));
 app.use('/api/post', postRoutes(dependencies));
 app.use('/api/admin', adminRoutes(dependencies));
-app.use('/api/portfolio', portfolioRoutes(dependencies))
+app.use('/api/portfolio', portfolioRoutes(dependencies));
+app.use('/api/chat',chatRoutes(dependencies));
 
 //Error handler middlewares
 app.use(notFound);

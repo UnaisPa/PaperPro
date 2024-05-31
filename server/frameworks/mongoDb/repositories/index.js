@@ -19,6 +19,7 @@ import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePo
 import {authAdminRepo,getAllUsersRepo,blockUserRepo} from "./adminRepo/index.js"
 
 import {createTradeRepo,getPositionsRepo,updatePositionRepo,getTotalProfitRepo,getPastTradesRepo} from "./portfolioRepo/index.js"
+import {getChatHistoryRepo,saveMessageRepo,createChatRepo,getChatsRepo} from "./chatRepo/index.js"
 export {
     authUserRepo,
     createUserRepo,
@@ -51,6 +52,11 @@ export {
     getPositionsRepo,
     updatePositionRepo,
     getTotalProfitRepo,
-    getPastTradesRepo
+    getPastTradesRepo,
     
+    //chat
+    getChatHistoryRepo,
+    saveMessageRepo,
+    createChatRepo,
+    getChatsRepo
 }

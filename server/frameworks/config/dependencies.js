@@ -30,7 +30,11 @@ import {
     checkCPasswordRepo,
     updatePasswordRepo,
     addWatchlistRepo,
-    deleteWatchlistRepo
+    deleteWatchlistRepo,
+    getChatHistoryRepo,
+    saveMessageRepo,
+    createChatRepo,
+    getChatsRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -65,7 +69,11 @@ import {
     updatePasswordUseCase,
     addWatchlistUseCase,
     getWatchlistUseCase,
-    deleteWatchlistUseCase
+    deleteWatchlistUseCase,
+    getChatHistoryUseCase,
+    saveMessageUseCase,
+    createChatUseCase,
+    getChatsUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -109,7 +117,13 @@ const useCase = {
     getPositionsUseCase,
     updatePositionUseCase,
     getTotalProfitUseCase,
-    getPastTradesUseCase
+    getPastTradesUseCase,
+
+    //chat
+    getChatHistoryUseCase,
+    saveMessageUseCase,
+    createChatUseCase,
+    getChatsUseCase
 }
 
 const repository = {
@@ -151,7 +165,13 @@ const repository = {
     getPositionsRepo,
     updatePositionRepo,
     getTotalProfitRepo,
-    getPastTradesRepo
+    getPastTradesRepo,
+
+    //chat
+    getChatHistoryRepo,
+    saveMessageRepo,
+    createChatRepo,
+    getChatsRepo
 }
 
 export default { useCase, repository } 

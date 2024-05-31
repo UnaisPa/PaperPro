@@ -8,6 +8,7 @@ import postSlice from "./postSlice";
 import adminSlice from "./adminSlice";
 import positionsSlice from "./positionsSlice";
 import completedTradesSlice from "./completedTradesSlice";
+import chatSlice from "./chatSlice";
 const rootReducer = combineReducers({
     user: userReducer,
     tempUser: tempUserSlice,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     posts:postSlice,
     admin:adminSlice,
     positions:positionsSlice,
-    completedTrades:completedTradesSlice
+    completedTrades:completedTradesSlice,
+    chat:chatSlice
 });
 const persistConfig = {
     key: 'root',

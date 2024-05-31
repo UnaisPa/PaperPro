@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import axios from "../axios.js"
+import axios from "../axiosInstance.js"
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import TabsComponent from '../components/Tabs.jsx';
 import { useDispatch } from 'react-redux';
 import { setProfile } from '../redux/userSlice.js';
@@ -13,17 +13,19 @@ import { useSelector } from 'react-redux';
 import TailwindDialog from '../components/TailwindDialog.jsx';
 import { updateFollowList } from '../redux/userSlice.js';
 import { setUserIdForGettingTrades } from '../redux/userSlice.js';
+import { setChatBox,setCurrentChatId,setCurrentReciever } from '../redux/chatSlice.js';
 
 const UserProfile = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
      const { currentUser } = useSelector((state) => state.user);
      const {posts} = useSelector((state)=>state.posts);
+    
     const [user,setUser] = useState(null)
     const [loading, setLoading] = useState(false)
     const [checkAlreadyFollow,setCheckAlreadyFollow] = useState(false)
     const [OpendDialog,setOpendDialog] = useState(false);
-
+    const navigate = useNavigate()
     
     useEffect(()=>{
         
@@ -103,6 +105,20 @@ const UserProfile = () => {
         } 
     }
 
+    const [chatLoading,setChatLoading] = useState(false);
+    const handleChat = () =>{
+        setChatLoading(true)
+        axios.post('/chat/create_chat',{userId:currentUser._id,otherUserId:id}).then((response)=>{
+            console.log(response.data.chatId);
+            dispatch(setCurrentChatId(response.data.chatId));
+            dispatch(setCurrentReciever(user));
+            navigate('/chat')
+        }).catch((err)=>{
+            toast.error(err.response?.data?.message);
+        }).finally(()=>{
+            setChatLoading(false);
+        })
+    }
 
     //console.log(user)
     return (
@@ -144,10 +160,10 @@ const UserProfile = () => {
                                     className=" rounded-lg flex text-xs border border-slate-400 mr-3  px-3.5 py-2 hover:text-blue-200  text-blue-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
                                      Follow
                                 </button>}
-                                {/* <button
-                                    className="rounded-lg flex text-xs border border-slate-400 px-3.5 py-2.5 hover:text-slate-50   text-slate-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
-                                   <CiSaveDown1 size={16} className='mr-2' /> Saved Posts
-                                </button> */}
+                                <button onClick={()=>!chatLoading&&handleChat()}
+                                    className=" rounded-lg flex text-xs border border-slate-400 mr-3  px-3.5 py-2 hover:text-blue-200  text-blue-300 shadow-sm hover:bg-opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mt-5">
+                                    {chatLoading?<><MoonLoader size={12} color='white' className='mr-1' /> Loading </>: "Chat"}
+                                </button>
                             </div>
                         </div>
                     </div>

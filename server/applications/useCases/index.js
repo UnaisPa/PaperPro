@@ -18,6 +18,7 @@ import {
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase} from "./postUseCases/index.js"
 import { authAdminUseCase,getAllUsersUseCase,blockUserUseCase } from "./adminUseCases/index.js"
 import {createTradeUseCase, getPositionsUseCase,updatePositionUseCase,getTotalProfitUseCase,getPastTradesUseCase} from "./portfolioUseCase/index.js"
+import {getChatHistoryUseCase,saveMessageUseCase,createChatUseCase,getChatsUseCase} from "./chatUseCases/index.js"
 export {
     //user
     authUserUseCase,
@@ -55,5 +56,11 @@ export {
     getPositionsUseCase,
     updatePositionUseCase,
     getTotalProfitUseCase,
-    getPastTradesUseCase
+    getPastTradesUseCase,
+
+    //chat
+    getChatHistoryUseCase,
+    saveMessageUseCase,
+    createChatUseCase,
+    getChatsUseCase
 }
