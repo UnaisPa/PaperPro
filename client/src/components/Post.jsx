@@ -17,6 +17,8 @@ import { GoReport } from "react-icons/go";
 import { FaRegShareSquare } from "react-icons/fa";
 import { LuThumbsDown } from "react-icons/lu";
 import LikedUsers from "./Dialogs/LikedUsers.jsx";
+import { MdHideImage } from "react-icons/md";
+import { AiFillDelete } from "react-icons/ai";
 
 const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => {
     const dispatch = useDispatch()
@@ -179,6 +181,20 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
     // view liked users
     const [displayLikedUsers,setDisplayLikedUsers] = useState(false)
 
+    const [isHide,setIsHide] = useState(post.hide)
+    //Hidd Post functionality only calls from admin side 
+    const handleHidePost = (type) =>{
+        if(currentUser.isAdmin){
+            axios.put(`/admin/hide_post/${post._id}`,{type:type},{}).then((response)=>{
+                if(response.data.success){
+                    type=='hide'?toast.success('Post hided'):toast.success('Post Unhided')
+                }
+                console.log('Post hided');
+            }).catch((err)=>{
+                toast.error(err.response?.data?.message);
+            })
+        }
+    }
     return (
         <>
             <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
@@ -192,7 +208,7 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             </h5>
                             <p className="text-[0.65rem]">{timeAgo(post.createdAt)}</p>
                         </div>
-                        {!checkAlreadyFollow && <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>}
+                        {!currentUser.isAdmin&&(!checkAlreadyFollow && <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>)}
                         
                         <div className="relative z-10 inline-block text-left ml-auto mt-2 mr-2">
                             <button
@@ -204,7 +220,32 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             </button>
 
                             {isOpen && (
-                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                currentUser.isAdmin?<div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    
+                                    {isHide==false?<p
+                                        onClick={() => {handleHidePost('hide'),setIsHide(true), setIsOpen(false) }}
+                                        className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                        role="menuitem"
+                                    >
+                                        <MdHideImage size={18} className="mr-2" />Hide Post
+                                    </p>:<p
+                                        onClick={() => {handleHidePost('unhide'),setIsHide(false), setIsOpen(false) }}
+                                        className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                        role="menuitem"
+                                    >
+                                        <MdHideImage size={18} className="mr-2" />Unhide Post
+                                    </p>}
+                                    <p
+                                        onClick={() =>{setIsOpen(false)}}
+                                        className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                        role="menuitem"
+                                    >
+                                        <AiFillDelete size={18} className="mr-2" />Delete Post
+                                    </p>
+                                    
+                                </div>
+                            </div>:<div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <p
                                             onClick={fromSavedPosts?()=>handleSavePost('unsave'):()=> handleSavePost('save')}

@@ -34,7 +34,9 @@ import {
     getChatHistoryRepo,
     saveMessageRepo,
     createChatRepo,
-    getChatsRepo
+    getChatsRepo,
+    getPostsRepo,
+    hidePostRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -73,7 +75,9 @@ import {
     getChatHistoryUseCase,
     saveMessageUseCase,
     createChatUseCase,
-    getChatsUseCase
+    getChatsUseCase,
+    getPostsUseCase,
+    hidePostUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -111,6 +115,8 @@ const useCase = {
     authAdminUseCase,
     getAllUsersUseCase,
     blockUserUseCase,
+    getPostsUseCase,
+    hidePostUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -158,6 +164,8 @@ const repository = {
     authAdminRepo,
     getAllUsersRepo,
     blockUserRepo,
+    getPostsRepo,
+    hidePostRepo,
     
 
     //portfolio

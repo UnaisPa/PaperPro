@@ -5,8 +5,16 @@ import UserManagement from '../../pages/admin/UserManagement';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import { HiMenuAlt1, HiX } from "react-icons/hi";
 import ContentManagement from '../../pages/admin/ContentManagement';
+import { useSelector } from 'react-redux';
+import { FaRegShareSquare } from 'react-icons/fa';
+import { GoReport } from 'react-icons/go';
+import { BiLogOut } from "react-icons/bi";
+import LogoutDialog from '../Dialogs/LogoutDialog';
 
 const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [openDialog,setOpenDialog] = useState(false);
+    const { currentUser } = useSelector((state) => state.user);
     const [sideBarOpen, setSideBarOpen] = useState(true);
     const handleSideBar = (e) => {
         setSideBarOpen(!sideBarOpen);
@@ -23,6 +31,9 @@ const Sidebar = () => {
         // { name: 'Reports', icon: 'chart-bar', component: ContentManagement },
     ];
 
+    const handleLogout = () =>{
+
+    }
     const icons = {
         home: (
             <svg className="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -69,8 +80,8 @@ const Sidebar = () => {
                                 <Link
                                     to={`/admin/${item.name.toLowerCase()}`}
                                     className={`flex items-center px-2 py-2 text-sm font-medium rounded-md ${selected === item.name
-                                            ? 'bg-gray-900 text-white'
-                                            : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                                        ? 'bg-gray-900 text-white'
+                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                                         }`}
                                     onClick={() => setSelected(item.name)}
                                 >
@@ -82,8 +93,37 @@ const Sidebar = () => {
                     </ul>
                 </nav>
             </div>}
-            <div className={`${sideBarOpen?'ml-64':'ml-0'} flex-1  `} >
-                <div className='cursor-pointer hover:opacity-85 m-3' onClick={handleSideBar} >{sideBarOpen ? <HiX color='grey' size={30} /> : <HiMenuAlt1 color='white' size={30} />}</div>
+            <div className={`${sideBarOpen ? 'ml-64' : 'ml-0'} flex-1  `} >
+                <div className='cursor-pointer  flex justify-between  m-3'  >{sideBarOpen ? <HiX onClick={handleSideBar} className='hover:opacity-85' color='grey' size={30} /> : <HiMenuAlt1 onClick={handleSideBar} className='hover:opacity-85' color='white' size={30} />}
+                    {currentUser?.profilePicture ? <img onClick={() => setIsOpen(!isOpen)} src={currentUser.profilePicture} className='w-8 h-8 rounded-full' /> : <div onClick={() => setIsOpen(!isOpen)} className=' w-8 h-8 rounded-full font-semibold text-black bg-primary text-center py-1' >{currentUser.name.split("")[0]}</div>}
+                </div>
+                {isOpen && <div className="origin-top-right absolute mr-3 right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        {/* <p
+                           
+                            className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                            role="menuitem"
+                        >
+                           helo
+                        </p> */}
+                        <p
+                            onClick={() => {setOpenDialog(true), setIsOpen(false) }}
+                            className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                            role="menuitem"
+                        >
+                            <BiLogOut size={18} className="mr-2" /> Logout
+                        </p>
+                        
+                         {/* <p
+                            onClick={() => { setIsOpen(false) }}
+                            className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                            role="menuitem"
+                        >
+                            <GoReport size={18} className="mr-2" />Report Post
+                        </p> */}
+                    </div>
+                </div>}
+                {openDialog&&<LogoutDialog setOpenDialog={setOpenDialog} />}
 
                 <Routes>
                     <Route path="dashboard" element={<Dashboard />} />
