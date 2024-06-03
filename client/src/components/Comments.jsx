@@ -64,7 +64,7 @@ export default function Comments({ post }) {
     return (
         <div className='w-full'>
             <Accordion className='bg-opacity-0 shadow-none' sx={{ background: 'transparent', boxShadow: 'none', padding: 0, }}>
-                <AccordionSummary
+                <AccordionSummary 
 
                     aria-controls=""
                     id="panel1-header"

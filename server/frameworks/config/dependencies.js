@@ -37,7 +37,9 @@ import {
     getChatsRepo,
     getPostsRepo,
     hidePostRepo,
-    deletePostByAdminRepo
+    deletePostByAdminRepo,
+    getReportedPostsRepo,
+    createReportPostRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -79,7 +81,9 @@ import {
     getChatsUseCase,
     getPostsUseCase,
     hidePostUseCase,
-    deletePostByAdminUseCase
+    deletePostByAdminUseCase,
+    getReportedPostsUseCase,
+    createReportPostUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -112,6 +116,7 @@ const useCase = {
     savePostUseCase,
     getSavedPostsUseCase,
     getLikedUsersUseCase,
+    createReportPostUseCase,
 
     //admin
     authAdminUseCase,
@@ -120,6 +125,7 @@ const useCase = {
     getPostsUseCase,
     hidePostUseCase,
     deletePostByAdminUseCase,
+    getReportedPostsUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -161,7 +167,7 @@ const repository = {
     savePostRepo,
     getSavedPostsRepo,
     getLikedUsersRepo,
-
+    createReportPostRepo,
 
     //admin
     authAdminRepo,
@@ -170,7 +176,7 @@ const repository = {
     getPostsRepo,
     hidePostRepo,
     deletePostByAdminRepo,
-
+    getReportedPostsRepo,
 
     //portfolio
     createTradeRepo,

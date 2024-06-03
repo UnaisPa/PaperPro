@@ -6,6 +6,7 @@ import deletePostRepo from "./deletePostRepo.js";
 import savePostRepo from "./savePostRepo.js";
 import getSavedPostsRepo from "./getSavedPostsRepo.js";
 import getLikedUsersRepo from "./getLikedUsersRepo.js";
+import createReportPostRepo from "./createReportPostRepo.js";
 export {
     getAllPostsRepo,
     createCommentRepo,
@@ -14,5 +15,6 @@ export {
     deletePostRepo,
     savePostRepo,
     getSavedPostsRepo,
-    getLikedUsersRepo
+    getLikedUsersRepo,
+    createReportPostRepo
 }

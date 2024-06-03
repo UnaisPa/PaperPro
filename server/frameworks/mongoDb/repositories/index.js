@@ -15,8 +15,8 @@ import {
 }
     from "./userRepo/index.js"
 
-import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePostRepo,savePostRepo,getSavedPostsRepo} from "./postRepo/index.js"
-import {authAdminRepo,getAllUsersRepo,blockUserRepo,getPostsRepo,hidePostRepo,deletePostByAdminRepo} from "./adminRepo/index.js"
+import {createCommentRepo,createPostRepo,getAllPostsRepo,postActionRepo,deletePostRepo,savePostRepo,getSavedPostsRepo,createReportPostRepo} from "./postRepo/index.js"
+import {authAdminRepo,getAllUsersRepo,blockUserRepo,getPostsRepo,hidePostRepo,deletePostByAdminRepo,getReportedPostsRepo} from "./adminRepo/index.js"
 
 import {createTradeRepo,getPositionsRepo,updatePositionRepo,getTotalProfitRepo,getPastTradesRepo} from "./portfolioRepo/index.js"
 import {getChatHistoryRepo,saveMessageRepo,createChatRepo,getChatsRepo} from "./chatRepo/index.js"
@@ -41,6 +41,7 @@ export {
     deletePostRepo,
     savePostRepo,
     getSavedPostsRepo,
+    createReportPostRepo,
     
     //admin
     authAdminRepo,
@@ -49,6 +50,7 @@ export {
     getPostsRepo,
     hidePostRepo,
     deletePostByAdminRepo,
+    getReportedPostsRepo,
 
     //portfolio
     createTradeRepo,

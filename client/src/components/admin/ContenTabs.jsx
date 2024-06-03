@@ -9,6 +9,8 @@ import axios from '../../axiosInstance';
 import { toast } from 'react-toastify';
 import { setPosts,deletePost } from '../../redux/adminSlice';
 import { useDispatch,useSelector } from 'react-redux';
+import ReportedPosts from './ReportedPosts';
+import TradingLoader from '../loader/TradingLoader';
 const ContentTabs = () => {
 
     const [page, setPage] = useState(1);
@@ -16,23 +18,7 @@ const ContentTabs = () => {
     const [hasMore, setHasMore] = useState(true);
     const {posts} = useSelector((state)=>state.admin);
     const dispatch = useDispatch();
-    //const [posts, setPosts] = useState([])
 
-    // const getAllPosts = () => {
-    //     setLoading(true)
-    //     axios.get(`/admin/get_all_posts?page=${page}`).then((response) => {
-    //         setPosts(response.data.posts);
-    //     }).catch((err) => {
-    //         toast.error(err.response?.data?.message);
-    //         console.log(err)
-    //     }).finally(() => {
-    //         setLoading(false)
-    //     })
-    // }
-
-    // useEffect(() => {
-    //      getAllPosts()
-    // }, [page])
     const loadItems = async () => {
         if (loading) return;
         setLoading(true);
@@ -79,27 +65,13 @@ const ContentTabs = () => {
                         </Tab>
                         
                     </TabList>
-                    {/* <TabPanel>
-                        <div className="mt-4 p-1 border-t border-slate-500 rounded-md w-full">
-                            {posts?.length > 0 ? posts.map((post, index) => (
-                                <React.Fragment key={post._id}>
-                                    {loading && index < 3 ? <PostSkeleton /> : <Post post={post} />}
-                                </React.Fragment>
-                            )) : (
-                                <div className='text-center my-9' >
-                                    <CiStickyNote className='mx-auto' size={40} />
-                                    <h3 className='text-xl text-slate-100 mt-1' > Oops! Nothing yet?</h3>
-                                </div>
-                            )}
-                        </div>
-                    </TabPanel> */}
                     <TabPanel>
                         <div>
                             <InfiniteScroll
                                 dataLength={posts?.length}
                                 next={fetchMoreData}
                                 hasMore={hasMore}
-                                loader={<h4>Loading...</h4>}
+                                loader={<TradingLoader />}
                                 endMessage={<p className='text-center text-slate-400 my-4' >No more items to display</p>}
                             >
                                 {posts.map((post, index) => (
@@ -111,7 +83,7 @@ const ContentTabs = () => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div>Reported Posts</div>
+                        <ReportedPosts />
                     </TabPanel>
                     
                 </Tabs>

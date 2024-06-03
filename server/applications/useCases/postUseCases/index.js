@@ -6,6 +6,7 @@ import { deletePostUseCase } from "./deletePostUseCase.js";
 import { savePostUseCase } from "./savePostUseCase.js";
 import { getSavedPostsUseCase } from "./getSavedPostsUseCase.js";
 import { getLikedUsersUseCase } from "./getLikedUsersUseCase.js";
+import { createReportPostUseCase } from "./createReportPostUseCase.js";
 export {
     createCommentUseCase,
     createPostUseCase,
@@ -14,6 +15,7 @@ export {
     deletePostUseCase,
     savePostUseCase,
     getSavedPostsUseCase,
-    getLikedUsersUseCase
+    getLikedUsersUseCase,
+    createReportPostUseCase
     
 }

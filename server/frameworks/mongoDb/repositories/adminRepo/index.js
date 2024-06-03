@@ -4,11 +4,13 @@ import blockUserRepo from "./blockUserRepo.js";
 import getPostsRepo from "./getPostsRepo.js";
 import hidePostRepo from "./hidePostRepo.js";
 import deletePostByAdminRepo from "./deletePostByAdminRepo.js";
+import getReportedPostsRepo from "./getReportedPostsRepo.js";
 export {
     authAdminRepo,
     getAllUsersRepo,
     blockUserRepo,
     getPostsRepo,
     hidePostRepo,
-    deletePostByAdminRepo
+    deletePostByAdminRepo,
+    getReportedPostsRepo
 }
