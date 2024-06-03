@@ -7,13 +7,16 @@ import { CiStickyNote } from "react-icons/ci";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from '../../axiosInstance';
 import { toast } from 'react-toastify';
+import { setPosts,deletePost } from '../../redux/adminSlice';
+import { useDispatch,useSelector } from 'react-redux';
 const ContentTabs = () => {
-
 
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [posts, setPosts] = useState([])
+    const {posts} = useSelector((state)=>state.admin);
+    const dispatch = useDispatch();
+    //const [posts, setPosts] = useState([])
 
     // const getAllPosts = () => {
     //     setLoading(true)
@@ -35,7 +38,9 @@ const ContentTabs = () => {
         setLoading(true);
         try {
             const res = await axios.get(`/admin/get_all_posts?page=${page}`);
-            setPosts(prev => [...prev, ...res.data.posts]);
+            //setPosts(prev => [...prev, ...res.data.posts]);
+            console.log(posts)
+            dispatch(setPosts(res.data.posts))
             if (res.data.posts.length === 0) {
                 setHasMore(false);
             }
@@ -91,7 +96,7 @@ const ContentTabs = () => {
                     <TabPanel>
                         <div>
                             <InfiniteScroll
-                                dataLength={posts.length}
+                                dataLength={posts?.length}
                                 next={fetchMoreData}
                                 hasMore={hasMore}
                                 loader={<h4>Loading...</h4>}

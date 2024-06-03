@@ -3,6 +3,7 @@ import getAllUsersController from "./getAllUsersController.js";
 import blockUserController from "./blockUserController.js";
 import getPostsController from "./getPostsController.js";
 import hidePostController from "./hidePostController.js";
+import deletePostByAdminController from "./deletePostByAdminController.js";
 export default (dependencies) =>{
     return {
         authAdminController:authAdminController(dependencies),
@@ -10,5 +11,6 @@ export default (dependencies) =>{
         blockUserController:blockUserController(dependencies),
         getPostsController:getPostsController(dependencies),
         hidePostController:hidePostController(dependencies),
+        deletePostByAdminController:deletePostByAdminController(dependencies),
     }
 }

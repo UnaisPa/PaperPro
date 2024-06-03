@@ -36,7 +36,8 @@ import {
     createChatRepo,
     getChatsRepo,
     getPostsRepo,
-    hidePostRepo
+    hidePostRepo,
+    deletePostByAdminRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -77,7 +78,8 @@ import {
     createChatUseCase,
     getChatsUseCase,
     getPostsUseCase,
-    hidePostUseCase
+    hidePostUseCase,
+    deletePostByAdminUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -117,6 +119,7 @@ const useCase = {
     blockUserUseCase,
     getPostsUseCase,
     hidePostUseCase,
+    deletePostByAdminUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -166,7 +169,8 @@ const repository = {
     blockUserRepo,
     getPostsRepo,
     hidePostRepo,
-    
+    deletePostByAdminRepo,
+
 
     //portfolio
     createTradeRepo,

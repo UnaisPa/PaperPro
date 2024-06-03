@@ -19,6 +19,7 @@ import { LuThumbsDown } from "react-icons/lu";
 import LikedUsers from "./Dialogs/LikedUsers.jsx";
 import { MdHideImage } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
+import DeletePostDialog from "./admin/DeletePostDialog.jsx";
 
 const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => {
     const dispatch = useDispatch()
@@ -195,6 +196,8 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
             })
         }
     }
+
+    const [deletePostDialogOpen,setDeletePostDialogOpen] = useState(false)
     return (
         <>
             <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
@@ -237,7 +240,7 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                                         <MdHideImage size={18} className="mr-2" />Unhide Post
                                     </p>}
                                     <p
-                                        onClick={() =>{setIsOpen(false)}}
+                                        onClick={() =>{setIsOpen(false) , setDeletePostDialogOpen(true)}}
                                         className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                         role="menuitem"
                                     >
@@ -289,7 +292,7 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                         </div>
                     </div>
                     {OpendDialog&&<TailwindDialog type={'delete_post'} title={'Delete Post'}  description={`Are you sure you want to Delete this post !`} setOpendDialog={setOpendDialog} post={post} />}
-
+                    {deletePostDialogOpen&&<DeletePostDialog postId={post._id} setOpenDialog={setDeletePostDialogOpen} />}
                     <div className="my-2 mt-4">
                         <pre style={{ fontFamily: '"Poppins", sans-serif', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}
                             className={`${expanded
