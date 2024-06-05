@@ -39,7 +39,10 @@ import {
     hidePostRepo,
     deletePostByAdminRepo,
     getReportedPostsRepo,
-    createReportPostRepo
+    createReportPostRepo,
+    getUserPortfolioRepo,
+    getAdminsRepo,
+    createAdminRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -83,7 +86,10 @@ import {
     hidePostUseCase,
     deletePostByAdminUseCase,
     getReportedPostsUseCase,
-    createReportPostUseCase
+    createReportPostUseCase,
+    getUserPortfolioUseCase,
+    getAdminsUseCase,
+    createAdminUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -126,6 +132,10 @@ const useCase = {
     hidePostUseCase,
     deletePostByAdminUseCase,
     getReportedPostsUseCase,
+    getPositionsUseCase,
+    getUserPortfolioUseCase,
+    getAdminsUseCase,
+    createAdminUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -177,6 +187,9 @@ const repository = {
     hidePostRepo,
     deletePostByAdminRepo,
     getReportedPostsRepo,
+    getUserPortfolioRepo,
+    getAdminsRepo,
+    createAdminRepo,
 
     //portfolio
     createTradeRepo,

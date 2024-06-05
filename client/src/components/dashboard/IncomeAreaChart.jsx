@@ -108,7 +108,7 @@ export default function IncomeAreaChart({ slot }) {
     ]);
   }, [slot]);
 
-  return <ReactApexChart options={options} series={series} type="area" height={450} />;
+  return <ReactApexChart options={options} series={series} type="area" height={350} />;
 }
 
 IncomeAreaChart.propTypes = { slot: PropTypes.string };

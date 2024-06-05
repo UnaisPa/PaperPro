@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import formatDate from '../helper/formatDate';
 
@@ -9,6 +9,10 @@ const PortfolioPerformanceGraph = ({ tradingData }) => {
   const profits = tradingData.map(entry => (entry.profit).toFixed(2));
   const investments = tradingData.map(entry => entry.totalPrice);
 
+  useEffect(()=>{
+    console.log(tradingData)
+  },[])
+  
   const series = [{
     name: 'Profit',
     data: profits,

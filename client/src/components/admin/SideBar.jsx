@@ -10,10 +10,13 @@ import { FaRegShareSquare } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
 import { BiLogOut } from "react-icons/bi";
 import LogoutDialog from '../Dialogs/LogoutDialog';
+import PortfolioManagement from '../../pages/admin/PortfolioManagement';
+import PortfolioOverview from './PortfolioOverview';
+import AdminManagement from '../../pages/admin/AdminManagement';
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [openDialog,setOpenDialog] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const { currentUser } = useSelector((state) => state.user);
     const [sideBarOpen, setSideBarOpen] = useState(true);
     const handleSideBar = (e) => {
@@ -26,12 +29,14 @@ const Sidebar = () => {
         { name: 'Dashboard', icon: 'home', component: Dashboard },
         { name: 'Users', icon: 'users', component: UserManagement },
         { name: 'Content', icon: 'folder', component: ContentManagement },
+        { name: 'Portfolio', icon: 'chartBar', component: PortfolioManagement },
+        { name: 'Admin', icon:'briefcase',component: AdminManagement }
         // { name: 'Calendar', icon: 'calendar', component: ContentManagement },
         // { name: 'Documents', icon: 'folder', component: ContentManagement },
         // { name: 'Reports', icon: 'chart-bar', component: ContentManagement },
     ];
 
-    const handleLogout = () =>{
+    const handleLogout = () => {
 
     }
     const icons = {
@@ -60,7 +65,7 @@ const Sidebar = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
             </svg>
         ),
-        'chart-bar': (
+        chartBar: (
             <svg className="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.125 17.625 7.5 15l-4.875 4.875M16.5 17.25a4.125 4.125 0 100-8.25 4.125 4.125 0 000 8.25z" />
             </svg>
@@ -107,14 +112,14 @@ const Sidebar = () => {
                            helo
                         </p> */}
                         <p
-                            onClick={() => {setOpenDialog(true), setIsOpen(false) }}
+                            onClick={() => { setOpenDialog(true), setIsOpen(false) }}
                             className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                             role="menuitem"
                         >
                             <BiLogOut size={18} className="mr-2" /> Logout
                         </p>
-                        
-                         {/* <p
+
+                        {/* <p
                             onClick={() => { setIsOpen(false) }}
                             className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                             role="menuitem"
@@ -123,14 +128,17 @@ const Sidebar = () => {
                         </p> */}
                     </div>
                 </div>}
-                {openDialog&&<LogoutDialog setOpenDialog={setOpenDialog} />}
+                {openDialog && <LogoutDialog setOpenDialog={setOpenDialog} />}
 
                 <Routes>
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path='users' element={<UserManagement />} />
                     <Route path='content' element={<ContentManagement />} />
+                    <Route path='portfolio' element={<PortfolioManagement />} />
+                    <Route path='portfolio/:id' element={<PortfolioOverview />} />
+                    <Route path='admin' element={<AdminManagement />} />
                     <Route path="/" exact element={<Dashboard />} />
-
+                    
                 </Routes>
 
             </div>

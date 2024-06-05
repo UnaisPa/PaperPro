@@ -27,6 +27,7 @@ const getAllUsersRepo = async (page) => {
                     userName: 1,
                     isBlocked:1,
                     profilePicture: 1,
+                    margin:1,
                     'portfolioDetails.totalProfit': 1,
                     'portfolioDetails.transactions': 1
                 }

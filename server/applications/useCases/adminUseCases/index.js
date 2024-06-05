@@ -5,6 +5,9 @@ import { getPostsUseCase } from "./getPostsUseCase.js";
 import { hidePostUseCase } from "./hidePostUseCase.js";
 import { deletePostByAdminUseCase } from "./deletePostByAdminUseCase.js";
 import { getReportedPostsUseCase } from "./getReportedPostsUseCase.js";
+import { getUserPortfolioUseCase } from "./getUserPortfolioUseCase.js";
+import { getAdminsUseCase } from "./getAdminsUseCase.js";
+import { createAdminUseCase } from "./createAdminUseCase.js";
 export {
     authAdminUseCase,
     getAllUsersUseCase,
@@ -12,5 +15,8 @@ export {
     getPostsUseCase,
     hidePostUseCase,
     deletePostByAdminUseCase,
-    getReportedPostsUseCase
+    getReportedPostsUseCase,
+    getUserPortfolioUseCase,
+    getAdminsUseCase,
+    createAdminUseCase
 }

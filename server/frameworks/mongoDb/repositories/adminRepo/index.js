@@ -5,6 +5,9 @@ import getPostsRepo from "./getPostsRepo.js";
 import hidePostRepo from "./hidePostRepo.js";
 import deletePostByAdminRepo from "./deletePostByAdminRepo.js";
 import getReportedPostsRepo from "./getReportedPostsRepo.js";
+import getUserPortfolioRepo from "./getUserPortfolioRepo.js";
+import getAdminsRepo from "./getAdminsRepo.js";
+import createAdminRepo from "./createAdminRepo.js";
 export {
     authAdminRepo,
     getAllUsersRepo,
@@ -12,5 +15,8 @@ export {
     getPostsRepo,
     hidePostRepo,
     deletePostByAdminRepo,
-    getReportedPostsRepo
+    getReportedPostsRepo,
+    getUserPortfolioRepo,
+    getAdminsRepo,
+    createAdminRepo
 }

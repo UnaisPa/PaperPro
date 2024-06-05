@@ -12,9 +12,14 @@ import { setPosts } from '../redux/postSlice.js';
 import { FiLogOut } from "react-icons/fi";
 import { setUserIdForGettingTrades } from '../redux/userSlice.js';
 import LogoutDialog from '../components/Dialogs/LogoutDialog.jsx';
+// import { setCompletedTrades } from '../redux/completedTradesSlice.js';
+import TradeAnalysis from '../components/TradeAnalytics.jsx';
+import PortfolioPerformanceGraph from '../components/performanceChart.jsx';
 const Profile = () => {
+    const [completedTrades,setCompletedTrades] = useState([])
     const { currentUser } = useSelector((state) => state.user);
     const {posts} = useSelector((state)=>state.posts)
+
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -45,6 +50,22 @@ const Profile = () => {
         })
     }
 
+    useEffect(() => {
+        getPastTrades()
+    }, [])
+
+    const getPastTrades = async () => {
+        const userId = currentUser._id
+        axios.get(`/portfolio/get_past_trades/${userId}`).then((response) => {
+            console.log(response.data);
+            setCompletedTrades(response.data.trades)
+            //dispatch(setCompletedTrades(response.data.trades));
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+   
     
 
     
@@ -96,8 +117,8 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='border hidden lg:block w-1/2'>
-
+                    <div className=' hidden lg:block w-1/2'>
+                        <PortfolioPerformanceGraph tradingData={completedTrades} />
                     </div>
                 </div>
                 
