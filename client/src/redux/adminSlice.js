@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     admin: null,
     posts: [],
-    reportedPosts:[]
+    reportedPosts:[],
+    totalTrades:[],
+    averageProfits:[],
 }
 
 const adminSlice = createSlice({
@@ -23,10 +25,16 @@ const adminSlice = createSlice({
         },
         deleteReportedPost:(state,action) =>{
             state.reportedPosts = state.reportedPosts.filter(post => post._id !== action.payload)
+        },
+        setTotalTrades:(state,action) =>{
+            state.totalTrades = action.payload;  
+        },
+        setAverageProfits:(state,action)=>{
+            state.averageProfits = action.payload
         }
         
     }
 })
 
-export const { adminSignInSuccess,deletePost,setPosts,setReportedPosts,deleteReportedPost } = adminSlice.actions;
+export const { adminSignInSuccess,deletePost,setPosts,setReportedPosts,deleteReportedPost,setTotalTrades,setAverageProfits } = adminSlice.actions;
 export default adminSlice.reducer

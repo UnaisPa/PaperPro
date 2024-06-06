@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import GoogleBtn from "../components/GoogleBtn.jsx";
 import { changeToRegister,changeToVerification } from "../redux/condRenderSlice.js";
+import ForgotPasswordDialog from "../components/Dialogs/ForgotPasswordDialog.jsx";
 const Login = () => {
   const initialState = {
     email: "",
@@ -23,6 +24,7 @@ const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const [validateErrors, setValidateErrors] = useState({});
   const [err, setErr] = useState("");
+  const [dialogOpen,setDialogOpen] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -152,9 +154,9 @@ const Login = () => {
                   />
                 </div>
                 <div className="text-xs m-3 float-right ">
-                  <a href="#" className=" text-gray-500 hover:text-gray-400">
+                  <p onClick={()=>setDialogOpen(true)}  className=" text-gray-500 cursor-pointer hover:text-gray-400">
                     Forgot password?
-                  </a>
+                  </p>
                 </div>
               </div>
 
@@ -186,6 +188,7 @@ const Login = () => {
                 className="mx-auto hover:animate-spin cursor-pointer"
               /> */}
               <GoogleBtn/>
+              {dialogOpen&&<ForgotPasswordDialog  setDialogOpen={setDialogOpen} />}
             </div>
           </div>
         </div>

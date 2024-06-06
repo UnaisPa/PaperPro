@@ -8,6 +8,7 @@ import { getReportedPostsUseCase } from "./getReportedPostsUseCase.js";
 import { getUserPortfolioUseCase } from "./getUserPortfolioUseCase.js";
 import { getAdminsUseCase } from "./getAdminsUseCase.js";
 import { createAdminUseCase } from "./createAdminUseCase.js";
+import { getDashboardDetailsUseCase } from "./getDashboardDetailsUseCase.js";
 export {
     authAdminUseCase,
     getAllUsersUseCase,
@@ -18,5 +19,6 @@ export {
     getReportedPostsUseCase,
     getUserPortfolioUseCase,
     getAdminsUseCase,
-    createAdminUseCase
+    createAdminUseCase,
+    getDashboardDetailsUseCase
 }

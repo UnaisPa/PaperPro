@@ -8,6 +8,7 @@ import getReportedPostsRepo from "./getReportedPostsRepo.js";
 import getUserPortfolioRepo from "./getUserPortfolioRepo.js";
 import getAdminsRepo from "./getAdminsRepo.js";
 import createAdminRepo from "./createAdminRepo.js";
+import getDashboardDetailsRepo from "./getDashboardDetailsRepo.js";
 export {
     authAdminRepo,
     getAllUsersRepo,
@@ -18,5 +19,6 @@ export {
     getReportedPostsRepo,
     getUserPortfolioRepo,
     getAdminsRepo,
-    createAdminRepo
+    createAdminRepo,
+    getDashboardDetailsRepo
 }

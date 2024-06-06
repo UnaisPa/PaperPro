@@ -42,7 +42,10 @@ import {
     createReportPostRepo,
     getUserPortfolioRepo,
     getAdminsRepo,
-    createAdminRepo
+    createAdminRepo,
+    getDashboardDetailsRepo,
+    countUnreadRepo,
+    markAsReadRepo
 
 
 } from "../mongoDb/repositories/index.js";
@@ -89,7 +92,10 @@ import {
     createReportPostUseCase,
     getUserPortfolioUseCase,
     getAdminsUseCase,
-    createAdminUseCase
+    createAdminUseCase,
+    getDashboardDetailsUseCase,
+    countUnreadUseCase,
+    markAsReadUseCase
 
 
 } from "../../applications/useCases/index.js";
@@ -136,6 +142,7 @@ const useCase = {
     getUserPortfolioUseCase,
     getAdminsUseCase,
     createAdminUseCase,
+    getDashboardDetailsUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -148,7 +155,9 @@ const useCase = {
     getChatHistoryUseCase,
     saveMessageUseCase,
     createChatUseCase,
-    getChatsUseCase
+    getChatsUseCase,
+    countUnreadUseCase,
+    markAsReadUseCase
 }
 
 const repository = {
@@ -190,6 +199,7 @@ const repository = {
     getUserPortfolioRepo,
     getAdminsRepo,
     createAdminRepo,
+    getDashboardDetailsRepo,
 
     //portfolio
     createTradeRepo,
@@ -202,7 +212,9 @@ const repository = {
     getChatHistoryRepo,
     saveMessageRepo,
     createChatRepo,
-    getChatsRepo
+    getChatsRepo,
+    countUnreadRepo,
+    markAsReadRepo
 }
 
 export default { useCase, repository } 

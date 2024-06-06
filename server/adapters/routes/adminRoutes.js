@@ -4,7 +4,7 @@ import adminController from "../controllers/adminController/index.js"
 
 export default (dependencies) => {
     const { authAdminController,getAllUsersController,blockUserController,getPostsController,hidePostController,deletePostByAdminController,
-        getReportedPostsController,getUserPortfolioController,getAdminsController,createAdminController
+        getReportedPostsController,getUserPortfolioController,getAdminsController,createAdminController,getDashboardDetailsController
      } = adminController(dependencies)
 
     const router = express.Router();
@@ -18,7 +18,8 @@ export default (dependencies) => {
     router.get('/get_all_reported_posts',protect,getReportedPostsController);
     router.get('/portfolio_details/:id',protect,getUserPortfolioController);
     router.get('/get_admins',protect,getAdminsController);
-    router.post('/create_admin',protect,createAdminController)
+    router.post('/create_admin',protect,createAdminController);
+    router.get('/get_dashboard_details',protect,getDashboardDetailsController)
     return router
 
 }

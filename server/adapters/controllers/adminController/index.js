@@ -8,6 +8,7 @@ import getReportedPostsController from "./getReportedPostsController.js";
 import getUserPortfolioController from "./getUserPortfolioController.js";
 import getAdminsController from "./getAdminsController.js";
 import createAdminController from "./createAdminController.js";
+import getDashboardDetailsController from "./getDashboardDetailsController.js";
 export default (dependencies) =>{
     return {
         authAdminController:authAdminController(dependencies),
@@ -19,6 +20,7 @@ export default (dependencies) =>{
         getReportedPostsController:getReportedPostsController(dependencies),
         getUserPortfolioController:getUserPortfolioController(dependencies),
         getAdminsController:getAdminsController(dependencies),
-        createAdminController:createAdminController(dependencies)
+        createAdminController:createAdminController(dependencies),
+        getDashboardDetailsController:getDashboardDetailsController(dependencies)
     }
 }

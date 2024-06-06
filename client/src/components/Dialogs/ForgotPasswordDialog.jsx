@@ -5,7 +5,7 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import axios from "../../axiosInstance"
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { RiStockLine } from "react-icons/ri";
-export default function ForgotPasswordDialog({ setDialogOpen, userId }) {
+export default function ForgotPasswordDialog({ setDialogOpen, }) {
     const [open, setOpen] = useState(true)
 
     const cancelButtonRef = useRef(null);
@@ -33,13 +33,15 @@ export default function ForgotPasswordDialog({ setDialogOpen, userId }) {
         }
     }
 
-    const [verified, setVerified] = useState(false)
+    const [verified, setVerified] = useState(false);
+    const [userId,setUserId] =useState('')
     const verifyOtp = () => {
         if (otp !== 123456) {
             axios.post('/users/verify_otp_forgotpassword', { email, otp }).then((response) => {
                 console.log(response.data);
                 if (response.data.success) {
                     setVerified(true)
+                    setUserId(response.data.userId);
                     toast.success(response.data.message);
                 }
             }).catch((err) => {

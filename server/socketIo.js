@@ -1,4 +1,5 @@
 import { io } from "./app.js";
+import { countUnreadUseCase, markAsReadUseCase } from "./applications/useCases/index.js";
 import dependencies from "./frameworks/config/dependencies.js";
 
 // The socket io configuration for Chat system
@@ -21,6 +22,23 @@ const sockeIoConfig = () => {
                 // Fetch all messages for the chat
                 const { getChatHistoryUseCase } = dependencies.useCase;
                 const messages = await getChatHistoryUseCase(dependencies).executeFunction(chatId);
+
+                // const unreadmessages = await countUnreadUseCase(dependencies).executeFunction(chatId);
+                // if(unreadmessages){
+                //     socket.emit('notification', { unreadMessages: unreadmessages });
+                // }
+
+                // // socket.on('markAsRead', async (chatId) => {
+                // //     await markAsReadUseCase(dependencies).executeFunction(chatId);
+                // //     //await Message.updateMany({ receiver: userId, read: false }, { read: true });
+                // //     console.log(`User ${userId} marked messages as read`);
+                // // });
+
+                // socket.on('markAsRead', async (chatId) => {
+                //     await markAsReadUseCase(dependencies).executeFunction(chatId);
+                //     //await Message.updateMany({ chatId: mongoose.Types.ObjectId(chatId), receiver: mongoose.Types.ObjectId(userId), read: false }, { read: true });
+                //     //console.log(`User ${userId} marked messages as read in chat ${chatId}`);
+                // });
 
                 // Emit the messages to the client
                 socket.emit('chat history', messages);

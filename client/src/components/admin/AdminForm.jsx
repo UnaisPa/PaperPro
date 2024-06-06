@@ -1,11 +1,12 @@
 import { Badge } from '@nextui-org/react'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoPersonAddOutline } from 'react-icons/io5';
 import { RiAdminLine } from "react-icons/ri";
 import { ClipLoader } from 'react-spinners';
 import axios from '../../axiosInstance';
 import { toast } from 'react-toastify';
-import Axios from 'axios' 
+import Axios from 'axios'
+import { useSelector } from 'react-redux';
 const AdminForm = () => {
     const initialState = {
         name: '',
@@ -14,7 +15,7 @@ const AdminForm = () => {
         position: 'admin',
     }
 
-
+    const { currentUser } = useSelector((state) => state.user);
     const [image, setImage] = useState('')
     const [validateErrors, setValidateErrors] = useState({})
     const [formData, setFormData] = useState(initialState);
@@ -57,7 +58,11 @@ const AdminForm = () => {
         }
     }
 
-
+    useEffect(() => {
+        if (!currentUser.isSuperAdmin) {
+            toast.warning('You are not eligible to add a new admin. Only a super admin can add new admins!');
+        }
+    }, [])
 
 
     // useEffect(() => {
@@ -83,36 +88,42 @@ const AdminForm = () => {
     const handleFormData = async (e) => {
         e.preventDefault();
         const formErrors = validate(formData);
-        if (Object.keys(formErrors).length == 0) {
-            console.log(formData)
-            setOnchangeLoader(true)
-            // console.log(imgFile)
-            let profileImageUrl;
-            if (imgFile) {
-                console.log('helooo')
+        if (currentUser.isSuperAdmin) {
 
-                await uploadFile(imgFile).then((imageUrl) => {
-                    // setFormData(prevData => {
-                    //     return { ...prevData, profilePicture: imageUrl };
-                    // })
-                    profileImageUrl=imageUrl
-                })
+            if (Object.keys(formErrors).length == 0) {
+                console.log(formData)
+                setOnchangeLoader(true)
+                // console.log(imgFile)
+                let profileImageUrl;
+                if (imgFile) {
+                    console.log('helooo')
+
+                    await uploadFile(imgFile).then((imageUrl) => {
+                        // setFormData(prevData => {
+                        //     return { ...prevData, profilePicture: imageUrl };
+                        // })
+                        profileImageUrl = imageUrl
+                    })
 
 
-            }
+                }
 
-            //console.log(profileImageUrl)
-            setOnchangeLoader(false)
-            axios.post(`/admin/create_admin`,{formData,profileImageUrl}).then((response) => {
-                toast.success('Admin created successfullly!')
-                //console.log(response.data)
-            }).catch((err) => {
-                console.log(err)
-                toast.error(err.response?.data?.message || err.message)
-            }).finally(() => {
+                //console.log(profileImageUrl)
                 setOnchangeLoader(false)
-            })
+                axios.post(`/admin/create_admin`, { formData, profileImageUrl }).then((response) => {
+                    toast.success('Admin created successfullly!')
+                    //console.log(response.data)
+                }).catch((err) => {
+                    console.log(err)
+                    toast.error(err.response?.data?.message || err.message)
+                }).finally(() => {
+                    setOnchangeLoader(false)
+                })
+            }
+        }else{
+            toast.error('You are not eligible to add a new admin. Only a super admin can add new admins!')
         }
+
 
     }
 
@@ -212,7 +223,7 @@ const AdminForm = () => {
                             </div>
                         </div>
                         <div className="w-full mb-3">
-                        <label style={validateErrors.password && { color: "rgb(194 65 12)" }} className="block text-sm font-medium leading-6 text-slate-300">
+                            <label style={validateErrors.password && { color: "rgb(194 65 12)" }} className="block text-sm font-medium leading-6 text-slate-300">
                                 {validateErrors.password ? validateErrors.password : "Password"}
                             </label>
                             <div className="mt-2">
@@ -242,7 +253,7 @@ const AdminForm = () => {
                                 </select>
                             </div>
                         </div>
-                    <button disabled={onChangeLoader} className=' my-3 px-3 py-2 text-black bg-primary text-sm font-semibold hover:bg-opacity-90 rounded-md' type='submit'>{onChangeLoader?<><ClipLoader className='mr-2' size={15} />Loading..</>:"SUBMIT DETAILS"}</button>
+                        <button disabled={onChangeLoader} className=' my-3 px-3 py-2 text-black bg-primary text-sm font-semibold hover:bg-opacity-90 rounded-md' type='submit'>{onChangeLoader ? <><ClipLoader className='mr-2' size={15} />Loading..</> : "SUBMIT DETAILS"}</button>
                     </form>
                 </div>
             </div>

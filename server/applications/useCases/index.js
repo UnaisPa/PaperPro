@@ -16,9 +16,9 @@ import {
 } from "./userUseCases/index.js"
 
 import {createCommentUseCase,createPostUseCase,getAllPostsUseCase,postActionUseCase,deletePostUseCase,savePostUseCase,getSavedPostsUseCase,getLikedUsersUseCase,createReportPostUseCase} from "./postUseCases/index.js"
-import { authAdminUseCase,getAllUsersUseCase,blockUserUseCase,getPostsUseCase,hidePostUseCase,deletePostByAdminUseCase,getReportedPostsUseCase,getUserPortfolioUseCase,getAdminsUseCase,createAdminUseCase } from "./adminUseCases/index.js"
+import { authAdminUseCase,getAllUsersUseCase,blockUserUseCase,getPostsUseCase,hidePostUseCase,deletePostByAdminUseCase,getReportedPostsUseCase,getUserPortfolioUseCase,getAdminsUseCase,createAdminUseCase,getDashboardDetailsUseCase } from "./adminUseCases/index.js"
 import {createTradeUseCase, getPositionsUseCase,updatePositionUseCase,getTotalProfitUseCase,getPastTradesUseCase} from "./portfolioUseCase/index.js"
-import {getChatHistoryUseCase,saveMessageUseCase,createChatUseCase,getChatsUseCase} from "./chatUseCases/index.js"
+import {getChatHistoryUseCase,saveMessageUseCase,createChatUseCase,getChatsUseCase,countUnreadUseCase,markAsReadUseCase} from "./chatUseCases/index.js"
 export {
     //user
     authUserUseCase,
@@ -58,6 +58,7 @@ export {
     getUserPortfolioUseCase,
     getAdminsUseCase,
     createAdminUseCase,
+    getDashboardDetailsUseCase,
 
     //portfolio
     createTradeUseCase,
@@ -70,5 +71,7 @@ export {
     getChatHistoryUseCase,
     saveMessageUseCase,
     createChatUseCase,
-    getChatsUseCase
+    getChatsUseCase,
+    countUnreadUseCase,
+    markAsReadUseCase
 }

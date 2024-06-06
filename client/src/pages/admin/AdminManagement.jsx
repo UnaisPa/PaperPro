@@ -82,7 +82,7 @@ const AdminManagement = () => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div className='border m-4' > 
+                        <div className=' m-4' > 
                             <AdminForm />
                         </div>
                     </TabPanel>

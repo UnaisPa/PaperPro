@@ -5,6 +5,7 @@ import formatDate from '../helper/formatDate';
 
 
 const PortfolioPerformanceGraph = ({ tradingData }) => {
+    
   const dates = tradingData.map(entry => formatDate(entry.createdAt));
   const profits = tradingData.map(entry => (entry.profit).toFixed(2));
   const investments = tradingData.map(entry => entry.totalPrice);

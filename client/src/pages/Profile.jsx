@@ -118,7 +118,7 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className=' hidden lg:block w-1/2'>
-                        <PortfolioPerformanceGraph tradingData={completedTrades} />
+                        {completedTrades&&<PortfolioPerformanceGraph tradingData={completedTrades} />}
                     </div>
                 </div>
                 

@@ -86,13 +86,14 @@ export default function Comments({ post }) {
                             <React.Fragment key={comment._id} >
 
                                 <div className='flex text-slate-300' >
-                                    <div className=" bg-primary w-7 h-7 rounded-full text-center text-black pt-1.5 font-semibold">N</div>
+                                    
+                                    {comment?.user?.profilePicture?<img src={comment.user.profilePicture} className='w-7 h-7 rounded-full' />:<div className=" bg-primary w-7 h-7 rounded-full text-center text-black pt-1.5 font-semibold">{comment?.user?.name?.split("")[0]}</div>}
                                     <p className='font-semibold mt-1 mx-2 text-sm' >{comment.user.name}</p>
                                     <p className='text-[0.60rem] opacity-70 mt-1.5' >{timeAgo(comment.createdAt)}</p>
                                 </div>
                                 <div className='mt-1' >
                                     <p className='text-slate-300 text-sm ml-9' >{comment.text}</p>
-                                    <p className='text-slate-300 text-[0.70rem] mt-2 opacity-60 ml-9'>Reply</p>
+                                    {/* <p className='text-slate-300 text-[0.70rem] mt-2 opacity-60 ml-9'>Reply</p> */}
                                 </div>
 
                             </React.Fragment>
