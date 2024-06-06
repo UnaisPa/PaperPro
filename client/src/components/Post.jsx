@@ -22,7 +22,7 @@ import { AiFillDelete } from "react-icons/ai";
 import DeletePostDialog from "./admin/DeletePostDialog.jsx";
 import ReportPostDialog from "./Dialogs/ReportPostDialog.jsx";
 
-const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => {
+const Post = ({ post, fromProfile, savedPosts, setSavedPosts, fromSavedPosts }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { currentUser } = useSelector((state) => state.user);
@@ -36,10 +36,10 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
     const [checkAlreadyLike, setCheckAlreadyLike] = useState(false)
 
     //for dropdown button
-    const [isOpen,setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     //for warning dialog
-    const [OpendDialog,setOpendDialog] = useState(false);
+    const [OpendDialog, setOpendDialog] = useState(false);
 
 
 
@@ -94,7 +94,7 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
         const action = 'follow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list', { currentUserId, userId,action }, {
+        await axios.put('/users/update_follow_list', { currentUserId, userId, action }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`
             }
@@ -125,9 +125,9 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
         return currentUser.following.includes(userId);
     }
 
-    
 
-    
+
+
 
     useEffect(() => {
         const check = checkAlreadyFollowing()
@@ -153,56 +153,71 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
     };
 
     // Handling save post and Unsave post by action (save/unsave)
-    const handleSavePost = async(action)=>{
+    const handleSavePost = async (action) => {
         const userId = currentUser._id;
         const postId = post._id
-        
-        await axiosInstance.post('/post/save_post',{userId,postId,action}).then((response)=>{
-            if(action==='unsave'){
+
+        await axiosInstance.post('/post/save_post', { userId, postId, action }).then((response) => {
+            if (action === 'unsave') {
                 handleUnsave(postId)
             }
-            if(response.data.success){
+            if (response.data.success) {
                 toast.success(response.data.message);
-            }else{
+            } else {
                 toast.error(response.data.message);
             }
             console.log(response.data)
             setIsOpen(false);
-        }).catch((err)=>{
+        }).catch((err) => {
             toast.error(err.response?.data.message || err.message)
             console.log(err)
         })
     }
 
     //handle unsave post from frontend;
-    const handleUnsave = (id) =>{
-        const updatedSavedPosts = savedPosts.filter(post =>post._id !==id);
+    const handleUnsave = (id) => {
+        const updatedSavedPosts = savedPosts.filter(post => post._id !== id);
         setSavedPosts(updatedSavedPosts);
     }
 
     // view liked users
-    const [displayLikedUsers,setDisplayLikedUsers] = useState(false)
+    const [displayLikedUsers, setDisplayLikedUsers] = useState(false)
 
-    const [isHide,setIsHide] = useState(post.hide)
+    const [isHide, setIsHide] = useState(post.hide)
 
     //Hidd Post functionality only calls from admin side 
-    const handleHidePost = (type) =>{
-        if(currentUser.isAdmin){
-            axios.put(`/admin/hide_post/${post._id}`,{type:type},{}).then((response)=>{
-                if(response.data.success){
-                    type=='hide'?toast.success('Post hided'):toast.success('Post Unhided')
+    const handleHidePost = (type) => {
+        if (currentUser.isAdmin) {
+            axios.put(`/admin/hide_post/${post._id}`, { type: type }, {}).then((response) => {
+                if (response.data.success) {
+                    type == 'hide' ? toast.success('Post hided') : toast.success('Post Unhided')
                 }
                 console.log('Post hided');
-            }).catch((err)=>{
+            }).catch((err) => {
                 toast.error(err.response?.data?.message);
             })
         }
     }
 
     //Report post
-    const [reportPostDialogOpen,setReportPostDialogOpen] = useState(false)
+    const [reportPostDialogOpen, setReportPostDialogOpen] = useState(false)
 
-    const [deletePostDialogOpen,setDeletePostDialogOpen] = useState(false)
+    const [deletePostDialogOpen, setDeletePostDialogOpen] = useState(false);
+
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Check out this post!',
+                text: post.content,
+                url: window.location.href
+            })
+                .then(() => console.log('Successfully shared'))
+                .catch(error => console.error('Error sharing', error));
+        } else {
+            // Fallback for browsers that do not support the Web Share API
+            alert('Web Share API is not supported in your browser.');
+        }
+    }
     return (
         <>
             <div className={`${fromProfile ? `md:w-3/5` : 'md:w-2/5'} sm:w-4/5 w-11/12 rounded-md text-xs my-2 mx-auto bg-[#333A45]`}>
@@ -216,56 +231,56 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             </h5>
                             <p className="text-[0.65rem]">{timeAgo(post.createdAt)}</p>
                         </div>
-                        {!currentUser.isAdmin&&(!checkAlreadyFollow && <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>)}
-                        
+                        {!currentUser.isAdmin && (!checkAlreadyFollow && <p onClick={handleFollowBtn} className="ml-2 mt-2 cursor-pointer hover:text-blue-400 text-blue-300">Follow</p>)}
+
                         <div className="relative z-10 inline-block text-left ml-auto mt-2 mr-2">
                             <button
                                 className="inline-flex justify-end  hover:bg-gray-600 rounded-full p-1 bg- text-sm font-medium text-slate-300 hover:text-gray-200 focus:outline-non"
                                 onClick={() => setIsOpen(!isOpen)}
                             >
                                 <BiDotsVerticalRounded size={20} className="" />
-                                
+
                             </button>
 
                             {isOpen && (
-                                currentUser.isAdmin?<div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                    
-                                    {isHide==false?<p
-                                        onClick={() => {handleHidePost('hide'),setIsHide(true), setIsOpen(false) }}
-                                        className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
-                                        role="menuitem"
-                                    >
-                                        <MdHideImage size={18} className="mr-2" />Hide Post
-                                    </p>:<p
-                                        onClick={() => {handleHidePost('unhide'),setIsHide(false), setIsOpen(false) }}
-                                        className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
-                                        role="menuitem"
-                                    >
-                                        <MdHideImage size={18} className="mr-2" />Unhide Post
-                                    </p>}
-                                    <p
-                                        onClick={() =>{setIsOpen(false) , setDeletePostDialogOpen(true)}}
-                                        className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
-                                        role="menuitem"
-                                    >
-                                        <AiFillDelete size={18} className="mr-2" />Delete Post
-                                    </p>
-                                    
-                                </div>
-                            </div>:<div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                currentUser.isAdmin ? <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+
+                                        {isHide == false ? <p
+                                            onClick={() => { handleHidePost('hide'), setIsHide(true), setIsOpen(false) }}
+                                            className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            <MdHideImage size={18} className="mr-2" />Hide Post
+                                        </p> : <p
+                                            onClick={() => { handleHidePost('unhide'), setIsHide(false), setIsOpen(false) }}
+                                            className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            <MdHideImage size={18} className="mr-2" />Unhide Post
+                                        </p>}
                                         <p
-                                            onClick={fromSavedPosts?()=>handleSavePost('unsave'):()=> handleSavePost('save')}
+                                            onClick={() => { setIsOpen(false), setDeletePostDialogOpen(true) }}
                                             className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
-                                           {fromSavedPosts?
-                                           <><LuThumbsDown className="mr-2" size={18} />Unsave </>:
-                                           <><MdOutlineSaveAlt className="mr-2" size={18} />Save Post</>}
+                                            <AiFillDelete size={18} className="mr-2" />Delete Post
+                                        </p>
+
+                                    </div>
+                                </div> : <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                        <p
+                                            onClick={fromSavedPosts ? () => handleSavePost('unsave') : () => handleSavePost('save')}
+                                            className="flex px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
+                                            role="menuitem"
+                                        >
+                                            {fromSavedPosts ?
+                                                <><LuThumbsDown className="mr-2" size={18} />Unsave </> :
+                                                <><MdOutlineSaveAlt className="mr-2" size={18} />Save Post</>}
                                         </p>
                                         <p
-                                            onClick={() => { setOrderType('Tomorrow'), setIsOpen(false) }}
+                                            onClick={() => { handleShare(), setIsOpen(false) }}
                                             className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
@@ -278,13 +293,13 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                                         >
                                             One Week
                                         </p> */}
-                                        {post.user._id===currentUser._id?<p
-                                            onClick={() =>{setOpendDialog(true),setIsOpen(false)}}
+                                        {post.user._id === currentUser._id ? <p
+                                            onClick={() => { setOpendDialog(true), setIsOpen(false) }}
                                             className="block px-4 py-2 cursor-pointer text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
                                         >
                                             Delete
-                                        </p>:<p
+                                        </p> : <p
                                             onClick={() => { setReportPostDialogOpen(true), setIsOpen(false) }}
                                             className="flex px-4 py-2 text-sm text-gray-300 hover:bg-gray-600 hover:text-gray-200"
                                             role="menuitem"
@@ -296,9 +311,9 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             )}
                         </div>
                     </div>
-                    {OpendDialog&&<TailwindDialog type={'delete_post'} title={'Delete Post'}  description={`Are you sure you want to Delete this post !`} setOpendDialog={setOpendDialog} post={post} />}
-                    {deletePostDialogOpen&&<DeletePostDialog postId={post._id} setOpenDialog={setDeletePostDialogOpen} />}
-                    {reportPostDialogOpen&&<ReportPostDialog postId={post._id} reportedBy={currentUser._id} postBy={post.user._id} setOpenDialog={setReportPostDialogOpen} />}
+                    {OpendDialog && <TailwindDialog type={'delete_post'} title={'Delete Post'} description={`Are you sure you want to Delete this post !`} setOpendDialog={setOpendDialog} post={post} />}
+                    {deletePostDialogOpen && <DeletePostDialog postId={post._id} setOpenDialog={setDeletePostDialogOpen} />}
+                    {reportPostDialogOpen && <ReportPostDialog postId={post._id} reportedBy={currentUser._id} postBy={post.user._id} setOpenDialog={setReportPostDialogOpen} />}
                     <div className="my-2 mt-4">
                         <pre style={{ fontFamily: '"Poppins", sans-serif', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}
                             className={`${expanded
@@ -323,8 +338,8 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             {expanded ? "Read Less" : "Read More"}
                         </button>)}
                         {post?.mediaUrls[0] && <div className=" mt-2 h-48 rounded-md">
-                            {post?.mediaUrls[0].includes('/image/upload/')&&<img className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />}
-                            {post?.mediaUrls[0].includes('/video/upload/')&&<video onClick={togglePlayPause} ref={videoRef} className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />}
+                            {post?.mediaUrls[0].includes('/image/upload/') && <img className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />}
+                            {post?.mediaUrls[0].includes('/video/upload/') && <video onClick={togglePlayPause} ref={videoRef} className="h-48 w-full rounded-md" src={post.mediaUrls[0]} />}
                         </div>}
                     </div>
                     <div className="flex">
@@ -338,9 +353,9 @@ const Post = ({ post, fromProfile,savedPosts,setSavedPosts,fromSavedPosts }) => 
                             ) : (
                                 <GoHeart onClick={isLike} size={18} />
                             )}
-                            <p onClick={()=>setDisplayLikedUsers(true)} className="text-[0.86rem] mx-1">{likeCount}</p>
+                            <p onClick={() => setDisplayLikedUsers(true)} className="text-[0.86rem] mx-1">{likeCount}</p>
                         </div>
-                        {displayLikedUsers&&<LikedUsers postId={post._id} displayLikedUsers={displayLikedUsers} setDisplayLikedUsers={setDisplayLikedUsers} />}
+                        {displayLikedUsers && <LikedUsers postId={post._id} displayLikedUsers={displayLikedUsers} setDisplayLikedUsers={setDisplayLikedUsers} />}
                         {/* <div className="flex ml-4 hover:text-slate-100 cursor-pointer">
                             <TbMessage size={18} />
                             <p className="text[0.86rem] mx-1">23</p>
