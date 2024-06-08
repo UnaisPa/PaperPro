@@ -14,11 +14,11 @@ import { MdOutlineSaveAlt } from "react-icons/md";
 import { GoReport } from "react-icons/go";
 import { FaRegShareSquare } from "react-icons/fa";
 import { LuThumbsDown } from "react-icons/lu";
-import LikedUsers from "../Dialogs/LikedUsers.jsx";
+import LikedUsers from "../dialogs/LikedUsers.jsx";
 import { MdHideImage } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
 import DeletePostDialog from "./DeletePostDialog.jsx";
-import ReportPostDialog from "../Dialogs/ReportPostDialog.jsx";
+import ReportPostDialog from "../dialogs/ReportPostDialog.jsx";
 import ReportDetails from "./ReportDeatails.jsx";
 
 const ReportedPost = ({ post,postBy,createdAt,reportedBy,reason,fromProfile }) => {

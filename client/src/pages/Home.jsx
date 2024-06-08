@@ -6,13 +6,15 @@ import axios from "../axiosInstance"
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux"
 import { setPosts, addPost, updatePost, deletePost } from '../redux/postSlice'
-import PostSkeleton from '../components/postSkeleton'
+import PostSkeleton from '../components/PostSkeleton'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 const Home = () => {
     const MemoizedPost = React.memo(Post);
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
 
     const { posts } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
@@ -21,6 +23,11 @@ const Home = () => {
         getAllPosts();
         //console.log(page)
     }, [page])
+
+
+    const fetchMoreData = () => {
+        setPage(prevPage => prevPage + 1);
+    };
 
 
 
@@ -50,13 +57,19 @@ const Home = () => {
                         <p className='text-secondary py-4 pl-4'> What's your view on market today</p>
                     </div>
                     <UploadForm open={open} setOpen={setOpen} />
-
-                    {posts.map((post, index) => (
-                        <React.Fragment key={post._id}>
-                            {loading && index < 3 ? <PostSkeleton /> : <MemoizedPost post={post} />}
-                        </React.Fragment>
-                    ))}
-                    {posts.length<count && <h5 className='border border-primary rounded-lg text-slate-300 text-center text-xs py-1.5 w-28 my-5 mx-auto cursor-pointer hover:text-slate-200' onClick={()=>setPage((prevPage) => prevPage + 1)} >Show more</h5>}
+                    <InfiniteScroll
+                        dataLength={posts?.length}
+                        next={fetchMoreData}
+                        hasMore={hasMore}
+                        endMessage={<p className='text-center text-slate-400 my-4' >No more items to display</p>}
+                    >
+                        {posts.map((post, index) => (
+                            <React.Fragment key={post._id}>
+                                {loading && index < 3 ? <PostSkeleton /> : <MemoizedPost post={post} />}
+                            </React.Fragment>
+                        ))}
+                    </InfiniteScroll>
+                    {/* {posts.length<count && <h5 className='border border-primary rounded-lg text-slate-300 text-center text-xs py-1.5 w-28 my-5 mx-auto cursor-pointer hover:text-slate-200' onClick={()=>setPage((prevPage) => prevPage + 1)} >Show more</h5>} */}
                 </div>
             </section>
         </div>

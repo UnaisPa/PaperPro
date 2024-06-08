@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IoIosArrowRoundBack } from "react-icons/io";
 import axios from "../axios.js";
 import { toast } from 'react-toastify';
-import PostSkeleton from '../components/postSkeleton';
+import PostSkeleton from '../components/PostSkeleton';
 import { MoonLoader } from 'react-spinners';
 import TradingLoader from '../components/loader/TradingLoader.jsx';
 import { useNavigate } from 'react-router-dom';

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { FaRegShareSquare } from 'react-icons/fa';
 import { GoReport } from 'react-icons/go';
 import { BiLogOut } from "react-icons/bi";
-import LogoutDialog from '../Dialogs/LogoutDialog';
+import LogoutDialog from '../dialogs/LogoutDialog';
 import PortfolioManagement from '../../pages/admin/PortfolioManagement';
 import PortfolioOverview from './PortfolioOverview';
 import AdminManagement from '../../pages/admin/AdminManagement';

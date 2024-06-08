@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import PostSkeleton from '../components/postSkeleton'
+import PostSkeleton from '../components/PostSkeleton'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useDispatch, useSelector } from 'react-redux';

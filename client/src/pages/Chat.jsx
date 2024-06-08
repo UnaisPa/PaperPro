@@ -8,7 +8,7 @@ import axios from '../axiosInstance';
 import Messages from '../components/Messages';
 import { toast } from 'react-toastify';
 import { setCurrentChatId, setCurrentReciever } from '../redux/chatSlice';
-
+import { incrementUnreadCount,setUnreadCount } from '../redux/chatSlice';
 const socket = io('http://localhost:5252');
 
 const Chat = () => {
@@ -28,10 +28,15 @@ const Chat = () => {
         try {
             const response = await axios.get(`/chat/get_chats/${currentUser._id}`);
             setChats(response.data.chats);
+            let res=0;
+            response.data?.chats?.forEach((chat)=>{
+                res+=chat.unreadCount; 
+            })
+            // toast.success(res)
+            dispatch(incrementUnreadCount(res))
             if (currentChatId !== undefined) {
                 //selectChat(true)
                 setSelected(currentChatId);
-                //console.log(currentChatId)
                 setSelectedReceiver(currentReciever);
             }
         } catch (err) {
@@ -53,10 +58,6 @@ const Chat = () => {
             setChatHistory(messages);
         });
 
-        // socket.on('getMessage', (message) => {
-        //     setChatHistory((prevMessages) => [...prevMessages, message]);
-        // });
-
         return () => {
             socket.off('chat history');
         };
@@ -64,6 +65,7 @@ const Chat = () => {
 
     useEffect(() => {
         socket.on('connection', () => {
+           
             console.log('Connected to server');
         });
 
@@ -77,6 +79,10 @@ const Chat = () => {
         };
     }, []);
 
+    useEffect(()=>{
+        dispatch(setUnreadCount());
+    },[])
+
     useEffect(() => {
         if (socket) {
             socket.on('getMessage', (message) => {
@@ -84,10 +90,16 @@ const Chat = () => {
                 setChatHistory((prevMessages) => [...prevMessages, message]);
             });
 
+            socket.on('getChats',({chats}) =>{
+                console.log(chats)
+                setChats(chats);
+            })
+
         }
         // Cleanup the event listener on component unmount
         return () => {
             socket.off('getMessage');
+            socket.off('getChats');
         };
     }, [socket]);
 
@@ -98,31 +110,18 @@ const Chat = () => {
                 receiverId: selectedReceiver._id,
                 content,
                 chatId: selected,
+                user:currentUser._id
             };
 
-            // const messageObject = {
-            //     sender: currentUser._id,
-            //     content,
-            //     chat: selected
-            // }
 
             socket.emit('sendMessage', messageData);
             console.log('message', message)
 
-            //setChatHistory((prevMessages) => [...prevMessages, messageObject]);
 
         }
     };
 
-    // useEffect(() => {
-    //     socket.on('getMessage', (message) => {
-    //         setChatHistory((prevMessages) => [...prevMessages, message]);
-    //     });
 
-    //     return () => {
-    //         socket.off('getMessage');
-    //     };
-    // }, []);
 
     const handleChatSelect = (chat) => {
         setSelected(chat._id);
@@ -135,7 +134,7 @@ const Chat = () => {
 
     return (
         <div>
-            <Header />
+            <Header fromChat={true} />
             <div className='h-[87vh] flex '>
                 {sideNav && (
                     <div className='sm:w-1/3 '>
@@ -148,7 +147,7 @@ const Chat = () => {
                                     className={`${selected === chat._id ? 'bg-slate-200 bg-opacity-20' : 'bg-slate-400  bg-opacity-10'} flex border-b border-slate-600   px-2 sm:pl-6 pt-2 py-4 sm:pr-6`}
                                 >
                                     <div className='rounded-full w-14'>
-                                        {chat.users.find((user) => user._id !== currentUser._id).profilePicture?<img className='w-7 h-7 sm:w-9 sm:h-9 rounded-full' src={chat.users.find((user) => user._id !== currentUser._id).profilePicture} alt='Profile' />:<div className='w-9 h-9 rounded-full bg-primary text-center py-1.5' >{chat.users.find((user) => user._id !== currentUser._id).name.split("")[0].toUpperCase()}</div>}
+                                        {chat.users.find((user) => user._id !== currentUser._id).profilePicture ? <img className='w-7 h-7 sm:w-9 sm:h-9 rounded-full' src={chat.users.find((user) => user._id !== currentUser._id).profilePicture} alt='Profile' /> : <div className='w-9 h-9 rounded-full bg-primary text-center py-1.5' >{chat.users.find((user) => user._id !== currentUser._id).name.split("")[0].toUpperCase()}</div>}
                                     </div>
                                     <div className='sm:ml-0 w-full'>
                                         <p className='text-slate-200'>
@@ -157,6 +156,10 @@ const Chat = () => {
                                         <p className='text-xs text-slate-400' >{chat.latestMessage?.content.length > 16
                                             ? chat.latestMessage?.content.substring(0, 16) + "..."
                                             : chat.latestMessage?.content}</p>
+                                            
+                                    </div>
+                                    <div>
+                                    {(chat.unreadCount>0&&selected!=chat._id)&&<p className='text-xs px-2 rounded-full text-white bg-green-600' >{chat.unreadCount}</p>}
                                     </div>
                                 </div>
                             ))}
@@ -172,15 +175,16 @@ const Chat = () => {
                 </div>
 
                 <div className='ml-1 sm:border-l border-slate-600 border-opacity-60 h-auto w-full'>
-                    
-                        <Messages
-                            selectedReceiver={selectedReceiver}
-                            handleSendMessage={handleSendMessage}
-                            setChatHistory={setChatHistory}
-                            setMessage={setMessage}
-                            chatHistory={chatHistory}
-                        />
-                    
+
+                    <Messages
+                        selectedReceiver={selectedReceiver}
+                        handleSendMessage={handleSendMessage}
+                        setChatHistory={setChatHistory}
+                        setMessage={setMessage}
+                        chatHistory={chatHistory}
+                        chatId={selected}
+                    />
+
                 </div>
             </div>
         </div>

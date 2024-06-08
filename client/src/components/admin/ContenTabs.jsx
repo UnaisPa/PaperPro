@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 import Post from '../Post';
-import PostSkeleton from '../postSkeleton';
+import PostSkeleton from '../PostSkeleton';
 import { CiStickyNote } from "react-icons/ci";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from '../../axiosInstance';

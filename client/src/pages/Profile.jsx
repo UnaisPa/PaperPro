@@ -11,7 +11,7 @@ import { CiSaveDown1 } from "react-icons/ci";
 import { setPosts } from '../redux/postSlice.js';
 import { FiLogOut } from "react-icons/fi";
 import { setUserIdForGettingTrades } from '../redux/userSlice.js';
-import LogoutDialog from '../components/Dialogs/LogoutDialog.jsx';
+import LogoutDialog from '../components/dialogs/LogoutDialog.jsx';
 // import { setCompletedTrades } from '../redux/completedTradesSlice.js';
 import TradeAnalysis from '../components/TradeAnalytics.jsx';
 import PortfolioPerformanceGraph from '../components/performanceChart.jsx';

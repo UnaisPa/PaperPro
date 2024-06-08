@@ -12,6 +12,10 @@ const chatSchema = new mongoose.Schema({
         type:Date,
         default:Date.now
     },
+    unreadCount:{
+        type:Number,
+        default:0
+    },
 })
 
 const Chat = mongoose.model('Chat',chatSchema);

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import GoogleBtn from "../components/GoogleBtn.jsx";
 import { changeToRegister,changeToVerification } from "../redux/condRenderSlice.js";
-import ForgotPasswordDialog from "../components/Dialogs/ForgotPasswordDialog.jsx";
+import ForgotPasswordDialog from "../components/dialogs/ForgotPasswordDialog.jsx";
 const Login = () => {
   const initialState = {
     email: "",

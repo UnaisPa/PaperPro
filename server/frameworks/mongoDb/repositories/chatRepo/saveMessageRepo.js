@@ -13,7 +13,7 @@ const saveMessageRepo = async(sender,content,chatId) =>{
         const message = await newMessage.save();
         return message;
     }catch(err){
-        throw new Error(err)
+        throw new Error(err) 
     }
 }
 

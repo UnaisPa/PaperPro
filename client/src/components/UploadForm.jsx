@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -27,13 +27,13 @@ export default function UploadForm({ open, setOpen }) {
 
     const {currentUser} = useSelector((state)=>state.user)
 
-    const fileInputRef = React.useRef(null);
-    const fileInputRefVid = React.useRef(null)
-    const [loading, setLoading] = React.useState(false);
-    const [images, setImages] = React.useState([])
+    const fileInputRef = useRef(null);
+    const fileInputRefVid = useRef(null)
+    const [loading, setLoading] = useState(false);
+    const [images, setImages] = useState([])
     const [videos, setVideos] = useState([])
-    const [mediaUrls,setMediaUrls] = React.useState([])
-    const [content, setcontent] = React.useState('');
+    const [mediaUrls,setMediaUrls] = useState([])
+    const [content, setcontent] = useState('');
 
 
     const handleImgButtonCLick = (e) => {
@@ -126,7 +126,7 @@ export default function UploadForm({ open, setOpen }) {
             let validateContent = checkContent()
             if (validateContent) {
                 setLoading(true);
-
+                console.log(images)
                 //Upload images
                 let mediaUrl = [];
                 if (images[0]) {
@@ -138,7 +138,7 @@ export default function UploadForm({ open, setOpen }) {
                 }
 
                 //Upload videos
-                if (videos) {
+                if (videos[0]) {
                     console.log(videos)
                     const videoUrls = await uploadFile(videos, 'video');
                     //mediaUrl = [...mediaUrl,...videoUrls];

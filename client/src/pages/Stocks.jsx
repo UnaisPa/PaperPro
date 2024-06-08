@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Header from '../components/Header'
 import TradingViewWidget from '../components/ListedStocks'
-import MarketOverview from '../components/marketOverview'
+// import MarketOverview from '../components/marketOverview'
 import { MoonLoader } from 'react-spinners'
 import { useNavigate } from 'react-router-dom'
 import { IoSearchOutline } from "react-icons/io5";

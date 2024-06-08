@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     chatBox:[],
     currentChatId:undefined,
-    currentReciever:{}
+    currentReciever:{},
+    unreadCount:0
 }
 
 const chatSlice = createSlice({
@@ -20,9 +21,15 @@ const chatSlice = createSlice({
         },
         setCurrentReciever:(state,action)=>{
             state.currentReciever = action.payload
+        },
+        incrementUnreadCount:(state,action)=>{
+            state.unreadCount = action.payload
+        },
+        setUnreadCount:(state)=>{
+            state.unreadCount = 0;
         }
     }
 })
 
-export const {addChatBox,setCurrentChatId,setChatBox,setCurrentReciever} = chatSlice.actions;
+export const {addChatBox,setCurrentChatId,setChatBox,setCurrentReciever,incrementUnreadCount,setUnreadCount} = chatSlice.actions;
 export default chatSlice.reducer

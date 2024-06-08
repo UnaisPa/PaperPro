@@ -67,21 +67,41 @@
 
 // export default Messages;
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import EmojiInput from './EmojiInput';
 import { TiMessages } from 'react-icons/ti';
 import './messages.css';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import convertToReadableTime from '../helper/readableTime';
+import axios from '../axiosInstance';
+import { toast } from 'react-toastify';
 
-const Messages = ({ selectedReceiver, handleSendMessage, setMessage, chatHistory }) => {
+const Messages = ({ selectedReceiver, handleSendMessage, setMessage, chatHistory,chatId }) => {
+
     const { currentUser } = useSelector((state) => state.user);
     const messageEndRef = useRef(null);
-
+    const [change,setChange] = useState(false);
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
+
+    const markAsRead = () =>{
+        axios.put(`/chat/mark_as_read/${chatId}`).then((response)=>{
+            console.log('okay')
+        }).catch((err)=>{
+            console.log(err);
+            toast.error(err.response?.data?.message);
+        })
+    }
+
+    useEffect(()=>{
+        if(chatId!==undefined){
+            //toast.success(chatId)
+            markAsRead();
+        }
+        
+    },[chatId,change])
 
     useEffect(() => {
         console.log(currentUser._id)
@@ -115,25 +135,32 @@ const Messages = ({ selectedReceiver, handleSendMessage, setMessage, chatHistory
                     </div>
                     <div className='border-b border-slate-600 h-[68vh] overflow-auto overflow-x-hidden px-2 w-full scroll-container'>
                         <div className='mt-2 mb-2'>
-                            {chatHistory.map((message, index) => (
-                                <div className={`flex  ${message.sender === currentUser._id ? ('justify-end ') : 'justify-start'} `}
-                                >
-                                    {message.sender !== currentUser._id&&<div className='mr-2  rounded-full w-8 h-8' >
-                                        {selectedReceiver?.profilePicture?<img className='rounded-full mt-2' src={selectedReceiver?.profilePicture} />:<div className=' rounded-full w-8 h-8 mt-2 bg-primary text-black text-center py-1' >{selectedReceiver.name.split("")[0].toUpperCase()}</div>}
-                                    </div>}
-                                    <div
-                                        key={index}
-                                        className={`flex items-end  ${message.sender === currentUser._id ? ('justify-end ') : 'justify-start'} relative my-2`}
-                                    >
-                                        <div
-                                            className={`bg-gradient-to-r ${message.sender === currentUser._id ? 'from-green-500 to-green-600' : 'from-slate-600 to-slate-500'} rounded-lg p-4 shadow-md max-w-xs relative`}
+                            {chatHistory.map((message, index) => {
+                                    
+                                return (
+                                    <>
+                                        { <div className={`flex  ${message.sender === currentUser._id ? ('justify-end ') : 'justify-start'} `}
                                         >
-                                            <p className='text-white'>{message.content}</p>
-                                            <span className='text-xs flex justify-end text-slate-300 mt-1'>{convertToReadableTime(message.createdAt?message.createdAt:Date.now())}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                                           
+                                            {message.sender !== currentUser._id && <div className='mr-2  rounded-full w-8 h-8' >
+                                                {selectedReceiver?.profilePicture ? <img className='rounded-full mt-2' src={selectedReceiver?.profilePicture} /> : <div className=' rounded-full w-8 h-8 mt-2 bg-primary text-black text-center py-1' >{selectedReceiver.name.split("")[0].toUpperCase()}</div>}
+                                            </div>}
+                                            <div
+                                                key={index}
+                                                className={`flex items-end  ${message.sender === currentUser._id ? ('justify-end ') : 'justify-start'} relative my-2`}
+                                            >
+                                                <div
+                                                    className={`bg-gradient-to-r ${message.sender === currentUser._id ? 'from-green-500 to-green-600' : 'from-slate-600 to-slate-500'} rounded-lg p-4 shadow-md max-w-xs relative`}
+                                                >
+                                                    <p className='text-white'>{message.content}</p>
+                                                    <span className='text-xs flex justify-end text-slate-300 mt-1'>{convertToReadableTime(message.createdAt ? message.createdAt : Date.now())}</span>
+                                                </div>
+                                            </div>
+                                        </div>}
+                                    </>
+                                )
+                            }
+                            )}
                             <div ref={messageEndRef} />
                         </div>
                     </div>

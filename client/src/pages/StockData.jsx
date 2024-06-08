@@ -13,9 +13,9 @@ import { addTrade } from '../redux/positionsSlice'
 import { useNavigate } from 'react-router-dom'
 import { updateMargin } from '../redux/userSlice'
 import isUSMarketOpen from '../helper/isUSMarketOpen'
-import ErrorDialog from '../components/Dialogs/ErrorDialog'
+import ErrorDialog from '../components/dialogs/ErrorDialog'
 import { RiStockLine } from "react-icons/ri";
-import SuccessDialog from '../components/Dialogs/successDialog'
+import SuccessDialog from '../components/dialogs/successDialog'
 import { IoMdAdd } from "react-icons/io";
 
 const ENDPOINT = 'ws://localhost:5050';
