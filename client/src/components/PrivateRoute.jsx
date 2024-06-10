@@ -7,6 +7,9 @@ import LandingPage from '../pages/LandingPage'
 const PrivateRoute = () => {
     const token = localStorage.getItem('jwt');
     const { currentUser } = useSelector((state) => state.user);
+    if(!token){
+        return <LandingPage />
+    }
     if(currentUser?.isAdmin==true){
         console.log('admin')
         return <Navigate to='/admin' />

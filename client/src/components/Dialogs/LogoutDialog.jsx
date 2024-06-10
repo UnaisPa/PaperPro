@@ -16,7 +16,9 @@ export default function LogoutDialog({setOpenDialog}) {
         toast.success(response.data.message)
         console.log(response.data)
         localStorage.removeItem('jwt');
-        localStorage.removeItem('root');
+        localStorage.removeItem('persist:root');
+        localStorage.removeItem('user');
+        localStorage.removeItem('tempUser')
         navigate('/login');
     }).catch((err) => {
         console.log(err.response ? err.response.data : err.message);

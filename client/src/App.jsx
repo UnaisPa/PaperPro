@@ -53,24 +53,24 @@ function App() {
                             <Route path="/symbol/:stock" element={<StockData />} />
                             <Route path="/saved_posts" element={<SavedPosts />} />
                             <Route path="/edit_profile" element={<EditProfile />} />
-                            <Route path="/advanced_chart/:symbol" element={<AdvancedChart/>} />
-                            <Route path="/tutorial" element={<Tutorial/>} />
-                            <Route path="/chat" element={<Chat/>} />
+                            <Route path="/advanced_chart/:symbol" element={<AdvancedChart />} />
+                            <Route path="/tutorial" element={<Tutorial />} />
+                            <Route path="/chat" element={<Chat />} />
                             {/* <Route path='/edit_profile' element={<Suspense fallback={<TradingLoader/>}>
                                 <EditProfilePage />
-                            </Suspense>} /> */} 
+                            </Suspense>} /> */}
 
                         </Route>
                         <Route path="" element={<HideRoutes />}>
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={registerPage ? <Register /> : <OtpVerification />} />
-                            <Route path="/admin_login" element={<AdminLogin/>} />
+                            <Route path="/admin_login" element={<AdminLogin />} />
                             {/* <Route path="/verification" element={<OtpVerification/>}/> */}
                         </Route>
 
                         <Route path='' element={<AdminRoute />}>
-                        <Route path="/admin/*" element={<Sidebar />} />
-                        {/* <Route path="/admin/users" element={<UserManagement/>} /> */}
+                            <Route path="/admin/*" element={<Sidebar />} />
+                            {/* <Route path="/admin/users" element={<UserManagement/>} /> */}
                             {/* <Route path='/admin/edit_user/:id' element={<EditUser />} />
                             <Route path='/admin/add_user' element={<AddUser />} /> */}
                         </Route>
