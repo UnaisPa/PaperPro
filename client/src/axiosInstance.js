@@ -43,6 +43,8 @@ axios.interceptors.response.use((response) => {
             // Retry the original request with the new access token
             return axios(originalRequest);
         } catch (err) {
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('root');
             console.log('Refresh token error:', err);
 
             // Optional: Handle refresh token expiration by redirecting to login or showing a message

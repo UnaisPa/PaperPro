@@ -58,11 +58,7 @@ const Post = ({ post, fromProfile, savedPosts, setSavedPosts, fromSavedPosts }) 
         const id = post._id
         const userId = currentUser._id
         try {
-            await axios.put(`/post/post_action/${id}`, { action: action, userId }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                }
-            }).then((response) => {
+            axiosInstance.put(`/post/post_action/${id}`, { action: action, userId }).then((response) => {
                 //action=='like'?setCheckAlreadyLike(true):setCheckAlreadyLike(false);
                 console.log(response.data);
             })
@@ -94,11 +90,7 @@ const Post = ({ post, fromProfile, savedPosts, setSavedPosts, fromSavedPosts }) 
         const action = 'follow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list', { currentUserId, userId, action }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response) => {
+        axiosInstance.put('/users/update_follow_list', { currentUserId, userId, action }).then((response) => {
             dispatch(updateFollowList(userId))
             setCheckAlreadyFollow(true);
             toast.success(`Now you are following ${post.user.name}`)
@@ -188,7 +180,7 @@ const Post = ({ post, fromProfile, savedPosts, setSavedPosts, fromSavedPosts }) 
     //Hidd Post functionality only calls from admin side 
     const handleHidePost = (type) => {
         if (currentUser.isAdmin) {
-            axios.put(`/admin/hide_post/${post._id}`, { type: type }, {}).then((response) => {
+            axiosInstance.put(`/admin/hide_post/${post._id}`, { type: type }, {}).then((response) => {
                 if (response.data.success) {
                     type == 'hide' ? toast.success('Post hided') : toast.success('Post Unhided')
                 }

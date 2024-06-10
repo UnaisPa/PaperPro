@@ -8,7 +8,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { TbMessage } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { useState } from 'react';
-import axios from "../axios"
+import axios from "../axiosInstance"
 import { ClipLoader, MoonLoader } from "react-spinners"
 import { useSelector, useDispatch } from 'react-redux';
 import { updatePost } from '../redux/postSlice';
@@ -33,11 +33,7 @@ export default function Comments({ post }) {
             const userId = currentUser._id
             console.log(postId, userId)
 
-            await axios.post('/post/add_comment', { postId, userId, text }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                }
-            }).then((response) => {
+            await axios.post('/post/add_comment', { postId, userId, text }).then((response) => {
                 console.log(response.data)
                 toast.success(response.data.message);
                 dispatch(updatePost(response.data.post));

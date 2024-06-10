@@ -40,11 +40,7 @@ const UserProfile = () => {
     const getUserProfile = async () => {
         const userId = id
         setLoading(true);
-        await axios.get(`/users/profile?userId=${userId}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response) => {
+        axios.get(`/users/profile?userId=${userId}`).then((response) => {
             //dispatch(setProfile(response.data.user));
             setUser(response.data.user);
             dispatch(setPosts(response.data.user.posts));
@@ -64,11 +60,7 @@ const UserProfile = () => {
         const action = 'follow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list',{currentUserId,userId,action},{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response)=>{
+        axios.put('/users/update_follow_list',{currentUserId,userId,action}).then((response)=>{
             dispatch(updateFollowList(userId))
             //const updatedUser = user.followers.push(currentUserId)
             const updatedUser = { ...user, followers: [...user.followers, currentUserId] };

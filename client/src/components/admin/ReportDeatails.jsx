@@ -35,11 +35,7 @@ export default function ReportDetails({ post,reportedBy,reason,postBy,createdAt 
             const userId = currentUser._id
             console.log(postId, userId)
 
-            await axios.post('/post/add_comment', { postId, userId, text }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                }
-            }).then((response) => {
+            axios.post('/post/add_comment', { postId, userId, text }).then((response) => {
                 console.log(response.data)
                 toast.success(response.data.message);
                 dispatch(updatePost(response.data.post));

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { IoIosArrowRoundBack } from "react-icons/io";
-import axios from "../axios.js";
+import axios from "../axiosInstance.js";
 import { toast } from 'react-toastify';
 import PostSkeleton from '../components/PostSkeleton';
 import { MoonLoader } from 'react-spinners';
@@ -18,11 +18,7 @@ const SavedPosts = () => {
     const getSavedPosts = async () => {
 
         const userId = currentUser._id;
-        await axios.get(`/post/saved_posts/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response) => {
+        axios.get(`/post/saved_posts/${userId}`).then((response) => {
             //console.log()
             setSavedPosts(response.data.posts);
         }).catch((err) => {

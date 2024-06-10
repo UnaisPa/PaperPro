@@ -57,11 +57,7 @@ const ReportedPost = ({ post,postBy,createdAt,reportedBy,reason,fromProfile }) =
         const id = post._id
         const userId = currentUser._id
         try {
-            await axios.put(`/post/post_action/${id}`, { action: action, userId }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                }
-            }).then((response) => {
+            axios.put(`/post/post_action/${id}`, { action: action, userId }).then((response) => {
                 //action=='like'?setCheckAlreadyLike(true):setCheckAlreadyLike(false);
                 console.log(response.data);
             })
@@ -93,11 +89,7 @@ const ReportedPost = ({ post,postBy,createdAt,reportedBy,reason,fromProfile }) =
         const action = 'follow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list', { currentUserId, userId, action }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response) => {
+        axios.put('/users/update_follow_list', { currentUserId, userId, action }).then((response) => {
             dispatch(updateFollowList(userId))
             setCheckAlreadyFollow(true);
             toast.success(`Now you are following ${post.user.name}`)

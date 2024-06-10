@@ -4,7 +4,7 @@ import { RiUserUnfollowFill, RiUserUnfollowLine } from "react-icons/ri";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch,useSelector } from 'react-redux';
 import { deletePost } from '../redux/postSlice';
-import axios from "../axios.js"
+import axios from "../axiosInstance.js"
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 import { updateFollowList,updateFollowListMinus } from '../redux/userSlice.js';
@@ -22,11 +22,7 @@ export default function TailwindDialog({setCheckAlreadyFollow,user,setUser, type
         setLoading(true)
         const postId = post._id
         if (currentUser._id === post.user._id) {
-            await axios.delete(`/post/delete_post/${postId}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                }
-            }).then((response) => {
+            axios.delete(`/post/delete_post/${postId}`).then((response) => {
                 dispatch(deletePost(postId))
                 toast.success(response.data.message)
             }).catch((err) => {
@@ -49,11 +45,7 @@ export default function TailwindDialog({setCheckAlreadyFollow,user,setUser, type
         const action = 'unfollow'
         // console.log(currentUserId);
         // console.log(userId);
-        await axios.put('/users/update_follow_list',{currentUserId,userId,action},{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt')}`
-            }
-        }).then((response)=>{
+        axios.put('/users/update_follow_list',{currentUserId,userId,action}).then((response)=>{
             dispatch(updateFollowListMinus(userId))
             setOpen(false);
             //dispatch(updateFollowList(userId))

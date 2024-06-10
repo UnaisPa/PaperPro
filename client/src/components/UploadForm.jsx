@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import Axios from "axios";
 import { IoClose } from "react-icons/io5";
 import { ClipLoader } from "react-spinners"
-import axios from "../axios.js"
+import axios from "../axiosInstance.js"
 import {useSelector,useDispatch} from "react-redux"
 import { addPost,updatePost,deletePost } from "../redux/postSlice.js";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -150,11 +150,7 @@ export default function UploadForm({ open, setOpen }) {
                 //Api call to server for save post details
                 setcontent(content.replace(/\r?\n/g, '\n'))
                 const userId = currentUser?._id
-                await axios.post(`/post/create_post/${userId}`,{content:content,mediaUrls:mediaUrl},{
-                    headers: {
-                      Authorization: `Bearer ${localStorage.getItem('jwt')}`
-                    }
-                  }).then((response)=>{
+                axios.post(`/post/create_post/${userId}`,{content:content,mediaUrls:mediaUrl}).then((response)=>{
                     console.log(response.data);
                     dispatch(addPost(response.data.post))
                     toast.success(response?.data.message)
