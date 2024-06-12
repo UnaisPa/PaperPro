@@ -6,7 +6,7 @@ import axios from "../axios.js";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { BiMobile } from 'react-icons/bi';
-import OtpTimer from "otp-timer";
+
 
 const OtpVerification = () => {
     const navigate = useNavigate()
