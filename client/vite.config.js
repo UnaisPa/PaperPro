@@ -20,7 +20,7 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       // overwrite default .html entry
-      input: path.resolve(__dirname, 'src/main.js'),
+      input: path.resolve(__dirname, 'src/main.jsx'),
     },
   },
   resolve: {
