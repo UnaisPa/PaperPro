@@ -31,7 +31,8 @@
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
     "otp-timer": "^1.1.5",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "ws": "^8.17.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
