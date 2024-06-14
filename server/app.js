@@ -13,7 +13,7 @@ import chatRoutes from "./adapters/routes/chatRoutes.js";
 import path from "path";
 import dependencies from "./frameworks/config/dependencies.js";
 import { Server } from "socket.io";
-import socketConfig from "./socket.js";
+//import socketConfig from "./socket.js";
 import sockeIoConfig from "./socketIo.js";
 import http from "http";
 
