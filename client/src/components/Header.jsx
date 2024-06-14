@@ -7,7 +7,7 @@ import { GrChat } from "react-icons/gr";
 import io from 'socket.io-client';
 import { toast } from "react-toastify";
 import { Badge } from "@mui/material";
-const socket = io('http://localhost:5252');
+const socket = io('https://paperpro.site');
 import { incrementUnreadCount,setUnreadCount } from "../redux/chatSlice";
 
 export default function Header({fromChat}) {

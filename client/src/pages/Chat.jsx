@@ -9,7 +9,7 @@ import Messages from '../components/Messages';
 import { toast } from 'react-toastify';
 import { setCurrentChatId, setCurrentReciever } from '../redux/chatSlice';
 import { incrementUnreadCount,setUnreadCount } from '../redux/chatSlice';
-const socket = io('http://localhost:5252');
+const socket = io('https://paperpro.site');
 
 const Chat = () => {
     const dispatch = useDispatch();

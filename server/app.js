@@ -25,7 +25,7 @@ const port = process.env.PORT || 8000
 connectDB();
 
 export const io = new Server(5252, {
-    cors: { origin: 'http://localhost:5173' }
+    cors: { origin: 'https://paperpro.site' }
 });
  sockeIoConfig()
 // const server = http.createServer();
@@ -43,7 +43,7 @@ export const wss = new WebSocket.Server({ port: 5050 });
 socketConfig()
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://paperpro.site',
     credentials: true, // If frontend sends credentials (like cookies)
 }));
  
