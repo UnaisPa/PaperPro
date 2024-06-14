@@ -33,7 +33,7 @@ const LandingPage = () => {
                         </button>
                     </div>
                     <div className="mt-10 sm:mt-0 w-full lg:w-[900px]">
-                        <img src="../src/assets/trader.png" />
+                        <img src="assets/trader.png" />
                     </div>
                 </div>
             </section>
