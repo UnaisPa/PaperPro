@@ -41,7 +41,7 @@ const LandingPage = () => {
             <section className="p-7  w-full">
                 <div className="lg:flex sm:pl-20 text-center lg:text-left mt-14 ">
                     <div className=" w-full md: ">
-                        <img className="opacity-80" src="../src/assets/chartsUI.png" />
+                        <img className="opacity-80" src="assets/chartsUi.png" />
                     </div>
                     <div className=" mt-10 sm:mt-0 w-full">
                         <div className="m-5 ">
