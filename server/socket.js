@@ -3,9 +3,9 @@ import { Server, Socket } from "socket.io";
 import cron from "node-cron"
 import moment from "moment-timezone";
 import axios from "axios"
-import { wss } from "./app.js";
+// import { wss } from "./app.js";
 import WebSocket from "ws"
-const socketConfig = () => {
+const socketConfig = (wss) => {
 
     //console.log('Socket file')
     let isRequesting = false;

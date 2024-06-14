@@ -19,6 +19,8 @@ import SuccessDialog from '../components/dialogs/successDialog'
 import { IoMdAdd } from "react-icons/io";
 
 const ENDPOINT = 'ws://paperpro.site';
+// const ENDPOINT = 'ws://localhost:5000';
+
 
 const StockData = () => {
     const navigate = useNavigate()
