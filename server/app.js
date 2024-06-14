@@ -16,7 +16,7 @@ import { Server } from "socket.io";
 import socketConfig from "./socket.js";
 import sockeIoConfig from "./socketIo.js";
 import http from "http";
-import WebSocket from "ws";
+import WebSocket, { WebSocketServer } from 'ws';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,18 +28,18 @@ const server = http.createServer(app);
 connectDB();
 
 // Initialize Socket.IO with the HTTP server
-export const io = new Server(server, {
+export const io = new Server(5001, {
     cors: { 
-        origin: 'https://paperpro.site',
+        origin: ['https://paperpro.site',"http://localhost:5173"],
         methods: ["GET", "POST"],
      }
 });
 sockeIoConfig(io); // Pass the Socket.IO instance to your config
-export const wss = new WebSocket.Server({ server });
-// Middleware
+export const wss = new WebSocketServer({ server });
+// Middleware 
 app.use(cors({
-    origin: 'https://paperpro.site',
-    credentials: true,
+    origin: ['https://paperpro.site',"http://localhost:5173"],
+    credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -64,10 +64,10 @@ app.use('/api/chat', chatRoutes(dependencies));
 // Error handler middlewares
 app.use(notFound);
 app.use(errorHandler);
-
+socketConfig(io);
 // Start the server
 server.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
 
-socketConfig(io); // Call your socket configuration
+ // Call your socket configuration

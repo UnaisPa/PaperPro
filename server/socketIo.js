@@ -1,10 +1,10 @@
-import { io } from "./app.js";
+// import { io } from "./app.js";
 import { countUnreadUseCase, getChatsUseCase, markAsReadUseCase } from "./applications/useCases/index.js";
 import dependencies from "./frameworks/config/dependencies.js";
 
 // The socket io configuration for Chat system
 
-const sockeIoConfig = () => {
+const sockeIoConfig = (io) => {
     let users = [];
 
     io.on('connection', (socket) => {
