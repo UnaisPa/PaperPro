@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -16,17 +15,14 @@ export default defineConfig({
     host: true,
   },
   build: {
-    // generate .vite/manifest.json in outDir
-    manifest: true,
+    outDir: 'dist',
+    assetsDir: 'assets',
+    manifest: true, // generate .vite/manifest.json in outDir
     rollupOptions: {
-      // overwrite default .html entry
-      input: path.resolve(__dirname, 'src/main.jsx'),
-    },
+        input: path.resolve(__dirname, 'index.html'), // Ensure this points to index.html
+      },
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-  },
-  build: {
-    outDir: 'dist',
   },
 });

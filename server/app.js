@@ -11,7 +11,7 @@ import postRoutes from "./adapters/routes/postRoutes.js"
 import adminRoutes from "./adapters/routes/adminRoutes.js";
 import portfolioRoutes from "./adapters/routes/portfolioRoutes.js";
 import chatRoutes from "./adapters/routes/chatRoutes.js";
-
+import path from "path";
 import dependencies from "./frameworks/config/dependencies.js";
 import { Server, Socket } from "socket.io"
 import socketConfig from "./socket.js";
@@ -64,7 +64,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     cookie: {
@@ -84,6 +84,10 @@ app.use('/api/post', postRoutes(dependencies));
 app.use('/api/admin', adminRoutes(dependencies));
 app.use('/api/portfolio', portfolioRoutes(dependencies));
 app.use('/api/chat',chatRoutes(dependencies));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+  });
 
 //Error handler middlewares
 app.use(notFound);
