@@ -32,7 +32,6 @@ export const io = new Server(server, {
     cors: { 
         origin: 'https://paperpro.site',
         methods: ["GET", "POST"],
-        credentials: true
      }
 });
 sockeIoConfig(io); // Pass the Socket.IO instance to your config
