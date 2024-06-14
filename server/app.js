@@ -95,6 +95,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`server is running on port:${port}`)
 })
