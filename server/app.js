@@ -85,9 +85,9 @@ app.use('/api/admin', adminRoutes(dependencies));
 app.use('/api/portfolio', portfolioRoutes(dependencies));
 app.use('/api/chat',chatRoutes(dependencies));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
-  });
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+//   });
 
 //Error handler middlewares
 app.use(notFound);
