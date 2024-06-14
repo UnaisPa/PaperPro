@@ -66,4 +66,4 @@ server.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
 
-socketConfig(io); // Call your socket configuration
+//socketConfig(io); // Call your socket configuration
