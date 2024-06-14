@@ -29,7 +29,11 @@ connectDB();
 
 // Initialize Socket.IO with the HTTP server
 export const io = new Server(server, {
-    cors: { origin: 'https://paperpro.site' }
+    cors: { 
+        origin: 'https://paperpro.site',
+        methods: ["GET", "POST"],
+        credentials: true
+     }
 });
 sockeIoConfig(io); // Pass the Socket.IO instance to your config
 export const wss = new WebSocket.Server({ server });
