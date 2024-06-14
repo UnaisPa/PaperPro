@@ -18,7 +18,7 @@ import { RiStockLine } from "react-icons/ri";
 import SuccessDialog from '../components/dialogs/successDialog'
 import { IoMdAdd } from "react-icons/io";
 
-const ENDPOINT = 'ws://localhost:5050';
+const ENDPOINT = 'ws://paperpro.site';
 
 const StockData = () => {
     const navigate = useNavigate()

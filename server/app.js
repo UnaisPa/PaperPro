@@ -20,16 +20,17 @@ import http from "http"
 const app = express(); 
 const store = new MemoryStore();
 import WebSocket from "ws"
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 5000
 
+const server=http.createServer(app)
 connectDB();
 
-export const io = new Server(5252, {
+export const io = new Server(server, {
     cors: { origin: 'https://paperpro.site' }
 });
  sockeIoConfig()
 // const server = http.createServer();
-export const wss = new WebSocket.Server({ port: 5050 });
+export const wss = new WebSocket.Server({ port: server });
 
 // export const io = new Server(server, {
 //   cors: {
@@ -94,6 +95,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`server is running on port:${port}`)
 })
