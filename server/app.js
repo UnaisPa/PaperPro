@@ -16,7 +16,6 @@ import { Server } from "socket.io";
 import socketConfig from "./socket.js";
 import sockeIoConfig from "./socketIo.js";
 import http from "http";
-import WebSocket from "ws";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -32,9 +31,6 @@ export const io = new Server(server, {
     cors: { origin: 'https://paperpro.site' }
 });
 sockeIoConfig(io); // Pass the Socket.IO instance to your config
-
-// Initialize WebSocket server with the HTTP server
-export const wss = new WebSocket.Server({ server });
 
 // Middleware
 app.use(cors({
