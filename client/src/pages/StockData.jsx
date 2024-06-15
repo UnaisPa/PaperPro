@@ -18,7 +18,7 @@ import { RiStockLine } from "react-icons/ri";
 import SuccessDialog from '../components/dialogs/successDialog'
 import { IoMdAdd } from "react-icons/io";
 
-const ENDPOINT = 'wss://paperpro.site';
+const ENDPOINT = 'wss://paperpro.site/ws';
 // const ENDPOINT = 'ws://localhost:5000';
 
 
