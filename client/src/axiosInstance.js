@@ -46,6 +46,7 @@ axios.interceptors.response.use((response) => {
             localStorage.removeItem('jwt');
             localStorage.removeItem('root');
             console.log('Refresh token error:', err);
+            location.reload();
 
             // Optional: Handle refresh token expiration by redirecting to login or showing a message
             // window.location.href = '/login';
