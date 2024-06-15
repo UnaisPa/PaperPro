@@ -170,7 +170,7 @@ const StockData = () => {
     const [checkStopLoss, setCheckStopLoss] = useState(false)
     let newData = {}
     useEffect(() => {
-        const socket = new WebSocket(ENDPOINT);
+        const socket = new WebSocket('wss://paperpro.site/ws');
 
         socket.onopen = () => {
             console.log('Connected to server');
