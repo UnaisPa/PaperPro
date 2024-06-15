@@ -35,14 +35,9 @@ export const io = new Server(5001, {
      }
 });
 sockeIoConfig(io); // Pass the Socket.IO instance to your config
-export const wss = new WebSocketServer(
-    { 
-       server,
-        cors:{
-            origin: ['https://paperpro.site',"http://localhost:5173"],
-        },
-        path: '/ws'
-     });
+
+export const wss = new WebSocketServer({ server, path: '/ws'});
+
 // Middleware 
 app.use(cors({
     origin: ['https://paperpro.site',"http://localhost:5173"],
