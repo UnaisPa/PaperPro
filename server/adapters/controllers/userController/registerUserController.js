@@ -5,14 +5,14 @@ export default (dependencies) =>{
     const registerUserController = expressAsyncHandler(async(req,res)=>{
         try{
             let {name,email,mobile,password,otp} = req.body
-            //console.log(name,email,mobile,password,otp)
-    
-            const verify = await verifyOtpUseCase(dependencies).executeFunction(email,otp);
+            console.log(name,email,mobile,password,otp)
+            const from = 'register'
+            const verify = await verifyOtpUseCase(dependencies).executeFunction(email,otp,from);
             if(verify===true){
                 let newUser = await createUserUseCase(dependencies).executeFunction(name,email,mobile,password);
                 res.status(200).json(newUser);
             }else{
-                console.log(verify.message)
+                console.log(verify)
                 //if verify variable is not true, then it returns error messages
                 res.status(200).json({success:false, message:verify.message})
             }

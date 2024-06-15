@@ -4,7 +4,8 @@ export default (dependencies) => {
     const { verifyOtpUseCase } = dependencies.useCase
     const verifyOtpController = expressAsyncHandler(async (req, res) => {
         const {email,otp} = req.body
-        const response = await verifyOtpUseCase(dependencies).executeFunction(email, otp)
+        const from = 'forgot_password'
+        const response = await verifyOtpUseCase(dependencies).executeFunction(email, otp,from)
         if (response.verify === true) {
             
             res.status(200).json({success:true,message:'You can change your password',userId:response.userId});
