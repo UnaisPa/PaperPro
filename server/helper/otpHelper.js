@@ -20,7 +20,7 @@ async function verfyOtp(email,otp){
     
     if(otpData.otp === otp){
         otpMap.delete(email);
-        return true
+        return {status:true}
     }
     else{
       console.log('Something happened')

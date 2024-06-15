@@ -8,7 +8,7 @@ const verifyOTPRepo = async (email, otp, from) => {
             const user = await User.findOne({ email: email });
             return { verify, userId: user._id }
         }else{
-            return { verify }
+            return verify
         }
 
     } catch (err) {

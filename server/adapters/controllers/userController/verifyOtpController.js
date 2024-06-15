@@ -6,7 +6,7 @@ export default (dependencies) => {
         const {email,otp} = req.body
         const from = 'forgot_password'
         const response = await verifyOtpUseCase(dependencies).executeFunction(email, otp,from)
-        if (response.verify === true) {
+        if (response.status === true) {
             
             res.status(200).json({success:true,message:'You can change your password',userId:response.userId});
         } else {

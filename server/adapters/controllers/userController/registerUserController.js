@@ -8,7 +8,7 @@ export default (dependencies) =>{
             console.log(name,email,mobile,password,otp)
             const from = 'register'
             const verify = await verifyOtpUseCase(dependencies).executeFunction(email,otp,from);
-            if(verify===true){
+            if(verify.status===true){
                 let newUser = await createUserUseCase(dependencies).executeFunction(name,email,mobile,password);
                 res.status(200).json(newUser);
             }else{
