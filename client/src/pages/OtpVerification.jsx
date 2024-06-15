@@ -122,7 +122,8 @@ const OtpVerification = () => {
                         navigate("/login");
                     },1500)
                 }else{
-                    toast.error(response.data.message);
+                    console.log(response)
+                    toast.error(response.data?.message);
                 }
             })
         }catch(err){
