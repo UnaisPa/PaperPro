@@ -83,7 +83,7 @@ const Portfolio = () => {
             for (let trade of positions) {
                 //console.log(trade)
                 const currentPrice = await fetchRealTimePrice(trade.stockSymbol);
-                const profit = (currentPrice - trade.stockPrice)
+                const profit = (currentPrice - trade.stockPrice) * trade.quantity
 
                 let actualProfit;
                 if(trade.type=='Sell'){

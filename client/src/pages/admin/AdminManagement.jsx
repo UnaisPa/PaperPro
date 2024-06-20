@@ -58,7 +58,7 @@ const AdminManagement = () => {
                             {superAdmins.map((admin, index) => {
                                 return (
                                     <div className=' rounded-md bg-slate-800 bg-opacity-70 border border-slate-700 m-2 w-1/4 h-72 pt-10' >
-                                        {currentUser.profilePicture ? <img className=' rounded-full w-20 h-20 mx-auto' src={currentUser.profilePicture} /> : <img src='../src/assets/superAdmin.jpg' className='shadow rounded-full w-20 h-20 mx-auto' />}
+                                        {currentUser.profilePicture ? <img className=' rounded-full w-20 h-20 mx-auto' src={currentUser.profilePicture} /> : <img src='/assets/superAdmin.jpg' className='shadow rounded-full w-20 h-20 mx-auto' />}
                                         <h1 className='text-center text-slate-300 font-medium mt-2' >{admin.name}</h1>
                                         <p className='text-slate-500 text-center text-xs' >@ahammed8@gmail.com</p>
                                         <p className='text-slate-400 text-center text-xs mt-2 w-11/12 mx-auto' >Super Admin</p>
